@@ -5,6 +5,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const ejs = require("ejs")
 const path = require("path")
 require("dotenv").config()
+const { dbConnect } = require("./data/database");
 
 const app = express();
 
@@ -49,7 +50,15 @@ passport.deserializeUser(function (obj, cb) {
 
 
 app.get('/login', (req, res) => {
-    res.render("login.ejs")
+    if (req.isAuthenticated()) {
+        console.log(req.user)
+        res.render("dashbord.ejs", {
+            user: req.user
+        });
+    } else {
+        res.render("login.ejs");
+    }
+    
 })
 
 app.get("/auth/google", passport.authenticate("google", {
@@ -93,3 +102,12 @@ app.get("/logout", (req, res) => {
 app.listen(5000, () => {
     console.log("server working")
 })
+
+
+
+// dbConnect.query('select * from studentInfo',(err,result)=>{
+//     if(!err){
+//         console.log(result.rows);
+//     }
+//     dbConnect.end();
+// });

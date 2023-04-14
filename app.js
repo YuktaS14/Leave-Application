@@ -15,7 +15,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     // local server has http, if we have https we can set it to true
-    cookie: { secure: false },
+    cookie: { secure: false, maxAge : 10000000 },
 }));
 
 app.use(passport.initialize())

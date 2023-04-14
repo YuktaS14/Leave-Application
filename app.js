@@ -25,12 +25,9 @@ app.use(passport.session())
 // two input 1st options, 2nd one function
 passport.use(new GoogleStrategy({
 
-    clientID:
-        "213766690937-p6j2lpceusl9ee7f99he8vsuf4010l37.apps.googleusercontent.com",
-    clientSecret:
-        "",
-    callbackURL:
-        "http://localhost:5000/auth/google/callback",
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret:process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.REDIRECT_URL
     // where we want to go ?
     // can be any route
     // redirect and callback are same
@@ -56,7 +53,8 @@ app.get('/login', (req, res) => {
 })
 
 app.get("/auth/google", passport.authenticate("google", {
-    scope: ["profile", "email"]
+    scope: ["profile", "email"],
+    prompt: "select_account"
 }
 ));
 

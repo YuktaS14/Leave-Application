@@ -19,7 +19,71 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
-<body>
-    Hello
-</body>
-</html>
+<style>
+body{
+    padding:35px;
+    font-size: 15px;
+
+}
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  
+  div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  </style>
+  <body>
+  
+  <h3 style="text-align: center;">Add Student in the Database</h3>
+  <div class="alert alert-success">
+  <%
+  if(message.length > 0){
+  %>
+  <%= message %> <%}%> </div>
+  <div>
+    <form action="/admin/addStudent" method = "post">
+      <label for="rollNo">Roll No* :</label>
+      <input type="text" id="fname" name="RollNo" required placeholder="Roll No..">
+  
+      <label for="name">Name* :</label>
+      <input type="text" id="lname" name="name" required  placeholder="Name..">
+  
+      <label for="leaves">Leaves Alloted* :</label>
+      <input type="text" id="lname" name="leavesAlloted" required  placeholder="Leaves Alloted..">
+  
+      <label for="fa">Faculty Advisor's Name* :</label>
+      <input type="text" id="lname" name="FA" required  placeholder="FA..">
+  
+      <label for="pm">Project Mentor's Name* :</label>
+      <input type="text" id="lname" name="PM"  required placeholder="PM..">
+  
+      <input type="submit" value="Add Student">
+    </form>
+  </div>
+  
+  </body>
+  </html>

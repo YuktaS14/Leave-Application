@@ -3,36 +3,66 @@ const { dbConnect } = require("../data/database");
 const router = express.Router();
 
 
-router.get("/",(req,res,next)=>{
+router.get("/", async (req, res, next) => {
+    const rollno = 112001010;
+    let temp = {};
 
-    rollno = 112001010
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT * FROM studentInfo WHERE rollno = ${rollno}`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
 
-    let temp = {}
+        temp.studentInfo = result.rows[0];
 
-    async function fun() {
-
-    await dbConnect.query(`select * from studentInfo where rollno = ${rollno}`, (err,result)=>{
-        if(!err){
-            console.log(result.rows);
-            temp.name = result.rows;
-        }
-    });
+        // res.render("studentHomePage.ejs", obj );
+    } catch (err) {
+        next(err);
     }
 
-    fun()
+    console.log(temp.studentInfo.rollno);
 
-    // dbConnect.query(`select * from leaveapplications where rollno = ${rollno}`,(err,result)=>{
-    //     if(!err){
-    //         // console.log(result.rows);
-    //         result.leaveapplication = result.rows;
-    //     }
-    // });
-    console.log('rishav')
-    console.log(temp)
-    console.log('rishav')
+    
 
-    // res.render("studentHomePage.ejs", obj )
 });
+
+// router.get("/", async (req,res,next)=>{
+
+//     rollno = 112001010
+
+//     let temp = {}
+
+//     dbConnect.query(`select * from studentInfo where rollno = ${rollno}`, (err,result)=>{
+//         if(!err){
+//             console.log(result.rows);
+//             temp.name = result.rows;
+//         }
+//         else {
+//             throw err
+//         }
+//     });
+
+
+//     // dbConnect.query(`select * from leaveapplications where rollno = ${rollno}`,(err,result)=>{
+//     //     if(!err){
+//     //         // console.log(result.rows);
+//     //         result.leaveapplication = result.rows;
+//     //     }
+//     // });
+//     console.log('rishav')
+//     console.log(temp)
+//     console.log('rishav')
+
+//     // res.render("studentHomePage.ejs", obj )
+// });
 
 
 module.exports = router;

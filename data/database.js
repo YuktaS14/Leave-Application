@@ -10,9 +10,9 @@ const client = new Client({
 });
 
 
-// client.connect()
-// .then(()=>console.log("Database Connected"))
-// .catch((e)=>console.log(e));
+client.connect()
+.then(()=>console.log("Database Connected"))
+.catch((e)=>console.log(e));
 
 
 exports.dbConnect = client; 

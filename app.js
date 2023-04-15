@@ -6,11 +6,13 @@ const ejs = require("ejs")
 const path = require("path")
 require("dotenv").config()
 const { dbConnect } = require("./data/database");
+const adminrouter = require("./routes/admin")
 
 const app = express();
 
 app.set("view engine", "ejs");
 
+app.use("/admin",adminrouter);
 app.use(session({
     secret: "key", // can be anything
     resave: false,

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leave Application Form</title>
+  <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css"  />
+  <base target="_top">
+	<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background-color: #4CAF50;
+      text-align: center;
+      padding: 20px;
+    }
+    .header h1, .header h2 {
+      margin: 0;
+      color: white;
+    }
+    form {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+    }
+    label {
+      display: block;
+      margin: 10px 0;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    hr {
+      border: none;
+      height: 1px;
+      background-color: #ddd;
+      margin: 40px 0;
+    }
+  </style>
+
+
+</head>
+<body>
+	<form>
+		<label>Name of the Scholar:</label>
+		<input type="text" name="name" id="Name" readonly required>
+		<br>
+
+
+
+
+
+		<label>Registration/Roll Number:</label>
+		<input type="text" name="regno" id="RollNo" readonly required>
+		<br>
+
+
+
+		<label>Department:</label>
+		<input type="text" name="dept" id = "Department" readonly required>
+		<br>
+
+		<label>Program (MTech/MS/PhD):</label>
+		<input type="text" name="program" id= "Program" readonly required>
+		<br>
+
+
+    <label>Number of Leaves Left:</label>
+		<input type="text" name="program" id= "noOfLeavesLeft" readonly>
+		<br>
+
+    <!-- <script> document.getElementById("noOfLeavesLeft").value =  google.script.run.getleavesByRollNumber(); </script> -->
+
+
+
+
+		<label>Type of Leave:</label>
+		<input type="text" name="leave-type" id = "typeOfLeave"required>
+		<br>
+
+		<label>Purpose of Leave:</label>
+		<textarea name="leave-purpose" id = "leavePurpose" required></textarea>
+		<br>
+
+		<!-- <input type="number" min="1" max="10" name="leave-days" id="noOfDays" required> Day(s), From -->
+
+    <label>Leave applied for:</label>
+  <input type="number" name="leave-days" id="noOfDays" required min="0" max="" onkeydown="return false" />
+
+
+
+
+		<input type="date" name="leave-from-date" id="from" required> To 
+		<input type="date" name="leave-to-date" id="to" required>
+		<br>
+
+		<label>Arrangement of HTRA/HTTA duties during the period of leave:</label>
+		<table>
+			<tr>
+				<th>Nature of HTTA/ HTRA duty</th>
+				<th>Name and Registration/Roll Number of the alternate scholar handling the duties</th>
+				<th>Signature of the alternate scholar(s)*</th>
+			</tr>
+			<tr>
+				<td><input type="text" name="duty-nature" id="dutyNature"></td>
+				<td><input type="text" name="alternate-scholar-name" id="alternateScholarName"></td>
+				<td><input type="text" name="alternate-scholar-signature" id = "alternateScholarSignature"></td>
+			</tr>
+		</table>
+		<p>* To be signed only if the alternate person(s) agree to carry out the duties of the scholar applying for leave.</p>
+
+		<!-- <label>Date:</label>
+		<input type="date" name="application-date" id="applicationDate" required>
+		<br> -->
+
+    <label>Date:</label>
+    <input type="date" name="application-date" id="applicationDate" readonly>
+
+
+		<label>Signature of Applicant:</label>
+		<input type="text" name="applicant-signature" id= "applicantSignature" required>
+		<br>
+		<br>
+    <input type="button" value="Apply For Leave" class="btn btn-primary" onclick="Apply()" />
+    <span id="display" ></span>
+  </div>
+		<!-- <label>Recommendation of the Guide/Project Mentor:</label> -->
+
+  </form>
+</body>
+</html>
+
+
+
+

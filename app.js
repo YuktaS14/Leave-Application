@@ -109,9 +109,9 @@ app.listen(5000, () => {
 
 
 
-// dbConnect.query('select * from studentInfo',(err,result)=>{
-//     if(!err){
-//         console.log(result.rows);
-//     }
-//     dbConnect.end();
-// });
+dbConnect.query('select * from studentInfo',(err,result)=>{
+    if(!err){
+        console.log(result.rows);
+    }
+    dbConnect.end();
+});

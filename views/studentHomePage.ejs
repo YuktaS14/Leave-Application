@@ -11,12 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base target="_top">
     <style>
-        body {
-            font-family: '[Open Sans](poe://www.poe.com/_api/key_phrase?phrase=Open%20Sans&prompt=Tell%20me%20more%20about%20Open%20Sans.)', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
         .header {
             background-color: #4CAF50;
             text-align: center;
@@ -29,290 +23,295 @@
             color: white;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        hr {
-            border: none;
-            height: 1px;
-            background-color: #ddd;
-            margin: 40px 0;
-        }
-
-        /* Style the navigation bar */
-        .navbar {
-            background-color: #333;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        /* Style the navigation links */
-        .navbar a {
-            color: #fff;
-            margin-left: 20px;
-            font-size: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: color 0.3s ease-in-out;
-        }
-
-        /* Style the navigation links on hover */
-        .navbar a:hover {
-            color: #ddd;
-        }
-
-        /* Style the logout button */
-        .navbar button {
-            background-color: #fff;
-            color: #333;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        /* Style the logout button on hover */
-        .navbar button:hover {
-            background-color: #ddd;
-        }
-
-        /* Style the dropdown menu */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        /* Style the dropdown button */
-        .dropdown button {
-            /* background-color: #4CAF50; */
-            /* color: white; */
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        /* Style the dropdown button on hover */
-        .dropdown button:hover {
-            background-color: #3e8e41;
-        }
-
-        /* Style the dropdown content */
-        .dropdown-content {
+        #main_form{
             display: none;
-            position: absolute;
-            z-index: 1;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            padding: 12px 16px;
-            margin-top: 5px;
-            border-radius: 5px;
-        }
-
-        /* Style the dropdown links */
-        .dropdown-content a {
-            color: #050101;
-            font-size: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            display: block;
-            padding: 5px 0;
-            width: 20rem;
-        }
-
-        /* Style the dropdown links on hover */
-        /* .dropdown-content a:hover {
-		background-color: #ddd;
-	} */
-
-        /* Show the dropdown content on hover */
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .header {
-            background-color: #4CAF50;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .header h1,
-        .header h2 {
-            margin: 0;
-            color: white;
         }
 
         form {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #f1f1f1;
+            background-color: #ffffff;
             border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
         label {
             display: block;
             margin: 10px 0;
+            color: #333;
         }
 
         input,
         textarea {
             width: 100%;
-            padding: 6px;
+            padding: 12px;
             margin-bottom: 20px;
             box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            color: #333;
+            outline: none;
         }
 
-        table {
+        textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            color: #333;
+            outline: none;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .form-group label {
+            float: left;
+            width: 25%;
+            text-align: right;
+            margin-right: 2.5%;
+            padding-top: 10px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            float: left;
+            width: 70%;
+            margin-left: 2.5%;
+        }
+
+        .form-group::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .my-table {
             width: 100%;
             border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            display: block;
         }
 
-        th,
-        td {
-            padding: 8px;
+        .my-table th,
+        .my-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
 
-        hr {
-            border: none;
-            height: 1px;
-            background-color: #ddd;
-            margin: 40px 0;
+        .my-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .my-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .my-table tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        .my-table th:first-child,
+        .my-table td:first-child {
+            border-left: none;
+        }
+
+        .my-table th:last-child,
+        .my-table td:last-child {
+            border-right: none;
+        }
+
+        .my-table th,
+        .my-table td:last-child {
+            text-align: right;
         }
     </style>
 
     <script>
 
-        function leave1() {
-            document.getElementById("main").innerHTML =
-                `
-            
-            <form>
-
-                <h3> Personal Leave </h3>
-
-		<label>Name of the Scholar:</label>
-		<input type="text" name="name" id="Name" readonly required>
-		<br>
+        //     function leave1() {
+        //         document.getElementById("main").innerHTML =
+        //             `
 
 
+        // `
+        //     }
+
+        function leave1(){
+            document.getElementById("main_form").style.display='block';
+            document.getElementById("my-table-id").style.display='none';
+        }
 
 
-		<label>Registration/Roll Number:</label>
-		<input type="text" name="regno" id="RollNo" readonly required>
-		<br>
+        function history() {
+            document.getElementById("main_form").style.display='none';
+            document.getElementById("my-table-id").style.display='block';
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <div class="header">
+        <h1>Leave Application</h1>
+        <h2>Welcome, <%= studentinfo.name %>
+        </h2>
+    </div>
+    <!-- Navigation bar -->
+    <div class="navbar">
+        <a onclick=history()> Past applications </a>
+        <a onclick=leave1()> Casual/Vacation Leave Application </a>
+        <!-- <a  onclick=leave2()>Other Leave</a> -->
+        <a href="/logout"> Logout </a>
+
+    </div>
+
+    <hr>
+    <!-- Leave history table -->
+    <div id="main">
+
+    </div>
+
+
+    <form id="main_form">
+
+        <label>Name of the Scholar:</label>
+        <input type="text" name="name" id="Name" readonly required>
+        <br>
 
 
 
-		<label>Department:</label>
-		<input type="text" name="dept" id = "Department" readonly required>
-		<br>
 
-		<label>Program (MTech/MS/PhD):</label>
-		<input type="text" name="program" id= "Program" readonly required>
-		<br>
+        <label>Registration/Roll Number:</label>
+        <input type="text" name="regno" id="RollNo" readonly required>
+        <br>
 
 
-    <label>Number of Leaves Left:</label>
-		<input type="text" name="program" id= "noOfLeavesLeft" readonly>
-		<br>
 
-    <!-- <script> document.getElementById("noOfLeavesLeft").value =  google.script.run.getleavesByRollNumber(); </script>
+        <label>Department:</label>
+        <input type="text" name="dept" id="Department" readonly required>
+        <br>
+
+        <label>Program (MTech/MS/PhD):</label>
+        <input type="text" name="program" id="Program" readonly required>
+        <br>
+
+
+        <label>Number of Leaves Left:</label>
+        <input type="text" name="program" id="noOfLeavesLeft" readonly>
+        <br>
+
+        <!-- <script> document.getElementById("noOfLeavesLeft").value =  google.script.run.getleavesByRollNumber(); </script>
     -->
 
 
 
 
-    <label>Type of Leave:</label>
-    <input type="text" name="leave-type" id="typeOfLeave" required>
-    <br>
+        <label>Type of Leave:</label>
+        <input type="text" name="leave-type" id="typeOfLeave" required>
+        <br>
 
-    <label>Purpose of Leave:</label>
-    <textarea name="leave-purpose" id="leavePurpose" required></textarea>
-    <br>
+        <label>Purpose of Leave:</label>
+        <textarea name="leave-purpose" id="leavePurpose" required></textarea>
+        <br>
 
-    <!-- <input type="number" min="1" max="10" name="leave-days" id="noOfDays" required> Day(s), From -->
+        <!-- <input type="number" min="1" max="10" name="leave-days" id="noOfDays" required> Day(s), From -->
 
-    <label>Leave applied for:</label>
-    <input type="number" name="leave-days" id="noOfDays" required min="0" max="" onkeydown="return false" />
-
-
+        <label>Leave applied for:</label>
+        <input type="number" name="leave-days" id="noOfDays" required min="0" max="" onkeydown="return false" />
 
 
-    <input type="date" name="leave-from-date" id="from" required> To
-    <input type="date" name="leave-to-date" id="to" required>
-    <br>
 
-    <label>Arrangement of HTRA/HTTA duties during the period of leave:</label>
-    <table>
-        <tr>
-            <th>Nature of HTTA/ HTRA duty</th>
-            <th>Name and Registration/Roll Number of the alternate scholar handling the duties</th>
-            <th>Signature of the alternate scholar(s)*</th>
-        </tr>
-        <tr>
-            <td><input type="text" name="duty-nature" id="dutyNature"></td>
-            <td><input type="text" name="alternate-scholar-name" id="alternateScholarName"></td>
-            <td><input type="text" name="alternate-scholar-signature" id="alternateScholarSignature"></td>
-        </tr>
-    </table>
-    <p>* To be signed only if the alternate person(s) agree to carry out the duties of the scholar applying for leave.
-    </p>
 
-    <!-- <label>Date:</label>
+        <input type="date" name="leave-from-date" id="from" onchange=calculateDays() required> To
+        <input type="date" name="leave-to-date" id="to" onchange=calculateDays() required>
+        <br>
+
+        <label>Arrangement of HTRA/HTTA duties during the period of leave:</label>
+        <table>
+            <tr>
+                <th>Nature of HTTA/ HTRA duty</th>
+                <th>Name and Registration/Roll Number of the alternate scholar handling the duties</th>
+                <th>Signature of the alternate scholar(s)*</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="duty-nature" id="dutyNature"></td>
+                <td><input type="text" name="alternate-scholar-name" id="alternateScholarName"></td>
+                <td><input type="text" name="alternate-scholar-signature" id="alternateScholarSignature"></td>
+            </tr>
+        </table>
+        <p>* To be signed only if the alternate person(s) agree to carry out the duties of the scholar applying for
+            leave.
+        </p>
+
+        <!-- <label>Date:</label>
 		<input type="date" name="application-date" id="applicationDate" required>
-		<br> -->
+	<br> -->
 
-    <label>Date:</label>
-    <input type="date" name="application-date" id="applicationDate" readonly>
+        <label>Date:</label>
+        <input type="date" name="application-date" id="applicationDate" readonly>
 
 
-    <label>Signature of Applicant:</label>
-    <input type="text" name="applicant-signature" id="applicantSignature" required>
-    <br>
-    <br>
-    <input type="button" value="Apply For Leave" class="btn btn-primary" onclick="Apply()" />
-    <span id="display"></span>
-    </div>
-    <!-- <label>Recommendation of the Guide/Project Mentor:</label> -->
+        <label>Signature of Applicant:</label>
+        <input type="text" name="applicant-signature" id="applicantSignature" required>
+        <br>
+        <br>
+        <input type="button" value="Apply For Leave" class="btn btn-primary" onclick="Apply()" />
+        <span id="display"></span>
+        </div>
+        <!-- <label>Recommendation of the Guide/Project Mentor:</label> -->
 
     </form>
 
-    `
-        }
 
 
-        function history() {
-            document.getElementById('main').innerHTML =
-                `
-    <table>
+
+    <table class="my-table" id="my-table-id">
         <thead>
             <tr>
                 <th>Leave Type</th>
@@ -347,129 +346,26 @@
         </tbody>
     </table>
 
-    `
-        }
-
-    
-        function leave2() {
-            document.getElementById("main").innerHTML =
-                `
-            <form>
-                <h3> Other Leave </h3>
-		<label>Name of the Scholar:</label>
-		<input type="text" name="name" id="Name" readonly required>
-		<br>
 
 
 
 
-		<label>Registration/Roll Number:</label>
-		<input type="text" name="regno" id="RollNo" readonly required>
-		<br>
+    <script>
 
+        function calculateDays() {
+            // Get the start and end dates
+            const startDate = new Date(document.getElementById("from").value);
+            const endDate = new Date(document.getElementById("to").value);
 
+            // Calculate the number of days between the dates
+            const numDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
-		<label>Department:</label>
-		<input type="text" name="dept" id = "Department" readonly required>
-		<br>
-
-		<label>Program (MTech/MS/PhD):</label>
-		<input type="text" name="program" id= "Program" readonly required>
-		<br>
-
-
-    <label>Number of Leaves Left:</label>
-		<input type="text" name="program" id= "noOfLeavesLeft" readonly>
-		<br>
-
-    <!-- <script> document.getElementById("noOfLeavesLeft").value =  google.script.run.getleavesByRollNumber(); </script>
-    -->
-
-
-
-
-    <label>Type of Leave:</label>
-    <input type="text" name="leave-type" id="typeOfLeave" required>
-    <br>
-
-    <label>Purpose of Leave:</label>
-    <textarea name="leave-purpose" id="leavePurpose" required></textarea>
-    <br>
-
-    <!-- <input type="number" min="1" max="10" name="leave-days" id="noOfDays" required> Day(s), From -->
-
-    <label>Leave applied for:</label>
-    <input type="number" name="leave-days" id="noOfDays" required min="0" max="" onkeydown="return false" />
-
-
-
-
-    <input type="date" name="leave-from-date" id="from" required> To
-    <input type="date" name="leave-to-date" id="to" required>
-    <br>
-
-    <label>Arrangement of HTRA/HTTA duties during the period of leave:</label>
-    <table>
-        <tr>
-            <th>Nature of HTTA/ HTRA duty</th>
-            <th>Name and Registration/Roll Number of the alternate scholar handling the duties</th>
-            <th>Signature of the alternate scholar(s)*</th>
-        </tr>
-        <tr>
-            <td><input type="text" name="duty-nature" id="dutyNature"></td>
-            <td><input type="text" name="alternate-scholar-name" id="alternateScholarName"></td>
-            <td><input type="text" name="alternate-scholar-signature" id="alternateScholarSignature"></td>
-        </tr>
-    </table>
-    <p>* To be signed only if the alternate person(s) agree to carry out the duties of the scholar applying for leave.
-    </p>
-
-    <!-- <label>Date:</label>
-		<input type="date" name="application-date" id="applicationDate" required>
-		<br> -->
-
-    <label>Date:</label>
-    <input type="date" name="application-date" id="applicationDate" readonly>
-
-
-    <label>Signature of Applicant:</label>
-    <input type="text" name="applicant-signature" id="applicantSignature" required>
-    <br>
-    <br>
-    <input type="button" value="Apply For Leave" class="btn btn-primary" onclick="Apply()" />
-    <span id="display"></span>
-    </div>
-    <!-- <label>Recommendation of the Guide/Project Mentor:</label> -->
-
-    </form>
-
-    `
+            // Set the value of the "Number of Days" input field
+            document.getElementById("noOfDays").value = numDays;
         }
 
     </script>
 
-</head>
-
-<body>
-    <div class="header">
-        <h1>Leave Application</h1>
-        <h2>Welcome, <%= locals.name %>
-        </h2>
-    </div>
-    <!-- Navigation bar -->
-    <div class="navbar">
-        <a  onclick=history()> Past applications </a>
-        <a  onclick=leave1()>Personal Leave</a>
-        <a  onclick=leave2()>Other Leave</a>
-        <button>Logout</button>
-    </div>
-
-    <hr>
-
-    <!-- Leave history table -->
-    <div id="main">
-
-    </div>
 
 </body>
 

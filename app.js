@@ -99,6 +99,10 @@ app.get("/logout", (req, res) => {
 });
 
 
+const studentRoute = require('./routes/student');
+app.use("/student",studentRoute);
+
+
 app.listen(5000, () => {
     console.log("server working")
 })

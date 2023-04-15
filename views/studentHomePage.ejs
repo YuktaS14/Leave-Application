@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Leave Application</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css?family=[Montserrat](poe://www.poe.com/_api/key_phrase?phrase=Montserrat&prompt=Tell%20me%20more%20about%20Montserrat.)|Open+Sans&display=swap"
+        rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_top">
+    <style>
+        body {
+            font-family: '[Open Sans](poe://www.poe.com/_api/key_phrase?phrase=Open%20Sans&prompt=Tell%20me%20more%20about%20Open%20Sans.)', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #4CAF50;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header h1,
+        .header h2 {
+            margin: 0;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #ddd;
+            margin: 40px 0;
+        }
+
+        /* Style the navigation bar */
+        .navbar {
+            background-color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Style the navigation links */
+        .navbar a {
+            color: #fff;
+            margin-left: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        /* Style the navigation links on hover */
+        .navbar a:hover {
+            color: #ddd;
+        }
+
+        /* Style the logout button */
+        .navbar button {
+            background-color: #fff;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Style the logout button on hover */
+        .navbar button:hover {
+            background-color: #ddd;
+        }
+
+        /* Style the dropdown menu */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Style the dropdown button */
+        .dropdown button {
+            /* background-color: #4CAF50; */
+            /* color: white; */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Style the dropdown button on hover */
+        .dropdown button:hover {
+            background-color: #3e8e41;
+        }
+
+        /* Style the dropdown content */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        /* Style the dropdown links */
+        .dropdown-content a {
+            color: #050101;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+            width: 20rem;
+        }
+
+        /* Style the dropdown links on hover */
+        /* .dropdown-content a:hover {
+		background-color: #ddd;
+	} */
+
+        /* Show the dropdown content on hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Leave Application</h1>
+        <h2>Welcome, <%= locals.name %>
+        </h2>
+    </div>
+    <!-- Navigation bar -->
+    <div class="navbar">
+        <a href="#">Contact Us</a>
+        <a href="#">Vacation Leave</a>
+        <a href="#">Sick Leave</a>
+        <a href="#">Personal Leave</a>
+        <a href="#">Maternity Leave</a>
+        <a href="#">Paternity Leave</a>
+        <button>Logout</button>
+    </div>
+
+    <hr>
+
+    <!-- Leave history table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Vacation Leave</td>
+                <td>2022-08-01</td>
+                <td>2022-08-10</td>
+                <td>Family vacation</td>
+                <td>Approved</td>
+            </tr>
+            <tr>
+                <td>Personal Leave</td>
+                <td>2022-05-12</td>
+                <td>2022-05-14</td>
+                <td>Attending friend's wedding</td>
+                <td>Rejected</td>
+            </tr>
+            <tr>
+                <td>Sick Leave</td>
+                <td>2022-02-22</td>
+                <td>2022-02-25</td>
+                <td>Flu</td>
+                <td>Pending</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

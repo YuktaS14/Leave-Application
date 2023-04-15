@@ -14,6 +14,14 @@ router.get("/",(req,res)=>{
 });
 });
 
+router.get("/addStudent",(req,res)=>{
+    res.render("../views/AddStudent.ejs");
+});
+
+router.post("/addStudent",(req,res)=>{
+    console.log(req.body);
+});
+
 
 // router.post("/",(req,res)=>{
 //     consolr.log(req);

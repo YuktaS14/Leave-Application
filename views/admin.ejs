@@ -35,6 +35,18 @@
       
       /* padding: 0px 10px; */
     }
+    .formMain{
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      text-align: center;
+      display: block inline;
+      font-size: 20px;
+      border: 1rem;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    
     
 	</style>
 </head>
@@ -43,10 +55,26 @@
         <h1>Welcome to the Admin Page</h1>
         <!-- <div class="btn-group btn-group-toggle btn-group-justified" data-togle="buttons"> -->
            <div class ="row">
-            <button type = "button" class="col-sm-2 btn btn-primary btn-lg options" onclick="showContent('button1')">View Applications</button>
-            <button type = "button" class="col-sm-2 btn btn-primary btn-lg options" onclick="showContent('button2')">Update Data</button>
-            <button type = "button" class="col-sm-2 btn btn-primary btn-lg options" onclick="showContent('button3')">Update TA-Instructors</button>
-            <button type = "button" class="col-sm-2 btn btn-primary btn-lg options" onclick="showContent('button4')">Add Holidays</button>
+            <button type = "button" class="col-sm-3 btn btn-primary btn-lg options" onclick="showContent('button1')">View Applications</button>
+            <!-- <button type = "" class="col-sm-3 btn btn-primary btn-lg options" onclick="showContent('button2')">Update Data</button> -->
+            <!-- <button type = "button" class="col-sm-2 btn btn-primary btn-lg options" onclick="showContent('button3')">Update TA-Instructors</button> -->
+            <div class="dropdown">
+              <button class=" btn btn-primary btn-lg options dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Update Data
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/admin/addStudent" >Add StudentData</a>
+                <a class="dropdown-item" href="#" >Delete StudentData</a>
+                <a class="dropdown-item" href="#" >Change FA</a>
+                <a class="dropdown-item" href="#" >Change Project Mentor</a>
+                <a class="dropdown-item" href="#" >Add TA</a>
+                <a class="dropdown-item" href="#" >Delete TA</a>          
+                <a class="dropdown-item" href="#" >Change Instructor</a>
+                <a class="dropdown-item" href="#" >Delete Faculty</a>
+                <a class="dropdown-item" href="#"></a>
+              </div>
+            </div>
+            <button type = "button" class="col-sm-3 btn btn-primary btn-lg options" onclick="showContent('button3')">Add Holidays</button>
             <button type = "button" class="col-sm-1 btn btn-primary btn-lg options" onclick="logout()">Logout</button>
         </div>
 
@@ -73,7 +101,9 @@
                 <th>Nature Of Duty</th>
                 <th>Alternate Student Roll No</th>
                 <th>Alternate Student Name</th>
-                <th>Approve</th>
+                <th>FA's Approval</th>
+                <th>Project Mentor's Approval</th>
+                <th>Final Approval</th>
                 </tr></thead>
                 <% 
                 if(data.length>0){
@@ -93,7 +123,10 @@
                   <td><%= record.natureofduty %></td>
                   <td><%= record.alternatestudrolno %></td>
                   <td><%= record.alternatestudname %></td>
-                  <td><input type="checkbox" name = 'approve'>approve</td>                      
+                  <td><%= record.alternatestudname %></td>
+                  <td><%= record.fa_approval %></td>  
+                  <td><%= record.mentor_approval %></td>
+                  <td><input type="checkbox" name = 'approve'>Approve</td>                      
                   </tr>
               <%
               });}
@@ -110,27 +143,62 @@
 
 
         <div class="content" id="button2-content">
-            <!-- Content for button 2 -->
-            
+          <!-- Content for button 2 -->
+          
 
         </div>
         <div class="content" id="button3-content">
-            <h2>Hello3</h2>
-
+            <!-- <h2>Hello3</h2> -->
+            <div class="formMain">
+            <form>
+            <div class="form-group row">
+              <label class=" col-sm-2 col-form-label">Holiday </label>    
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="event" style="font-size: 15px;"">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for=" date-input" class="col-sm-2 col-form-label">Date </label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="date-input" placeholder="DD/MM/YYYY" style="font-size: 15px;">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for=" inputDay" class="col-sm-2">Day </label>
+              <select id="day" class="form-control col-sm-8 " style="font-size: 15px;">
+                <option selected>Choose Day</option>
+                <option>Sunday</option>
+                <option>Monday</option>
+                <option>Tueday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+              </select>
+            </div>
+            <div class="form-group row">
+              <label for="inputType" class="col-sm-2">Type</label>
+              <select id="typeOfHoliday" class="form-control col-sm-8" style="font-size: 15px;">
+                <option selected>Choose</option>
+                <option>Gazetted</option>
+                <option>Restricted</option>
+              </select>
+            </div>
+          </form>
+        </div>
             <!-- Content for button 3 -->
         </div>
-        <div class="content" id="button4-content">
+        <!-- <div class="content" id="button4-content">
             <h2>Hello4</h2>
-        
+         -->
         <!-- Content for button 4 -->
-        </div>
+        <!-- </div> -->
     </div>
 
 	<script>
     var lastClick = null;
     // var isNone = null;
 		function showContent(buttonId) {
-			// Hide all content divs
       const selectedContenthiv = document.getElementById(buttonId + '-content');
       var content = selectedContenthiv.style.display;
 
@@ -139,7 +207,6 @@
 				contenthivs[i].style.display = 'none';
 			}
 
-			// Show the content for the selected button      
       if(lastClick == buttonId  && content == 'block'){
           selectedContenthiv.style.display = 'none';}
       else
@@ -148,9 +215,17 @@
 		}
 
 		function logout() {
-			/* // Add your logout logic here, e.g. redirect to the login page */
 			window.location.href = '/logout';
 		}
+
+
+    function performAction(actionId){
+      if(actionid == '1')
+      {
+
+      }
+    }
+
 	</script>
 </body>
 </html>

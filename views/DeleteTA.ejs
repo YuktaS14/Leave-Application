@@ -58,30 +58,18 @@ input[type=text], select {
   </style>
   <body>
   
-  <h3 style="text-align: center;">Delete Student From the Database</h3>
+  <h3 style="text-align: center;">Delete TA from the Database</h3>
   <div class="alert alert-success">
   <%
   if(message.length > 0){
   %>
   <%= message %> <%}%> </div>
   <div>
-    <form action="/admin/addStudent" method = "post">
+    <form action="/admin/deleteTA" method = "post">
       <label for="rollNo">Roll No* :</label>
       <input type="text" id="rollNo" name="RollNo" required placeholder="Roll No..">
   
-      <label for="name">Name* :</label>
-      <input type="text" id="lname" name="name" required  placeholder="Name..">
-  
-      <label for="leaves">Leaves Alloted* :</label>
-      <input type="text" id="lname" name="leavesAlloted" required  placeholder="Leaves Alloted..">
-  
-      <label for="fa">Faculty Advisor's Name* :</label>
-      <input type="text" id="lname" name="FA" required  placeholder="FA..">
-  
-      <label for="pm">Project Mentor's Name* :</label>
-      <input type="text" id="lname" name="PM"  required placeholder="PM..">
-  
-      <input type="submit" value="Add Student">
+      <input type="submit" value="Delete Student">
     </form>
   </div>
   

@@ -10,6 +10,26 @@
         rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base target="_top">
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
     <style>
         .header {
             background-color: #4CAF50;
@@ -129,17 +149,18 @@
         }
 
         .my-table {
-            width: 100%;
+            width: 80%;
             border-collapse: collapse;
             font-family: Arial, sans-serif;
             display: block;
+            /* margin-left: 20rem; */
+            text-align: center;
         }
 
         .my-table th,
         .my-table td {
             border: 1px solid #ccc;
             padding: 10px;
-            text-align: left;
         }
 
         .my-table th {
@@ -155,15 +176,15 @@
             background-color: #e0e0e0;
         }
 
-        .my-table th:first-child,
-        .my-table td:first-child {
-            border-left: none;
-        }
+        /* .my-table th:first-child, */
+        /* .my-table td:first-child { */
+            /* border-left: none; */
+        /* } */
 
-        .my-table th:last-child,
-        .my-table td:last-child {
-            border-right: none;
-        }
+        /* .my-table th:last-child, */
+        /* .my-table td:last-child { */
+            /* border-right: none; */
+        /* } */
 
         .my-table th,
         .my-table td:last-child {
@@ -265,12 +286,12 @@
 
             <option value="" disabled selected> select appropriate option </option>
 
-            <option value="1"> Leave with stipend not exceeding 30 days </option>
-            <option value="2"> for attending conferences/seminars </option>
-            <option value="3"> Women Fellows with less than two surviving children </option>
-            <option value="4"> Second maternity leave applications </option>
-            <option value="5"> Male Fellows of institute HTRA / CSIR </option>
-            <option value="6"> Other </option>
+            <option value="Leave with stipend not exceeding 30 days"> Leave with stipend not exceeding 30 days </option>
+            <option value="for attending conferences/seminars"> for attending conferences/seminars </option>
+            <option value="Women Fellows with less than two surviving children"> Women Fellows with less than two surviving children </option>
+            <option value="Second maternity leave applications"> Second maternity leave applications </option>
+            <option value="Male Fellows of institute HTRA / CSIR"> Male Fellows of institute HTRA / CSIR </option>
+            <option value="Other"> Other </option>
 
         </select>
 
@@ -366,7 +387,7 @@
 
 
 
-    <table class="my-table" id="my-table-id">
+    <table class="table table-bordered table-responsive" id="my-table-id">
 
         <% if( leaveapplications.length==0 ) { %>
 
@@ -376,13 +397,15 @@
 
                 <!-- <h3>  <%- leaveapplications.length %> previous record found </h3> -->
 
-                <thead>
-                    <tr>
+                <thead class="thead-dark">
+                    <tr >
                         <th>Leave Type</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Reason</th>
-                        <th>Status</th>
+                        <th>admin status</th>
+                        <th>mentor status</th>
+                        <th>mentor status</th>
                     </tr>
                 </thead>
 
@@ -395,7 +418,9 @@
                             <td> <%- record.fromdate.toISOString().slice(0, 10); %> </td>
                             <td> <%- record.todate.toISOString().slice(0, 10); %> </td>
                             <td> <%- record.leavepurpose %> </td>
-                            <td> <%- record.admin_status %> </td>
+                            <td> <%- record.admin_approval %> </td>
+                            <td> <%- record.fa_approval %> </td>
+                            <td> <%- record.mentor_approval %> </td>
 
                         </tr>
                         <!-- <tr>
@@ -447,7 +472,9 @@
         async function calculateDays() {
             // Get the start and end dates
             const startDate = new Date(document.getElementById("from").value);
+            startDate.setHours(0,0,0,0);
             const endDate = new Date(document.getElementById("to").value);
+            endDate.setHours(0,0,0,0);
 
             if ((!endDate) || (!startDate)) {
                 return;
@@ -464,7 +491,7 @@
 
             }
 
-            counter = 0
+            var counter = 0
             var lst = []
 
             '<% for (let i = 0; i < holidays.length; i++) { %>'
@@ -473,6 +500,11 @@
             '<% } %>'
 
             lst.forEach((y) => {
+
+                // console.log(startDate)
+                // console.log(y)
+                // console.log(endDate)
+
                 if ((startDate <= y) && (y <= endDate)) {
                     counter = counter + 1;
                 }
@@ -482,11 +514,23 @@
             //     console.log(r.date)
             // } )
 
+            console.log(counter)
+
             // Calculate the number of days between the dates
             const numDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
             // Set the value of the "Number of Days" input field
-            document.getElementById("noOfDays").value = numDays - countWeekendDays(startDate, endDate) + 1 - counter;
+            const numdays = numDays - countWeekendDays(startDate, endDate) + 1 - counter;
+
+            const allow = document.getElementById('noOfLeavesLeft').value
+
+            if( numdays >= allow ) {
+                alert(`You can apply for max ${allow} days`);
+                document.getElementById("to").value = ""
+                return;
+            }
+
+            document.getElementById("noOfDays").value = numdays;
         }
 
         function handleleavetype() {
@@ -494,19 +538,19 @@
             const val = document.getElementById("typeOfLeave").value;
             var inputbox = document.getElementById("typeOfLeaveReason");
             var text = "None"
-            if (val == 1) {
+            if (val == "Leave with stipend not exceeding 30 days") {
                 text = `Leave with stipend not exceeding 30 days for each completed year of tenure may be allowed. Sanction of leave without stipend may be considered under special circumstances. If the Fellow is away from the Institute for more than a period of 7 days, then all the holidays that come within that period will be counted as leave.`
             }
-            else if (val == 2) {
+            else if (val == "for attending conferences/seminars") {
                 text = `The Fellow should take permission for visits abroad for attending conferences/seminars etc. The absence for such foreign visits will be treated as on duty.`
             }
-            else if (val == 3) {
+            else if (val == "Women Fellows with less than two surviving children") {
                 text = `Women Fellows with less than two surviving children are entitled to full stipend plus HRA, during the period of absence up to 180 days on grounds of maternity once in the entire duration of PhD. The Fellowship amount for leave period will be paid after the fellow resumes duty and submits a medical certificate in support of actual confinement. It is expected that the Fellow will make up for the research work during the remaining tenure.`
             }
-            else if (val == 4) {
+            else if (val == "Second maternity leave applications") {
                 text = `Second maternity leave applications from the women research scholars shall be considered as under “other valid reasons” for grant of leave. Accordingly, the second maternity leave, if granted, shall be without any fellowship. The total duration of the fellowship should be five years from the date of joining and any extension provided beyond five years shall be without fellowship.`
             }
-            else if (val == 5) {
+            else if (val == "Male Fellows of institute HTRA / CSIR") {
                 text = `Male Fellows of institute HTRA / CSIR are entitled for 15 days paternity leave during the confinement of his wife on submission of relevant documentary proof. The leave shall be taken at a single stretch, without a break and can be availed only once during the period of fellowship.`
             }
             else {

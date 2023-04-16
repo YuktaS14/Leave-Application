@@ -32,8 +32,8 @@ router.post("/", async (req, res,next) => {
                 INSERT INTO leaveapplications
                 VALUES 
                 ( 
-                    ${rollno},'${nameofscholar}','${department}','${program}',${leavesleft},'${typeofleave}','${leavepurpose}',${daysapplied},
-                    '${fromdate}', '${todate}', '${natureofduty}',${alternatestudrolno},'${alternatestudname}'
+                    ${rollno},'${nameofscholar}','${department}','${program}',${leavesleft},'${leavepurpose}',${daysapplied},
+                    '${fromdate}', '${todate}', '${natureofduty}',${alternatestudrolno},'${alternatestudname}','Pending','Pending','Pending','${typeofleave}'
                 );
                 `
                 ,

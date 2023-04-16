@@ -1,18 +1,22 @@
-const express = require("express")
-const session = require("express-session")
-const passport = require("passport")
+const express = require("express");
+const session = require("express-session");
+const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const ejs = require("ejs")
-const path = require("path")
-require("dotenv").config()
+const ejs = require("ejs");
+const path = require("path");
+require("dotenv").config();
 const { dbConnect } = require("./data/database");
-const adminrouter = require("./routes/admin")
+const adminrouter = require("./routes/admin");
+const bodyParser = require("body-parser");
+const flash = require("connect-flash");
 
 const app = express();
 
 app.set("view engine", "ejs");
 
-app.use("/admin",adminrouter);
+app.use(flash());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
 app.use(session({
     secret: "key", // can be anything
     resave: false,
@@ -20,6 +24,9 @@ app.use(session({
     // local server has http, if we have https we can set it to true
     cookie: { secure: false, maxAge : 10000000 },
 }));
+
+app.use("/admin",adminrouter);
+
 
 app.use(passport.initialize())
 // first we need to create express session then only we can use this session

@@ -58,30 +58,32 @@ input[type=text], select {
   </style>
   <body>
   
-  <h3 style="text-align: center;">Delete Student From the Database</h3>
+  <h3 style="text-align: center;">Update Project Mentor</h3>
   <div class="alert alert-success">
   <%
   if(message.length > 0){
+    var msg = message
+    console.log(msg[0])
   %>
   <%= message %> <%}%> </div>
   <div>
-    <form action="/admin/addStudent" method = "post">
-      <label for="rollNo">Roll No* :</label>
-      <input type="text" id="rollNo" name="RollNo" required placeholder="Roll No..">
+    <form action="/admin/updatePM" method = "post">
+      <label for="rollNo">For Student With Roll No* :</label>
+      <input type="text" id="rollNo" name="RollNo" required placeholder="Student Roll No..">
   
-      <label for="name">Name* :</label>
-      <input type="text" id="lname" name="name" required  placeholder="Name..">
+      <label for="name">New Project Mentor's Name* :</label>
+      <input type="text" id="name" name="PMnew" required  placeholder="Project Manager's Name..">
   
-      <label for="leaves">Leaves Alloted* :</label>
-      <input type="text" id="lname" name="leavesAlloted" required  placeholder="Leaves Alloted..">
+      <!-- <label for="leaves">Leaves Alloted* :</label>
+      <input type="text" id="lname" name="leavesAlloted" required  placeholder="Leaves Alloted.."> -->
   
-      <label for="fa">Faculty Advisor's Name* :</label>
+      <!-- <label for="fa">Faculty Advisor's Name* :</label>
       <input type="text" id="lname" name="FA" required  placeholder="FA..">
-  
-      <label for="pm">Project Mentor's Name* :</label>
+   -->
+      <!-- <label for="pm">Project Mentor's Name* :</label>
       <input type="text" id="lname" name="PM"  required placeholder="PM..">
-  
-      <input type="submit" value="Add Student">
+   -->
+      <input type="submit" value="Update Project Mentor">
     </form>
   </div>
   

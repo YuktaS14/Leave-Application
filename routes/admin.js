@@ -14,9 +14,28 @@ router.get("/",(req,res)=>{
 });
 });
 
-//why is req empty here :.. 
+
 router.post("/", async (req,res) =>{
-    console.log(req.body)
+    var event =  req.body.event;
+    var date =  req.body.date;
+    var day = req.body.day;
+    var type =  req.body.type;
+    var addHoliday = `
+    INSERT INTO holidays (holiday,date,day,type)
+    VALUES ('${event}','${date}','${day}','${type}')
+    `;
+    dbConnect.query(addHoliday,(err,result)=>{
+        if(err) throw err;
+        else{
+        console.log(req.body);
+
+        res.status(200).send('Added Holiday');
+        res.end();   
+        //   res.redirect("/admin")
+
+        }
+        })
+
 });
 
 router.get("/addStudent",(req,res)=>{
@@ -178,24 +197,73 @@ router.post("/deleteFaculty",(req,res)=>{
     })
 });
 
-router.get("/updateFaculty",(req,res)=>{
-    res.render("../views/ChangeFA.ejs",{message: req.flash('updateFaculty')});
+router.get("/updateFA",(req,res)=>{
+    res.render("../views/ChangeFa.ejs",{message: req.flash('updateFA')});
     
 });
 
-router.post("/deleteFaculty",(req,res)=>{
-    var email =  req.body.email;
-    var deleteFaculty = 
-    `
-    DELETE FROM faculty where email = '${email}'
+router.post("/updateFA",(req,res)=>{
+    var rollNo =  req.body.RollNo;
+    var FAnew = req.body.FAnew
+    var updateFA = `
+    UPDATE studentFaculty SET facultyadvisor = '${FAnew}' where rollNo = ${rollNo} 
     `;
 
-    dbConnect.query(deleteFaculty,(err,result)=>{
+    dbConnect.query(updateFA,(err,result)=>{
     if(err) throw err;
     else{
     
-        req.flash('updateFaculty','Deleted faculty from the database successfully!! ');
-        res.redirect("/admin/deleteFaculty")
+        req.flash('updateFA','Updated Faculty Advisor successfully!! ');
+        res.redirect("/admin/updateFA")
+    }
+    console.log(req.body);
+    })
+});
+
+
+router.get("/updatePM",(req,res)=>{
+    res.render("../views/ChangeProjectMentor.ejs",{message: req.flash('updatePM')});
+    
+});
+
+router.post("/updatePM",(req,res)=>{
+    var rollNo =  req.body.RollNo;
+    var PMnew = req.body.PMnew;
+    var updatePM = `
+    UPDATE studentFaculty SET projectmentor = '${PMnew}' where rollNo = ${rollNo} 
+    `;
+
+    dbConnect.query(updatePM,(err,result)=>{
+    if(err) throw err;
+    else{
+    
+        req.flash('updatePM','Updated Project Mentor successfully!! ');
+        res.redirect("/admin/updatePM")
+    }
+    console.log(req.body);
+    })
+});
+
+
+
+router.get("/updateInstructor",(req,res)=>{
+    res.render("../views/ChangeInstructor.ejs",{message: req.flash('updateInstructor')});
+    
+});
+
+router.post("/updateInstructor",(req,res)=>{
+    var rollNo =  req.body.RollNo;
+    var instructor= req.body.Instructor;
+    var updateInstructor = `
+    UPDATE tainstructor SET instructorname = '${instructor}' where rollNo = ${rollNo} 
+    `;
+
+    dbConnect.query(updateInstructor,(err,result)=>{
+    if(err) throw err;
+    else{
+    
+        req.flash('updateInstructor','Updated Instructor successfully!! ');
+        res.redirect("/admin/updateInstructor")
     }
     console.log(req.body);
     })

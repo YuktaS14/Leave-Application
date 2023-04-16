@@ -66,11 +66,11 @@
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="/admin/addStudent" >Add StudentData</a>
                 <a class="dropdown-item" href="/admin/deleteStudent" >Delete StudentData</a>
-                <a class="dropdown-item" href="/admin/changeFA" >Change FA</a>
-                <a class="dropdown-item" href="/admin/changeProjectMentor" >Change Project Mentor</a>
+                <a class="dropdown-item" href="/admin/updateFA" >Change FA</a>
+                <a class="dropdown-item" href="/admin/updatePM" >Change Project Mentor</a>
                 <a class="dropdown-item" href="/admin/addTA" >Add TA</a>
                 <a class="dropdown-item" href="/admin/deleteTA" >Delete TA</a>          
-                <a class="dropdown-item" href="/admin/changeInstructor" >Change Instructor</a>
+                <a class="dropdown-item" href="/admin/Instructor" >Change Instructor</a>
                 <a class="dropdown-item" href="/admin/addFaculty" >Add Faculty</a>
                 <a class="dropdown-item" href="/admin/deleteFaculty" >Delete Faculty</a>
                 <a class="dropdown-item" href="#"></a>
@@ -150,24 +150,23 @@
 
         </div>
         <div class="content" id="button3-content">
-            <!-- <h2>Hello3</h2> -->
             <div class="formMain">
             <form id = "holidays" method="post" action="/admin">
-            <div class="form-group row">
+             <div class="form-group row">
               <label class=" col-sm-2 col-form-label">Holiday </label>    
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="event" style="font-size: 15px;" required>
+              <div class="col-sm-8"> 
+                <input type="text" class="form-control" id="event" name = "event" style="font-size: 15px;" required>
               </div>
             </div>
             <div class="form-group row">
               <label for=" date-input" class="col-sm-2 col-form-label">Date </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="date-input" placeholder="DD/MM/YYYY" style="font-size: 15px;" required>
+                <input type="text" class="form-control" id="date-input"  name = "date" placeholder="DD/MM/YYYY" style="font-size: 15px;" required>
               </div>
             </div>
             <div class="form-group row">
               <label for=" inputDay" class="col-sm-2">Day </label>
-              <select id="day" class="form-control col-sm-8 " style="font-size: 15px;height:fit-content">
+              <select id="day" class="form-control col-sm-8 " name ="day" style="font-size: 15px;height:fit-content">
                 <option selected>Choose Day</option>
                 <option>Sunday</option>
                 <option>Monday</option>
@@ -180,7 +179,7 @@
             </div>
             <div class="form-group row">
               <label for="inputType" class="col-sm-2">Type</label>
-              <select id="typeOfHoliday" class="form-control col-sm-8" style="font-size: 15px;">
+              <select id="typeOfHoliday" class="form-control col-sm-8" name = "type" style="font-size: 15px;">
                 <option selected>Choose</option>
                 <option>Gazetted</option>
                 <option>Restricted</option>
@@ -188,7 +187,7 @@
             </div>
 
             <div class="form-group row" style="align-items: center; ">
-            <input type = "submit" class="col-sm-3 " id="submitBtn" style=" color:white; background-color: blue; border-radius: 4px; width: 100px; align-items: center; margin-left: 36%; " value= "Add Holiday"/>           
+            <input type = "submit" class="col-sm-3 " id="submitBtn" style=" color:white; background-color: blue; border-radius: 4px; width: 100px; align-items: center; margin-left: 36%; " onclick="added()" value= "Add Holiday"/>           
             </div>
             <p id = "onAdd" style="font-size: 12px; color: green; text-align: center; padding: 2px;"></p>
 
@@ -196,11 +195,6 @@
         </div>
             <!-- Content for button 3 -->
         </div>
-        <!-- <div class="content" id="button4-content">
-            <h2>Hello4</h2>
-         -->
-        <!-- Content for button 4 -->
-        <!-- </div> -->
     </div>
 
 	<script>
@@ -243,13 +237,13 @@
     //   }
     // });
 
-    // function added(){
-    //   document.getElementById("onAdd").innerHTML = "Added Successfully!! ";
-    //   setTimeout(()=>{
-    //     document.getElementById("onAdd").innerHTML = '';
+    function added(){
+      document.getElementById("onAdd").innerHTML = "Added Successfully!! ";
+      setTimeout(()=>{
+        document.getElementById("onAdd").innerHTML = '';
 
-    //   },2000);
-    // }
+      },2000);
+    }
 
 	</script>
 </body>

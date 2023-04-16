@@ -441,10 +441,14 @@
         }
 
 
-        function calculateDays() {
+        async function calculateDays() {
             // Get the start and end dates
             const startDate = new Date(document.getElementById("from").value);
             const endDate = new Date(document.getElementById("to").value);
+
+            if ((!endDate) || (!startDate)) {
+                return;
+            }
 
             if (startDate && endDate) {
 
@@ -457,11 +461,19 @@
 
             }
 
-            let counter = 0
+            counter = 0
+            var lst = []
 
-            var dates = `<%- holidays %>`
+            '<% for (let i = 0; i < holidays.length; i++) { %>'
+            var holidaydate = await new Date('<%= holidays[i].date %>')
+            lst.push(holidaydate)
+            '<% } %>'
 
-            console.log(dates[1].date)
+            lst.forEach((y) => {
+                if ((startDate <= y) && (y <= endDate)) {
+                    counter = counter + 1;
+                }
+            })
 
             // dates.forEach( (r) =>{
             //     console.log(r.date)
@@ -471,7 +483,7 @@
             const numDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
             // Set the value of the "Number of Days" input field
-            document.getElementById("noOfDays").value = numDays - countWeekendDays(startDate, endDate) + 1;
+            document.getElementById("noOfDays").value = numDays - countWeekendDays(startDate, endDate) + 1 - counter;
         }
 
         function handleleavetype() {
@@ -505,6 +517,7 @@
         }
 
     </script>
+
 
 
 </body>

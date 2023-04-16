@@ -92,7 +92,7 @@ router.get("/", async (req, res, next) => {
 
     // console.log(temp.studentInfo);
 
-    console.log(temp)
+    // console.log(temp)
 
     res.render("studentHomePage.ejs", temp)
 });

@@ -22,7 +22,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     // local server has http, if we have https we can set it to true
-    cookie: { secure: false, maxAge : 10000000 },
+    cookie: { secure: false, maxAge : 1000000000 },
 }));
 
 app.use("/admin",adminrouter);
@@ -110,6 +110,9 @@ app.get("/logout", (req, res) => {
 
 const studentRoute = require('./routes/student');
 app.use("/student",studentRoute);
+
+const submittRoute = require('./routes/submit');
+app.use("/submit",submittRoute);
 
 
 app.listen(5000, () => {

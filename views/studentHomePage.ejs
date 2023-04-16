@@ -174,7 +174,8 @@
             background-color: white;
             border: 1px solid #ccc;
             padding: 0.5em;
-            cursor: pointer;
+            cursor: auto;
+            width: 30%;
         }
 
         input[type="date"]:focus {
@@ -222,7 +223,7 @@
     </div>
 
 
-    <form id="main_form">
+    <form id="main_form" method="post" action="/submit">
 
         <label> Name of the Scholar: </label>
         <input type="text" name="name" id="Name" readonly required value=" <%- locals.studentInfo[0].name %>  ">
@@ -247,7 +248,7 @@
 
 
         <label>Number of Leaves Left:</label>
-        <input type="text" name="program" id="noOfLeavesLeft" readonly
+        <input type="text" name="noOfLeavesLeft" id="noOfLeavesLeft" readonly
             value=" <%- locals.studentInfo[0].leavesleft %>  ">
         <br>
 
@@ -290,7 +291,7 @@
         <!-- <input type="number" min="1" max="10" name="leave-days" id="noOfDays" required> Day(s), From -->
 
         <label for="from"> Start date </label>
-        <input type="date" name="leave-from-date" id="from" onchange=calculateDays() required>
+        <input type="date" name="leave-from-date" id="from" onchange=calculateDays() required >
 
 
         <label for="from"> End date </label>
@@ -319,13 +320,13 @@
         </table> -->
 
         <label>Nature of HTTA/ HTRA duty</label>
-        <input type="text" name="leave-days" id="noOfDays" />
+        <input type="text" name="duty-nature" id="duty-nature"" />
 
         <label> Roll Number of the alternate scholar handling the duties</label>
-        <input type="number" name="leave-days" id="noOfDays" />
+        <input type="number" name="alternate-scholar-rollno" id="alternate-scholar-rollno" />
 
         <label> Name of the alternate scholar handling the duties</label>
-        <input type="text" name="leave-days" id="noOfDays" />
+        <input type="text" name="alternate-scholar-name" id="alternate-scholar-name" />
 
 
         <p> <i>* only if the alternate person(s) agree to carry out the duties of the scholar applying for
@@ -358,6 +359,7 @@
         <span id="display"></span>
         </div>
         <!-- <label>Recommendation of the Guide/Project Mentor:</label> -->
+          <hr>
 
     </form>
 
@@ -418,6 +420,7 @@
                 <% } %>
 
     </table>
+
 
 
 

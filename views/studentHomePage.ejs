@@ -23,7 +23,7 @@
             color: white;
         }
 
-        #main_form{
+        #main_form {
             display: none;
         }
 
@@ -57,7 +57,7 @@
 
         textarea {
             resize: vertical;
-            height: 150px;
+            height: 130px;
         }
 
         select {
@@ -169,6 +169,18 @@
         .my-table td:last-child {
             text-align: right;
         }
+
+        input[type="date"] {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 0.5em;
+            cursor: pointer;
+        }
+
+        input[type="date"]:focus {
+            outline: none;
+            box-shadow: 0 0 5px #99c;
+        }
     </style>
 
     <script>
@@ -181,15 +193,15 @@
         // `
         //     }
 
-        function leave1(){
-            document.getElementById("main_form").style.display='block';
-            document.getElementById("my-table-id").style.display='none';
+        function leave1() {
+            document.getElementById("main_form").style.display = 'block';
+            document.getElementById("my-table-id").style.display = 'none';
         }
 
 
         function history() {
-            document.getElementById("main_form").style.display='none';
-            document.getElementById("my-table-id").style.display='block';
+            document.getElementById("main_form").style.display = 'none';
+            document.getElementById("my-table-id").style.display = 'block';
         }
 
     </script>
@@ -199,7 +211,7 @@
 <body>
     <div class="header">
         <h1>Leave Application</h1>
-        <h2>Welcome, <%= studentinfo.name %>
+        <h2>Welcome, <%- locals.studentInfo[0].name %>
         </h2>
     </div>
     <!-- Navigation bar -->
@@ -220,60 +232,88 @@
 
     <form id="main_form">
 
-        <label>Name of the Scholar:</label>
-        <input type="text" name="name" id="Name" readonly required>
+        <label> Name of the Scholar: </label>
+        <input type="text" name="name" id="Name" readonly required value=" <%- locals.studentInfo[0].name %>  ">
         <br>
 
 
 
 
         <label>Registration/Roll Number:</label>
-        <input type="text" name="regno" id="RollNo" readonly required>
+        <input type="text" name="regno" id="RollNo" readonly required value=" <%- locals.studentInfo[0].rollno %>  ">
         <br>
 
 
 
         <label>Department:</label>
-        <input type="text" name="dept" id="Department" readonly required>
+        <input type="text" name="dept" id="Department" readonly required value=" <%- locals.parseInfo.department %>  ">
         <br>
 
         <label>Program (MTech/MS/PhD):</label>
-        <input type="text" name="program" id="Program" readonly required>
+        <input type="text" name="program" id="Program" readonly required value=" <%- locals.parseInfo.batch %>  ">
         <br>
 
 
         <label>Number of Leaves Left:</label>
-        <input type="text" name="program" id="noOfLeavesLeft" readonly>
+        <input type="text" name="program" id="noOfLeavesLeft" readonly
+            value=" <%- locals.studentInfo[0].leavesleft %>  ">
         <br>
 
-        <!-- <script> document.getElementById("noOfLeavesLeft").value =  google.script.run.getleavesByRollNumber(); </script>
-    -->
 
+        <!-- <label>Type of Leave:</label> -->
+        <!-- <input type="text" name="leave-type" id="typeOfLeave" required> -->
+        <!-- <button type="drop" name="leave-type" id="typeOfLeave" required>  -->
 
+        <hr>
 
+        <label for="typeOfLeave"> Type of leave </label>
 
-        <label>Type of Leave:</label>
-        <input type="text" name="leave-type" id="typeOfLeave" required>
-        <br>
+        <select name="leave-type" id="typeOfLeave" required onchange=handleleavetype()>
+
+            <option value="" disabled selected> select appropriate option </option>
+
+            <option value="1"> Leave with stipend not exceeding 30 days </option>
+            <option value="2"> for attending conferences/seminars </option>
+            <option value="3"> Women Fellows with less than two surviving children </option>
+            <option value="4"> Second maternity leave applications </option>
+            <option value="5"> Male Fellows of institute HTRA / CSIR </option>
+            <option value="6"> Other </option>
+
+        </select>
+
+        <p type="text" id="typeOfLeaveReason" style="display:none" readonly> </p>
+
+        <hr>
+
+        <!-- <hr> -->
+
+        <!-- <br> -->
 
         <label>Purpose of Leave:</label>
         <textarea name="leave-purpose" id="leavePurpose" required></textarea>
-        <br>
+        <!-- <br> -->
+
+
 
         <!-- <input type="number" min="1" max="10" name="leave-days" id="noOfDays" required> Day(s), From -->
 
-        <label>Leave applied for:</label>
-        <input type="number" name="leave-days" id="noOfDays" required min="0" max="" onkeydown="return false" />
+        <label for="from"> Start date </label>
+        <input type="date" name="leave-from-date" id="from" onchange=calculateDays() required>
 
 
-
-
-        <input type="date" name="leave-from-date" id="from" onchange=calculateDays() required> To
+        <label for="from"> End date </label>
         <input type="date" name="leave-to-date" id="to" onchange=calculateDays() required>
+
         <br>
 
-        <label>Arrangement of HTRA/HTTA duties during the period of leave:</label>
-        <table>
+        <label>Leave applied for:</label>
+        <input type="number" name="leave-days" id="noOfDays" readonly />
+
+        <hr>
+
+        <label> <b> Arrangement of HTRA/HTTA duties during the period of leave </b></label>
+        <br>
+        <!-- <table>
             <tr>
                 <th>Nature of HTTA/ HTRA duty</th>
                 <th>Name and Registration/Roll Number of the alternate scholar handling the duties</th>
@@ -284,24 +324,45 @@
                 <td><input type="text" name="alternate-scholar-name" id="alternateScholarName"></td>
                 <td><input type="text" name="alternate-scholar-signature" id="alternateScholarSignature"></td>
             </tr>
-        </table>
-        <p>* To be signed only if the alternate person(s) agree to carry out the duties of the scholar applying for
-            leave.
+        </table> -->
+
+        <label>Nature of HTTA/ HTRA duty</label>
+        <input type="text" name="leave-days" id="noOfDays" />
+
+        <label> Roll Number of the alternate scholar handling the duties</label>
+        <input type="number" name="leave-days" id="noOfDays" />
+
+        <label> Name of the alternate scholar handling the duties</label>
+        <input type="text" name="leave-days" id="noOfDays" />
+
+
+        <p> <i>* only if the alternate person(s) agree to carry out the duties of the scholar applying for
+                leave. </i>
         </p>
 
         <!-- <label>Date:</label>
 		<input type="date" name="application-date" id="applicationDate" required>
 	<br> -->
 
+        <hr>
+
         <label>Date:</label>
         <input type="date" name="application-date" id="applicationDate" readonly>
 
+        <script>
+            var currentDate = new Date().toISOString().slice(0, 10);
+            document.getElementById("applicationDate").value = currentDate;
+            document.getElementById("from").setAttribute("min", currentDate);
+            document.getElementById("to").setAttribute("min", currentDate);
+        </script>
 
-        <label>Signature of Applicant:</label>
-        <input type="text" name="applicant-signature" id="applicantSignature" required>
+
+        <label for="applicantSignature">Signature of Applicant:</label>
+        <input type="checkbox" name="applicant-signature" id="applicantSignature" required>
         <br>
         <br>
-        <input type="button" value="Apply For Leave" class="btn btn-primary" onclick="Apply()" />
+
+        <input type="submit" value="Apply For Leave" class="btn btn-primary" onclick="Apply()" />
         <span id="display"></span>
         </div>
         <!-- <label>Recommendation of the Guide/Project Mentor:</label> -->
@@ -312,24 +373,38 @@
 
 
     <table class="my-table" id="my-table-id">
-        <thead>
-            <tr>
-                <th>Leave Type</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Reason</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Vacation Leave</td>
-                <td>2022-08-01</td>
-                <td>2022-08-10</td>
-                <td>Family vacation</td>
-                <td>Approved</td>
-            </tr>
-            <tr>
+
+        <% if( leaveapplications.length==0 ) { %>
+
+            <h3> No previous record to show </h3>
+
+            <% } else { %>
+
+                <!-- <h3>  <%- leaveapplications.length %> previous record found </h3> -->
+
+                <thead>
+                    <tr>
+                        <th>Leave Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <% leaveapplications.forEach((record)=> { %>
+
+                        <tr>
+                            <td> <%- record.typeofleave %> </td>
+                            <td> <%- record.fromdate.toISOString().slice(0, 10); %> </td>
+                            <td> <%- record.todate.toISOString().slice(0, 10); %> </td>
+                            <td> <%- record.leavepurpose %> </td>
+                            <td> <%- record.admin_status %> </td>
+
+                        </tr>
+                        <!-- <tr>
                 <td>Personal Leave</td>
                 <td>2022-05-12</td>
                 <td>2022-05-14</td>
@@ -342,8 +417,14 @@
                 <td>2022-02-25</td>
                 <td>Flu</td>
                 <td>Pending</td>
-            </tr>
-        </tbody>
+            </tr> -->
+
+                        <% } ); %>
+
+                </tbody>
+
+                <% } %>
+
     </table>
 
 
@@ -352,16 +433,73 @@
 
     <script>
 
+        function countWeekendDays(startDate, endDate) {
+            let count = 0;
+            let currentDate = new Date(startDate);
+
+            while (currentDate <= endDate) {
+                const dayOfWeek = currentDate.getDay();
+                if (dayOfWeek === 0 || dayOfWeek === 6) {
+                    count++;
+                }
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+
+            return count;
+        }
+
+
         function calculateDays() {
             // Get the start and end dates
             const startDate = new Date(document.getElementById("from").value);
             const endDate = new Date(document.getElementById("to").value);
 
+            if (startDate && endDate) {
+
+                if (endDate < startDate) {
+                    alert("check start and end dates")
+                    document.getElementById("from").value = "";
+                    document.getElementById("to").value = "";
+                    return;
+                }
+
+            }
+
             // Calculate the number of days between the dates
             const numDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
 
             // Set the value of the "Number of Days" input field
-            document.getElementById("noOfDays").value = numDays;
+            document.getElementById("noOfDays").value = numDays - countWeekendDays(startDate, endDate) + 1;
+        }
+
+        function handleleavetype() {
+
+            const val = document.getElementById("typeOfLeave").value;
+            var inputbox = document.getElementById("typeOfLeaveReason");
+            var text = "None"
+            if (val == 1) {
+                text = `Leave with stipend not exceeding 30 days for each completed year of tenure may be allowed. Sanction of leave without stipend may be considered under special circumstances. If the Fellow is away from the Institute for more than a period of 7 days, then all the holidays that come within that period will be counted as leave.`
+            }
+            else if (val == 2) {
+                text = `The Fellow should take permission for visits abroad for attending conferences/seminars etc. The absence for such foreign visits will be treated as on duty.`
+            }
+            else if (val == 3) {
+                text = `Women Fellows with less than two surviving children are entitled to full stipend plus HRA, during the period of absence up to 180 days on grounds of maternity once in the entire duration of PhD. The Fellowship amount for leave period will be paid after the fellow resumes duty and submits a medical certificate in support of actual confinement. It is expected that the Fellow will make up for the research work during the remaining tenure.`
+            }
+            else if (val == 4) {
+                text = `Second maternity leave applications from the women research scholars shall be considered as under “other valid reasons” for grant of leave. Accordingly, the second maternity leave, if granted, shall be without any fellowship. The total duration of the fellowship should be five years from the date of joining and any extension provided beyond five years shall be without fellowship.`
+            }
+            else if (val == 5) {
+                text = `Male Fellows of institute HTRA / CSIR are entitled for 15 days paternity leave during the confinement of his wife on submission of relevant documentary proof. The leave shall be taken at a single stretch, without a break and can be availed only once during the period of fellowship.`
+            }
+            else {
+                inputbox.style.display = "none"
+                return;
+            }
+
+            inputbox.style.display = "block"
+            inputbox.innerHTML = text;
+
         }
 
     </script>

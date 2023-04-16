@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.get("/", async (req, res, next) => {
-    const rollno = 112001010;
+    const rollno = 112001052;
     let temp = {};
 
     try {
@@ -21,17 +21,55 @@ router.get("/", async (req, res, next) => {
             );
         });
 
-        temp.studentInfo = result.rows[0];
+        temp.studentInfo = result.rows;
 
         // res.render("studentHomePage.ejs", obj );
     } catch (err) {
         next(err);
     }
 
-    console.log(temp.studentInfo.rollno);
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT * FROM leaveapplications WHERE rollno = ${rollno}`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
 
-    
+        temp.leaveapplications = result.rows;
 
+        // res.render("studentHomePage.ejs", obj );
+    } catch (err) {
+        next(err);
+    }
+
+    function getDepartment(rollNumber) {
+
+        rollNumber = String(rollNumber)
+
+        var getDept = { '10': 'Civil', '11': 'Computer Science', '12': 'Electrical', '13': 'Mechanical' };
+
+        var getBatch = { '01': 'BTech', '02': 'MTech', '03': 'MS' }
+
+        var obj = {};
+
+        obj.department = getDept[rollNumber.substring(0, 2)]
+        obj.batch = getBatch[rollNumber.substring(4, 6)]
+
+        return obj;
+    }
+
+    temp.parseInfo = getDepartment(temp.studentInfo[0].rollno)
+
+    // console.log(temp.studentInfo);
+
+    res.render("studentHomePage.ejs", temp)
 });
 
 // router.get("/", async (req,res,next)=>{

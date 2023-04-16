@@ -185,14 +185,6 @@
 
     <script>
 
-        //     function leave1() {
-        //         document.getElementById("main").innerHTML =
-        //             `
-
-
-        // `
-        //     }
-
         function leave1() {
             document.getElementById("main_form").style.display = 'block';
             document.getElementById("my-table-id").style.display = 'none';
@@ -464,6 +456,16 @@
                 }
 
             }
+
+            let counter = 0
+
+            var dates = `<%- holidays %>`
+
+            console.log(dates[1].date)
+
+            // dates.forEach( (r) =>{
+            //     console.log(r.date)
+            // } )
 
             // Calculate the number of days between the dates
             const numDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));

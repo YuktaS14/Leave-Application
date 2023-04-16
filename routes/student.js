@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.get("/", async (req, res, next) => {
-    const rollno = 112001052;
+    const rollno = 112001010;
     let temp = {};
 
     try {
@@ -49,6 +49,29 @@ router.get("/", async (req, res, next) => {
         next(err);
     }
 
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT date FROM holidays`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        // console.table(result.rows)
+
+        temp.holidays = result.rows;
+
+        // res.render("studentHomePage.ejs", obj );
+    } catch (err) {
+        next(err);
+    }
+
     function getDepartment(rollNumber) {
 
         rollNumber = String(rollNumber)
@@ -68,6 +91,8 @@ router.get("/", async (req, res, next) => {
     temp.parseInfo = getDepartment(temp.studentInfo[0].rollno)
 
     // console.log(temp.studentInfo);
+
+    console.log(temp)
 
     res.render("studentHomePage.ejs", temp)
 });

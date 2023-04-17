@@ -115,8 +115,10 @@ const submittRoute = require('./routes/submit');
 app.use("/submit",submittRoute);
 
 const facultyRoute = require('./routes/faculty');
-app.use("/faculy",facultyRoute);
+app.use("/faculty",facultyRoute);
 
+const pmRoute = require('./routes/project_mentor');
+app.use("/pm",pmRoute);
 
 app.listen(5000, () => {
     console.log("server working")

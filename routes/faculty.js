@@ -46,6 +46,21 @@ router.get("/", async (req, res, next) => {
 })
 
 
+router.get("/:rollId",(req,res)=>{
+    // res.render("../views/approveForm.ejs")
+    const id  = req.params.rollId;
+    // console.log(req.params)
+    var getForm = `select * from leaveApplications where rollno = ${id} and fa_approval = 'Pending'`
+    dbConnect.query(getForm,(err,result)=>{
+    if(err) throw err;
+    else{
+        console.log(result.rows[0])
+        res.render('../views/facultyapproval.ejs',{data : result.rows[0]})
+    }
+});
+});
+
+
 module.exports = router;
 
 

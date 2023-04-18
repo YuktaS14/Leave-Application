@@ -150,7 +150,15 @@
                             <td>
                                 <%= record.mentor_approval %>
                             </td>
-                            <td><input type="checkbox" name='approve'>Approve</td>
+                            
+                            <td>
+                                
+                                <form method = 'get' action = /pm/<%=record.rollno%> >
+                                    <input type="submit" value="Open Form" style="font-family: Arial, sans-serif; font-size: 16px;" >
+                                </form> 
+
+                            </td>
+
                         </tr>
                         <% });} else{ %>
                             <tr>

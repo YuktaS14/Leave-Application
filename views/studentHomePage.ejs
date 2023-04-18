@@ -12,24 +12,38 @@
     <base target="_top">
 
     <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"> </script>
+
+
+
+
+
     <style>
         .header {
             background-color: #4CAF50;
@@ -178,12 +192,12 @@
 
         /* .my-table th:first-child, */
         /* .my-table td:first-child { */
-            /* border-left: none; */
+        /* border-left: none; */
         /* } */
 
         /* .my-table th:last-child, */
         /* .my-table td:last-child { */
-            /* border-right: none; */
+        /* border-right: none; */
         /* } */
 
         .my-table th,
@@ -203,19 +217,65 @@
             outline: none;
             box-shadow: 0 0 5px #99c;
         }
+
+        #middle,
+        #left,
+        #right {
+            /* background-color: #e0e0e0; */
+            /* box-shadow: 0 0 2px #4CAF50; */
+            padding: 1rem;
+            font-weight: bolder;
+            margin-left: 2rem;
+            margin-right: auto;
+
+        }
+
+        #middle,
+        #left,
+        #right :hover {
+            cursor: pointer;
+        }
+
+        html {
+            overflow-x: hidden;
+            margin-right: calc(-1 * (100vw - 100%));
+        }
+
+        #my-table-id {
+            /* border: #45a049;
+            border-width: 10px;
+            border: solid; */
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
     </style>
 
     <script>
 
         function leave1() {
+            if (document.getElementById("main_form").style.display == 'block') {
+                document.getElementById("main_form").style.display = 'none';
+                document.getElementById("middle").style.boxShadow = '0 0 0px'
+                return
+            }
             document.getElementById("main_form").style.display = 'block';
             document.getElementById("my-table-id").style.display = 'none';
+            document.getElementById("middle").style.boxShadow = '0 0 1px';
+            document.getElementById("left").style.boxShadow = '0 0 0px';
         }
 
 
         function history() {
+            if (document.getElementById("my-table-id").style.display == 'block') {
+                document.getElementById("my-table-id").style.display = 'none';
+                document.getElementById("left").style.boxShadow = '0 0 0px';
+                return
+            }
             document.getElementById("main_form").style.display = 'none';
             document.getElementById("my-table-id").style.display = 'block';
+            document.getElementById("left").style.boxShadow = '0 0 1px';
+            document.getElementById("middle").style.boxShadow = '0 0 0px';
         }
 
     </script>
@@ -229,105 +289,157 @@
         </h2>
     </div>
     <!-- Navigation bar -->
-    <div class="navbar">
-        <a onclick=history()> Past applications </a>
-        <a onclick=leave1()> Casual/Vacation Leave Application </a>
-        <!-- <a  onclick=leave2()>Other Leave</a> -->
-        <a href="/logout"> Logout </a>
 
-    </div>
+    <!-- Just an image -->
+    <!-- 
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Page 1</a></li>
+            <li><a href="#">Page 2</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          </ul>
+        </div>
+      </nav> -->
 
-    <hr>
-    <!-- Leave history table -->
-    <div id="main">
-
-    </div>
-
-
-    <form id="main_form" method="post" action="/submit">
-
-        <label> Name of the Scholar: </label>
-        <input type="text" name="name" id="Name" readonly required value=" <%- locals.studentInfo[0].name %>  ">
-        <br>
-
-
-
-
-        <label>Registration/Roll Number:</label>
-        <input type="text" name="regno" id="RollNo" readonly required value=" <%- locals.studentInfo[0].rollno %>  ">
-        <br>
-
-
-
-        <label>Department:</label>
-        <input type="text" name="dept" id="Department" readonly required value=" <%- locals.parseInfo.department %>  ">
-        <br>
-
-        <label>Program (MTech/MS/PhD):</label>
-        <input type="text" name="program" id="Program" readonly required value=" <%- locals.parseInfo.batch %>  ">
-        <br>
-
-
-        <label>Number of Leaves Left:</label>
-        <input type="text" name="noOfLeavesLeft" id="noOfLeavesLeft" readonly
-            value=" <%- locals.studentInfo[0].leavesleft %>  ">
-        <br>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#colNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="colNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" id="left" onclick=history()> Past applications </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="middle" onclick=leave1()> Casual/Vacation Leave Application </a>
+                </li>
+                <li class="nav-item">
+                    <a id="right" class="nav-link" href="/logout"> Logout </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
 
-        <!-- <label>Type of Leave:</label> -->
-        <!-- <input type="text" name="leave-type" id="typeOfLeave" required> -->
-        <!-- <button type="drop" name="leave-type" id="typeOfLeave" required>  -->
 
-        <hr>
+    <div class="container">
 
-        <label for="typeOfLeave"> Type of leave </label>
+        <!-- 
+        <nav class="navbar navbar-light bg-light">
 
-        <select name="leave-type" id="typeOfLeave" required onchange=handleleavetype()>
+            <div class="navbar">
+                <a id="left" onclick=history()> Past applications </a>
+                <a id="middle" onclick=leave1()> Casual/Vacation Leave Application </a>
+                <a  onclick=leave2()>Other Leave</a>
+                <a id="right" href="/logout"> Logout </a>
 
-            <option value="" disabled selected> select appropriate option </option>
+            </div>
 
-            <option value="Leave with stipend not exceeding 30 days"> Leave with stipend not exceeding 30 days </option>
-            <option value="for attending conferences/seminars"> for attending conferences/seminars </option>
-            <option value="Women Fellows with less than two surviving children"> Women Fellows with less than two surviving children </option>
-            <option value="Second maternity leave applications"> Second maternity leave applications </option>
-            <option value="Male Fellows of institute HTRA / CSIR"> Male Fellows of institute HTRA / CSIR </option>
-            <option value="Other"> Other </option>
-
-        </select>
-
-        <p type="text" id="typeOfLeaveReason" style="display:none" readonly> </p>
-
-        <hr>
+        </nav> -->
 
         <!-- <hr> -->
+        <!-- Leave history table -->
+        <div id="main">
 
-        <!-- <br> -->
-
-        <label>Purpose of Leave:</label>
-        <textarea name="leave-purpose" id="leavePurpose" required></textarea>
-        <!-- <br> -->
+        </div>
 
 
+        <form id="main_form" method="post" action="/submit">
 
-        <!-- <input type="number" min="1" max="10" name="leave-days" id="noOfDays" required> Day(s), From -->
+            <label> Name of the Scholar: </label>
+            <input type="text" name="name" id="Name" readonly required value=" <%- locals.studentInfo[0].name %>  ">
+            <br>
 
-        <label for="from"> Start date </label>
-        <input type="date" name="leave-from-date" id="from" onchange=calculateDays() required >
 
 
-        <label for="from"> End date </label>
-        <input type="date" name="leave-to-date" id="to" onchange=calculateDays() required>
 
-        <br>
+            <label>Registration/Roll Number:</label>
+            <input type="text" name="regno" id="RollNo" readonly required
+                value=" <%- locals.studentInfo[0].rollno %>  ">
+            <br>
 
-        <label>Leave applied for:</label>
-        <input type="number" name="leave-days" id="noOfDays" readonly />
 
-        <hr>
 
-        <label> <b> Arrangement of HTRA/HTTA duties during the period of leave </b></label>
-        <br>
-        <!-- <table>
+            <label>Department:</label>
+            <input type="text" name="dept" id="Department" readonly required
+                value=" <%- locals.parseInfo.department %>  ">
+            <br>
+
+            <label>Program (MTech/MS/PhD):</label>
+            <input type="text" name="program" id="Program" readonly required value=" <%- locals.parseInfo.batch %>  ">
+            <br>
+
+
+            <label>Number of Leaves Left:</label>
+            <input type="text" name="noOfLeavesLeft" id="noOfLeavesLeft" readonly
+                value=" <%- locals.studentInfo[0].leavesleft %>  ">
+            <br>
+
+
+            <!-- <label>Type of Leave:</label> -->
+            <!-- <input type="text" name="leave-type" id="typeOfLeave" required> -->
+            <!-- <button type="drop" name="leave-type" id="typeOfLeave" required>  -->
+
+            <hr>
+
+            <label for="typeOfLeave"> Type of leave </label>
+
+            <select name="leave-type" id="typeOfLeave" required onchange=handleleavetype()>
+
+                <option value="" disabled selected> select appropriate option </option>
+
+                <option value="Leave with stipend not exceeding 30 days"> Leave with stipend not exceeding 30 days
+                </option>
+                <option value="for attending conferences/seminars"> for attending conferences/seminars </option>
+                <option value="Women Fellows with less than two surviving children"> Women Fellows with less than two
+                    surviving children </option>
+                <option value="Second maternity leave applications"> Second maternity leave applications </option>
+                <option value="Male Fellows of institute HTRA / CSIR"> Male Fellows of institute HTRA / CSIR </option>
+                <option value="Other"> Other </option>
+
+            </select>
+
+            <p type="text" id="typeOfLeaveReason" style="display:none" readonly> </p>
+
+            <hr>
+
+            <!-- <hr> -->
+
+            <!-- <br> -->
+
+            <label>Purpose of Leave:</label>
+            <textarea name="leave-purpose" id="leavePurpose" required></textarea>
+            <!-- <br> -->
+
+
+
+            <!-- <input type="number" min="1" max="10" name="leave-days" id="noOfDays" required> Day(s), From -->
+
+            <label for="from"> Start date </label>
+            <input type="date" name="leave-from-date" id="from" onchange=calculateDays() required>
+
+
+            <label for="from"> End date </label>
+            <input type="date" name="leave-to-date" id="to" onchange=calculateDays() required>
+
+            <br>
+
+            <label>Leave applied for:</label>
+            <input type="number" name="leave-days" id="noOfDays" readonly />
+
+            <hr>
+
+            <label> <b> Arrangement of HTRA/HTTA duties during the period of leave </b></label>
+            <br>
+            <!-- <table>
             <tr>
                 <th>Nature of HTTA/ HTRA duty</th>
                 <th>Name and Registration/Roll Number of the alternate scholar handling the duties</th>
@@ -340,90 +452,123 @@
             </tr>
         </table> -->
 
-        <label>Nature of HTTA/ HTRA duty</label>
-        <input type="text" name="duty-nature" id="duty-nature"" />
+            <label>Nature of HTTA/ HTRA duty</label>
+            <input type="text" name="duty-nature" id="duty-nature"" />
 
         <label> Roll Number of the alternate scholar handling the duties</label>
-        <input type="number" name="alternate-scholar-rollno" id="alternate-scholar-rollno" />
+        <input type=" number" name="alternate-scholar-rollno" id="alternate-scholar-rollno" />
 
-        <label> Name of the alternate scholar handling the duties</label>
-        <input type="text" name="alternate-scholar-name" id="alternate-scholar-name" />
+            <label> Name of the alternate scholar handling the duties</label>
+            <input type="text" name="alternate-scholar-name" id="alternate-scholar-name" />
 
 
-        <p> <i>* only if the alternate person(s) agree to carry out the duties of the scholar applying for
-                leave. </i>
-        </p>
+            <p> <i>* only if the alternate person(s) agree to carry out the duties of the scholar applying for
+                    leave. </i>
+            </p>
 
-        <!-- <label>Date:</label>
+            <!-- <label>Date:</label>
 		<input type="date" name="application-date" id="applicationDate" required>
 	<br> -->
 
-        <hr>
+            <hr>
 
-        <label>Date:</label>
-        <input type="date" name="application-date" id="applicationDate" readonly>
+            <label>Date:</label>
+            <input type="date" name="application-date" id="applicationDate" readonly>
 
-        <script>
-            var currentDate = new Date().toISOString().slice(0, 10);
-            document.getElementById("applicationDate").value = currentDate;
-            document.getElementById("from").setAttribute("min", currentDate);
-            document.getElementById("to").setAttribute("min", currentDate);
-        </script>
+            <script>
+                var currentDate = new Date().toISOString().slice(0, 10);
+                document.getElementById("applicationDate").value = currentDate;
+                document.getElementById("from").setAttribute("min", currentDate);
+                document.getElementById("to").setAttribute("min", currentDate);
+            </script>
 
 
-        <label for="applicantSignature">Signature of Applicant:</label>
-        <input type="checkbox" name="applicant-signature" id="applicantSignature" required>
-        <br>
-        <br>
+            <label for="applicantSignature">Signature of Applicant:</label>
+            <input type="checkbox" name="applicant-signature" id="applicantSignature" required>
+            <br>
+            <br>
 
-        <input type="submit" value="Apply For Leave" class="btn btn-primary" onclick="Apply()" />
-        <span id="display"></span>
-        </div>
-        <!-- <label>Recommendation of the Guide/Project Mentor:</label> -->
-          <hr>
+            <input type="submit" value="Apply For Leave" class="btn btn-primary" onclick="Apply()" />
+            <span id="display"></span>
+    </div>
+    <!-- <label>Recommendation of the Guide/Project Mentor:</label> -->
+    <hr>
 
     </form>
 
+    <!-- <div class = "table-responsive">
+        <table class = "table">
+           <thead>
+              <tr>
+                 <th>Subject</th>
+                 <th>Marks</th>
+                 <th>Student</th>
+              </tr>
+           </thead>
+        <tbody>
+           <tr class = "success">
+              <td>Programming</td>
+              <td>90</td>
+              <td>Amit</td>
+           </tr>
+           <tr class = "active">
+              <td>Web Dev</td>
+              <td>92</td>
+              <td>Yuvraj</td>
+           </tr>
+           <tr class = "warning">
+              <td>Science</td>
+              <td>95</td>
+              <td>Sachin</td>
+           </tr>
+           <tr class = "danger">
+              <td>Economics</td>
+              <td>80</td>
+              <td>Tony</td>
+           </tr>
+        </tbody>
+     </table> -->
 
 
+    <div class="table-responsive" id="my-table-id">
 
-    <table class="table table-bordered table-responsive" id="my-table-id">
+        <table class=" table table-bordered">
 
-        <% if( leaveapplications.length==0 ) { %>
+            <% if( leaveapplications.length==0 ) { %>
 
-            <h3> No previous record to show </h3>
+                <h3> No previous record to show </h3>
 
-            <% } else { %>
+                <% } else { %>
 
-                <!-- <h3>  <%- leaveapplications.length %> previous record found </h3> -->
+                    <!-- <h3>  <%- leaveapplications.length %> previous record found </h3> -->
 
-                <thead class="thead-dark">
-                    <tr >
-                        <th>Leave Type</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Reason</th>
-                        <th>admin status</th>
-                        <th>mentor status</th>
-                        <th>mentor status</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <% leaveapplications.forEach((record)=> { %>
-
+                    <thead class="thead-dark">
                         <tr>
-                            <td> <%- record.typeofleave %> </td>
-                            <td> <%- record.fromdate.toISOString().slice(0, 10); %> </td>
-                            <td> <%- record.todate.toISOString().slice(0, 10); %> </td>
-                            <td> <%- record.leavepurpose %> </td>
-                            <td> <%- record.admin_approval %> </td>
-                            <td> <%- record.fa_approval %> </td>
-                            <td> <%- record.mentor_approval %> </td>
-
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>admin status</th>
+                            <th>faculty advisor status</th>
+                            <th>project mentor status</th>
+                            <th>Leave Type</th>
+                            <th>Reason</th>
                         </tr>
-                        <!-- <tr>
+                    </thead>
+
+                    <tbody>
+
+                        <% leaveapplications.forEach((record)=> { %>
+
+                            <tr>
+                                <td> <%- record.fromdate.toISOString().slice(0, 10); %> </td>
+                                <td> <%- record.todate.toISOString().slice(0, 10); %> </td>
+                                <td> <%- record.admin_approval %> </td>
+                                <td> <%- record.fa_approval %> </td>
+                                <td> <%- record.mentor_approval %> </td>
+                                <td> <%- record.typeofleave %> </td>
+                                <td> <%- record.leavepurpose %> </td>
+
+                            </tr>
+                            <!-- <tr>
                 <td>Personal Leave</td>
                 <td>2022-05-12</td>
                 <td>2022-05-14</td>
@@ -438,16 +583,16 @@
                 <td>Pending</td>
             </tr> -->
 
-                        <% } ); %>
+                            <% } ); %>
 
-                </tbody>
+                    </tbody>
 
-                <% } %>
+                    <% } %>
 
-    </table>
+        </table>
 
 
-
+    </div>
 
 
 
@@ -472,9 +617,9 @@
         async function calculateDays() {
             // Get the start and end dates
             const startDate = new Date(document.getElementById("from").value);
-            startDate.setHours(0,0,0,0);
+            startDate.setHours(0, 0, 0, 0);
             const endDate = new Date(document.getElementById("to").value);
-            endDate.setHours(0,0,0,0);
+            endDate.setHours(0, 0, 0, 0);
 
             if ((!endDate) || (!startDate)) {
                 return;
@@ -524,7 +669,7 @@
 
             const allow = document.getElementById('noOfLeavesLeft').value
 
-            if( numdays >= allow ) {
+            if (numdays >= allow) {
                 alert(`You can apply for max ${allow} days`);
                 document.getElementById("to").value = ""
                 return;

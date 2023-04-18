@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -46,6 +48,28 @@
       font-family: 'Times New Roman', Times, serif;
     }
 
+    #applications {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#applications td, #applications th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#applications tr:nth-child(even){background-color: #f2f2f2;}
+
+#applications tr:hover {background-color: #ddd;}
+
+#applications th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
 
     
     
@@ -56,7 +80,7 @@
         <h1>Welcome to the Admin Page</h1>
         <!-- <div class="btn-group btn-group-toggle btn-group-justified" data-togle="buttons"> -->
            <div class ="row">
-            <button type = "button" class="col-sm-3 btn btn-primary btn-lg options" onclick="showContent('button1')">View Applications</button>
+            <button type = "button" class="col-sm-3 btn btn-primary btn-lg options" onclick="showContent('button1')" >View Applications</button>
             <!-- <button type = "" class="col-sm-3 btn btn-primary btn-lg options" onclick="showContent('button2')">Update Data</button> -->
             <!-- <button type = "button" class="col-sm-2 btn btn-primary btn-lg options" onclick="showContent('button3')">Update TA-Instructors</button> -->
             <div class="dropdown">
@@ -80,21 +104,24 @@
             <button type = "button" class="col-sm-1 btn btn-primary btn-lg options" onclick="logout()">Logout</button>
         </div>
 
-        <div class="content" id="button1-content">
+        <div class="content" style="display: block; "id="button1-content">
             <!-- Content for button 1 -->
 
             <h2 style="margin-left: 40%;"> 
               <%= title %>
             </h2>
             <div>
-              <table class="table table-bordered table-responsive">
+              <table id= "applications">
                 <thead class="thead-dark" >
                 <tr>
                 <th>Roll No</th>
                 <th>Name Of Scholar</th>
                 <th>Department</th>
                 <th>Program</th>
-                <th>Leaves Left</th>
+                <th>FA's Approval</th>
+                <th>Project Mentor's Approval</th>
+                <th>View Form</th>
+                <!-- <th>Leaves Left</th>
                 <th>Type of Leave</th>
                 <th>Purpose</th>
                 <th>No. of Days</th>
@@ -105,9 +132,11 @@
                 <th>Alternate Student Name</th>
                 <th>FA's Approval</th>
                 <th>Project Mentor's Approval</th>
-                <th>Final Approval</th>
+                <th>Admin Approval</th>
+                <th></th> -->
                 </tr></thead>
                 <% 
+                i = 0;
                 if(data.length>0){
                   data.forEach((record)=>{
                 %>
@@ -116,21 +145,46 @@
                   <td><%= record.nameofscholar %></td>
                   <td><%= record.department %></td>
                   <td><%= record.program %></td>
-                  <td><%= record.leavesleft %></td>
+                  <td><%= record.fa_approval%></td>
+                  <td><%= record.mentor_approval%></td>
+
+                  <!-- <td><%= record.leavesleft %></td>
                   <td><%= record.typeofleave %></td>
                   <td><%= record.leavepurpose %></td>
                   <td><%= record.daysapplied %></td>
-                  <td><%= record.fromdate.toISOString().slice(0, 10);%></td>
-                  <td><%= record.todate.toISOString().slice(0, 10); %></td>
+                  <td><%= record.fromdate.toISOString().slice(0,10);%></td>
+                  <td><%= record.todate.toISOString().slice(0,10);%></td>
                   <td><%= record.natureofduty %></td>
                   <td><%= record.alternatestudrolno %></td>
-                  <td><%= record.alternatestudname %></td>
+                  <td><%= record.alternatestudname %></td> -->
                   <!-- <td><%= record.alternatestudname %></td> -->
-                  <td><%= record.fa_approval %></td>  
+                  <!-- <td><%= record.fa_approval %></td>  
                   <td><%= record.mentor_approval %></td>
-                  <td><input type="checkbox" name = 'approve'>Approve</td>                      
+                  <td>
+                    <select name = "adminApprove" id = "ApprovalID" class="approvalStatus" >
+                      <option id = "PendingStill" selected><%= record.admin_approval %></option>
+                      <option id = "ApproveIt">Approve</option>
+                      <option id = "RejectIt">Reject</option>
+                    </select> -->
+                    <!-- <input type = "text" value = "<%= record.admin_approval %>" readonly />  -->
+                  
+                  <!-- </td> -->
+                  
+                  <td ><div>
+                <form method = 'get' action = /admin/<%=record.rollno%> >
+                  <input type="submit" value="Open Form" style="font-family: Arial, sans-serif; font-size: 16px;" >
+                </form> 
+                </div>
+     
+                  <!-- </td>
+                  <td ><div>
+                          <input type="submit" value="Email" style="font-family: Arial, sans-serif; font-size: 16px;font-weight: bold;">
+                  </div>
+                  </td> -->
+                  
+                  <!-- <td><input type="checkbox" name = 'approve'>Approve</td>                       -->
                   </tr>
-              <%
+              <% i++;
               });}
                 else{
                 %>
@@ -139,6 +193,10 @@
                 </tr>
                 <% } %>
               </table>
+            </div>
+            <div>
+              <!-- <button type="submit" value="Email"> -->
+
             </div>
         </div>
 
@@ -190,7 +248,7 @@
             <input type = "submit" class="col-sm-3 " id="submitBtn" style=" color:white; background-color: blue; border-radius: 4px; width: 100px; align-items: center; margin-left: 36%; " onclick="added()" value= "Add Holiday"/>           
             </div>
             <p id = "onAdd" style="font-size: 12px; color: green; text-align: center; padding: 2px;"></p>
-
+          </div>
           </form>
         </div>
             <!-- Content for button 3 -->
@@ -198,7 +256,7 @@
     </div>
 
 	<script>
-    var lastClick = null;
+    var lastClick = 'button1';
     // var isNone = null;
 		function showContent(buttonId) {
       const selectedContenthiv = document.getElementById(buttonId + '-content');
@@ -228,6 +286,36 @@
 
       },2000);
     }
+
+   
+    // function checkStatus(i){
+    //   try{
+    //     var v = document.getElementById(i);
+    //     console.log(v.value)
+    //     // console.log(row);
+    //     if(v.value=="Approve")
+    //     {
+    //       document.getElementsByClassName(i).innerHTML = "<h1>AAA</h1>"
+    //       // document.getElementsByClassName(i).style.display='block'
+    //       console.log(document.getElementsByClassName(i))
+    //       console.log(v.value+"a")
+          
+    //     }
+    //     else if(v.value == "Reject")
+    //     {
+    //       console.log(v+"r")
+    //     }
+    //     else
+    //     {
+    //       console.log(v+"p")
+    //     }
+    //   }
+    //   catch(error){
+    //     console.error(error)
+    //   }
+    // }
+
+ 
 
 	</script>
 </body>

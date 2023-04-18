@@ -2,10 +2,29 @@ const express = require("express")
 const router = express.Router();
 const { dbConnect } = require("../data/database");
 
+const nodemailer = require("nodemailer")
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user:process.env.USER_EMAIL,
+        pass: process.env.PASSWORD
+
+    }
+})
+transporter.verify((error,success)=>{
+    if(error){
+        console.log(error)
+    }
+    else{
+        console.log("Ready for message");
+        console.log(success)
+    }
+})
 
 router.get("/",(req,res)=>{
     // res.render("admin.ejs")
-    var viewData = 'select * from leaveApplications'
+    var viewData = `select * from leaveApplications where admin_approval = 'Pending' `
     dbConnect.query(viewData,(err,result)=>{
     if(err) throw err;
     else{
@@ -37,6 +56,9 @@ router.post("/", async (req,res) =>{
         })
 
 });
+
+
+
 
 router.get("/addStudent",(req,res)=>{
     res.render("../views/AddStudent.ejs",{message: req.flash('studentInsert')});
@@ -268,6 +290,110 @@ router.post("/updateInstructor",(req,res)=>{
     console.log(req.body);
     })
 });
+
+router.get("/:rollId",(req,res)=>{
+    // res.render("../views/approveForm.ejs")
+    const id  = req.params.rollId;
+    // console.log(req.params)
+    var getForm = `select * from leaveApplications where rollno = ${id} and admin_approval = 'Pending'`
+    dbConnect.query(getForm,(err,result)=>{
+    if(err) throw err;
+    else{
+        console.log(result.rows[0])
+        res.render('../views/approveForm.ejs',{data : result.rows[0]})
+    }
+});
+});
+
+router.post("/:rollId",(req,res)=>{
+    console.log(req.body);
+    const id  = req.body.regno;
+    const status = req.body.status;
+    const applied = req.body.leaveDays;
+    const leftleaves = req.body.noOfLeavesLeft;
+    const nameOfScholar =  req.body.name;
+    const typeOfLeave =  req.body.leaveType;
+    const startDate = req.body.leavefromdate;
+    const tillDate = req.body.leaveToDate;
+    const FA_approval = req.body.FA_approval;
+    const PM_approval =  req.body.PM_approval;
+    if(req.body.comment == '')
+    {
+     comment = "-";
+    }
+    else{
+     comment = "req.body.comment";
+    }
+
+
+    // if(status == 'Not Approved')
+    // {
+    //     var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
+    //     dbConnect.query(updateStatus,(err,result)=>{
+    //         if(err) throw err;
+    //         else{
+    //             res.redirect('/admin')
+    //         }});
+    // }
+    // else if(status == 'Approved')
+    // {
+    //     const newLeft = leftleaves-applied ;
+    //     // console.log(newLeft)
+    //     var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
+    //     var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id}`
+    //     dbConnect.query(updateStatus,(err,result)=>{
+    //     if(err) throw err;
+    //     else{
+    //         dbConnect.query(updateLeaves,(err,result2)=>{
+    //             if(err) throw err;
+    //             else{                
+    //                 res.redirect('/admin')
+                                       
+    //             }
+    //             })
+    //         }
+        
+    //     });
+
+    // }
+    if(status !== 'Pending'){
+    const mailOptions = {
+        from: process.env.USER_EMAIL,
+        to: 'salunkheyukta14@gmail.com',
+        subject: 'Leave Application',
+        text: `Your Leave has been ${status}
+            Details: 
+            Roll No: ${id}
+            Name:  ${nameOfScholar}
+            Type Of Leave: ${typeOfLeave}
+            Leave From:  ${startDate}       TO: ${tillDate} 
+            FA Approval Status: ${FA_approval}
+            Project Mentor Approval Status:  ${PM_approval}
+            Admin Approval Status:  ${status}
+            
+            Additional Comment: ${comment}
+            
+        `
+    }
+    transporter
+        .sendMail(mailOptions)
+        .then(()=>{
+            res.json({
+            status:"Success",
+            message: "Message Sent Successfully!! "})
+        })
+        .catch((error)=>{
+            console.log(error);
+            res.json({status: 'Failed',message:"An Error Occurred!! "})
+        })
+    }
+
+    res.redirect('/admin')
+
+
+// console.log(data)
+});
+
 
 // router.post("/",(req,res)=>{
 //     consolr.log(req);

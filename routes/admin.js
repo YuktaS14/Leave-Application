@@ -24,6 +24,13 @@ transporter.verify((error, success) => {
 
 router.get("/", (req, res) => {
     // res.render("admin.ejs")
+
+    // console.log('Here')
+
+    console.log(req)
+
+    // console.log('Here')
+
     var viewData = `select * from leaveApplications where admin_approval = 'Pending' `
     dbConnect.query(viewData, (err, result) => {
         if (err) throw err;
@@ -309,6 +316,7 @@ router.get("/:rollId", (req, res) => {
 
 router.post("/:rollId", async (req, res) => {
     console.log(req.body);
+
     const id = req.body.regno;
     const status = req.body.status;
     const applied = req.body.leaveDays;

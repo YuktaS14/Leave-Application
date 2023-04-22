@@ -25,19 +25,27 @@ transporter.verify((error, success) => {
 router.get("/", (req, res) => {
     // res.render("admin.ejs")
 
+    console.log('Here')
+
+    console.log(req.admin)
+
+    console.log('Here')
+
+    if( req.user == undefined ) {
+        res.redirect('/login')
+        return
+    }
+
     // console.log('Here')
 
-    console.log(req)
-
-    // console.log('Here')
-
-    var viewData = `select * from leaveApplications where admin_approval = 'Pending' `
+    var viewData = `select * from leaveApplications where admin_approval = 'Pending'`
     dbConnect.query(viewData, (err, result) => {
         if (err) throw err;
         else {
             res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
         }
     });
+
 });
 
 
@@ -63,8 +71,6 @@ router.post("/", async (req, res) => {
     })
 
 });
-
-
 
 
 router.get("/addStudent", (req, res) => {
@@ -392,7 +398,7 @@ router.post("/:rollId", async (req, res) => {
             })
     }
 
-
+    
     // console.log(data)
 });
 

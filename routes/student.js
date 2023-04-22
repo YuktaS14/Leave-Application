@@ -4,6 +4,9 @@ const router = express.Router();
 
 
 router.get("/", async (req, res, next) => {
+
+    console.log(req.user.emails)
+
     const rollno = 112001001;
     let temp = {};
 

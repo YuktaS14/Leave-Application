@@ -8,6 +8,8 @@ router.get("/", async (req, res, next) => {
 
     var facultyemail = 'johnson@smail.iitpkd.ac.in'
 
+    console.log(req.user.emails)
+
     var data = null
 
     try {

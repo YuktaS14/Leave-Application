@@ -6,7 +6,6 @@ const ejs = require("ejs");
 const path = require("path");
 require("dotenv").config();
 const { dbConnect } = require("./data/database");
-const adminrouter = require("./routes/admin");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 
@@ -18,14 +17,12 @@ app.use(flash());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-    secret: "key", // can be anything
+    secret: process.env.SESSION_SECRETE, // can be anything
     resave: false,
     saveUninitialized: false,
     // local server has http, if we have https we can set it to true
     cookie: { secure: false },
 }));
-
-app.use("/admin", adminrouter);
 
 
 app.use(passport.initialize())
@@ -59,29 +56,77 @@ passport.deserializeUser(function (obj, cb) {
 
 
 app.get('/temp', (req, res) => {
-    console.log(req)
+    console.log(req.user.emails)
 });
 
 
-app.get('/login', (req, res) => {
-    if (req.isAuthenticated()) {
-        // console.log(req.user)
-        // res.render("dashbord.ejs", {
-        //     user: req.user
-        // });
 
-        // console.log(req)
+app.get('/login', async (req, res, next) => {
 
-        if (req.user.emails[0].value == process.env.ADMIN_EMAIL) {
-            res.redirect("/admin")
-            // res.redirect("/temp")
-        } else {
-            res.redirect("/failed");
+    if (req.user == undefined) {
+        res.render("login.ejs");
+        return
+    }
+
+    let userEmail = req.user.emails[0].value;
+
+    console.log(userEmail)
+
+    if (userEmail == process.env.ADMIN_EMAIL) {
+        // req.admin = {"admin":"true"}
+        res.redirect("/admin");
+        return
+    }
+
+    // checking for faculty
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT * FROM studentfaculty WHERE faculty_email = '${userEmail}'`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        if (result.rows.length > 0) {
+            res.redirect("/faculty")
+            return
         }
 
-    } else {
-        res.render("login.ejs");
+    } catch (err) {
+        next(err);
     }
+
+    // checking for pm
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT * FROM studentfaculty WHERE projectmentor_email = '${userEmail}'`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        if (result.rows.length > 0) {
+            res.redirect("/pm")
+            return
+        }
+
+    } catch (err) {
+        next(err);
+    }
+
+    redirect("/failed")
 })
 
 
@@ -92,24 +137,6 @@ app.get("/auth/google", passport.authenticate("google", {
 ));
 
 
-// app.get("/dashboard", (req, res) => {
-//     if (req.isAuthenticated()) {
-//         // console.log(req.user.emails[0].value)
-
-//         if (req.user.emails[0].value == process.env.ADMIN_EMAIL) {
-
-//             res.redirect("/admin")
-
-//         } else {
-//             res.redirect("/failed");
-//         }
-//         // res.render("dashbord.ejs", {
-//         //     user: req.user
-//         // });
-//     } else {
-//         res.redirect("/");
-//     }
-// })
 
 // verifying again
 app.get("/auth/google/callback", passport.authenticate("google", {
@@ -118,6 +145,17 @@ app.get("/auth/google/callback", passport.authenticate("google", {
     res.redirect("/login")
 }
 );
+
+
+app.use((req, res, next) => {
+    if (req.isAuthenticated()) {
+        next();
+    }
+    else {
+        res.render("login.ejs");
+    }
+})
+
 
 app.get("/logout", (req, res) => {
     req.logout(function (err) {
@@ -143,7 +181,8 @@ app.use("/faculty", facultyRoute);
 const pmRoute = require('./routes/project_mentor');
 app.use("/pm", pmRoute);
 
-
+const adminrouter = require("./routes/admin");
+app.use("/admin", adminrouter);
 
 app.get('/failed', (req, res) => {
     res.send('Hello')
@@ -161,3 +200,24 @@ app.listen(5000, () => {
 //     }
 //     dbConnect.end();
 // });
+
+
+
+// app.get("/dashboard", (req, res) => {
+//     if (req.isAuthenticated()) {
+//         // console.log(req.user.emails[0].value)
+
+//         if (req.user.emails[0].value == process.env.ADMIN_EMAIL) {
+
+//             res.redirect("/admin")
+
+//         } else {
+//             res.redirect("/failed");
+//         }
+//         // res.render("dashbord.ejs", {
+//         //     user: req.user
+//         // });
+//     } else {
+//         res.redirect("/");
+//     }
+// })

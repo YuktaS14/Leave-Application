@@ -3,10 +3,11 @@ const { dbConnect } = require("../data/database");
 const router = express.Router();
 
 
-router.get("/", async (req, res, next) => {
+router.get("/:EMAIL_ID", async (req, res, next) => {
     // res.render("admin.ejs")
 
-    var projectMentorEmail = 'johnson@smail.iitpkd.ac.in'
+    // var projectMentorEmail = 'johnson@smail.iitpkd.ac.in'
+    var projectMentorEmail = req.params.EMAIL_ID
 
     var data = null
 

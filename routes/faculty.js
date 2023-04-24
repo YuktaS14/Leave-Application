@@ -3,21 +3,57 @@ const { dbConnect } = require("../data/database");
 const router = express.Router();
 
 
-// router.use( (req,res,next) => {
-//     if (req.isAuthenticated()) {
-//         next();
-//     }
-//     else {
-//         res.render("login.ejs");
-//     }
-// } )
+
+router.use( async (req,res,next) => {
+    if (req.isAuthenticated()) {
+
+
+    var facultyemail = req.user.emails[0].value
+
+    // console.log(facultyemail)
+    
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `select * from faculty where email = '${facultyemail}';`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        // temp.studentInfo = result.rows;
+        // data = result.rows
+        if( !result.rows.length ) {
+            res.redirect('/failed')
+            return
+        }
+
+        // res.render("studentHomePage.ejs", obj );
+    } catch (err) {
+        next(err);
+    }
+
+
+        next();
+    }
+    else {
+        res.render("login.ejs");
+    }
+} )
+
+
 
 router.get("/", async (req, res, next) => {
     // res.render("admin.ejs")
 
     // var facultyemail = 'johnson@smail.iitpkd.ac.in'
 
-    var facultyemail = req.user.emails[0]
+    var facultyemail = req.user.emails[0].value
 
     // console.log(req.user.emails)
 
@@ -53,15 +89,47 @@ router.get("/", async (req, res, next) => {
     // dbConnect.query(viewData, (err, result) => {
     //     if (err) throw err;
     //     else {
-            
     //     }
     // })
 })
 
 
-router.get("/:rollId",(req,res)=>{
+router.get("/:rollId",async (req,res)=>{
     // res.render("../views/approveForm.ejs")
+
+    const facultyemail = req.user.emails[0].value
     const id  = req.params.rollId;
+
+    // check for student
+
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `select * from studentfaculty where rollno = ${id} and faculty_email = '${facultyemail}'  ;`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        // temp.studentInfo = result.rows;
+        data = result.rows
+
+        // res.render("studentHomePage.ejs", obj );
+    } catch (err) {
+        next(err);
+    }
+
+    if( data.length == 0 ) {
+        console.log('student not valid')
+        res.redirect('/faculty')
+        return
+    }
+
     // console.log(req.params)
     var getForm = `select * from leaveApplications where rollno = ${id} and fa_approval = 'Pending'`
     dbConnect.query(getForm,(err,result)=>{

@@ -22,14 +22,26 @@ transporter.verify((error, success) => {
     }
 })
 
-router.use( (req,res,next) => {
+router.use( async (req,res,next) => {
+    
     if (req.isAuthenticated()) {
-        next();
+
+        const email = req.user.emails[0].value
+
+        if( email == process.env.ADMIN_EMAIL ) {
+            next()
+        }
+        else{
+            res.redirect('/failed')
+        }
+
     }
     else {
         res.render("login.ejs");
     }
 } )
+
+
 
 router.get("/", (req, res) => {
     // res.render("admin.ejs")

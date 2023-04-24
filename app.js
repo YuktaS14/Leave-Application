@@ -68,7 +68,7 @@ app.get('/login', async (req, res, next) => {
         return
     }
 
-    let userEmail = req.user.emails[0].value;
+    const userEmail = req.user.emails[0].value;
 
     console.log(userEmail)
 
@@ -120,13 +120,43 @@ app.get('/login', async (req, res, next) => {
 
         if (result.rows.length > 0) {
             // res.redirect(`/pm/${userEmail}`)
-            res.redirect(`/faculty`)
+            res.redirect(`/pm`)
             return
         }
 
     } catch (err) {
         next(err);
     }
+
+
+    // checking for students
+
+    console.log(userEmail.split('@')[0])
+
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT * FROM studentinfo WHERE rollno = '${userEmail.split('@')[0]}'`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        if (result.rows.length > 0) {
+            // res.redirect(`/pm/${userEmail}`)
+            res.redirect(`/student`)
+            return
+        }
+
+    } catch (err) {
+        next(err);
+    }
+
 
     redirect("/failed")
 })

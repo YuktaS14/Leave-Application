@@ -2,21 +2,21 @@ const express = require("express");
 const { dbConnect } = require("../data/database");
 const router = express.Router();
 
-// router.use((req, res, next) => {
-//     if (req.isAuthenticated()) {
-//         next();
-//     }
-//     else {
-//         res.render("login.ejs");
-//     }
-// })
+router.use((req, res, next) => {
+    if (req.isAuthenticated()) {
+        next();
+    }
+    else {
+        res.render("login.ejs");
+    }
+})
 
 router.get("/", async (req, res, next) => {
     // res.render("admin.ejs")
 
     // var projectMentorEmail = 'johnson@smail.iitpkd.ac.in'
     // var projectMentorEmail = req.params.EMAIL_ID
-    var facultyemail = req.user.emails[0]
+    const projectMentorEmail = req.user.emails[0].value
 
     var data = null
 

@@ -22,6 +22,15 @@ transporter.verify((error, success) => {
     }
 })
 
+router.use( (req,res,next) => {
+    if (req.isAuthenticated()) {
+        next();
+    }
+    else {
+        res.render("login.ejs");
+    }
+} )
+
 router.get("/", (req, res) => {
     // res.render("admin.ejs")
 
@@ -47,7 +56,6 @@ router.get("/", (req, res) => {
     });
 
 });
-
 
 router.post("/", async (req, res) => {
     var event = req.body.event;

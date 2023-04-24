@@ -94,7 +94,8 @@ app.get('/login', async (req, res, next) => {
         });
 
         if (result.rows.length > 0) {
-            res.redirect(`/faculty/${userEmail}`)
+            // res.redirect(`/faculty/${userEmail}`)
+            res.redirect(`/faculty`)
             return
         }
 
@@ -118,7 +119,8 @@ app.get('/login', async (req, res, next) => {
         });
 
         if (result.rows.length > 0) {
-            res.redirect(`/pm/${userEmail}`)
+            // res.redirect(`/pm/${userEmail}`)
+            res.redirect(`/faculty`)
             return
         }
 

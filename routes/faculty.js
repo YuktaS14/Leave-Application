@@ -3,12 +3,21 @@ const { dbConnect } = require("../data/database");
 const router = express.Router();
 
 
-router.get("/:EMAIL_ID", async (req, res, next) => {
+// router.use( (req,res,next) => {
+//     if (req.isAuthenticated()) {
+//         next();
+//     }
+//     else {
+//         res.render("login.ejs");
+//     }
+// } )
+
+router.get("/", async (req, res, next) => {
     // res.render("admin.ejs")
 
     // var facultyemail = 'johnson@smail.iitpkd.ac.in'
 
-    var facultyemail = req.params.EMAIL_ID
+    var facultyemail = req.user.emails[0]
 
     // console.log(req.user.emails)
 

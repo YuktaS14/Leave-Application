@@ -2,12 +2,21 @@ const express = require("express");
 const { dbConnect } = require("../data/database");
 const router = express.Router();
 
+// router.use((req, res, next) => {
+//     if (req.isAuthenticated()) {
+//         next();
+//     }
+//     else {
+//         res.render("login.ejs");
+//     }
+// })
 
-router.get("/:EMAIL_ID", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     // res.render("admin.ejs")
 
     // var projectMentorEmail = 'johnson@smail.iitpkd.ac.in'
-    var projectMentorEmail = req.params.EMAIL_ID
+    // var projectMentorEmail = req.params.EMAIL_ID
+    var facultyemail = req.user.emails[0]
 
     var data = null
 
@@ -40,18 +49,18 @@ router.get("/:EMAIL_ID", async (req, res, next) => {
 })
 
 
-router.get("/:rollId",(req,res)=>{
+router.get("/:rollId", (req, res) => {
     // res.render("../views/approveForm.ejs")
-    const id  = req.params.rollId;
+    const id = req.params.rollId;
     // console.log(req.params)
     var getForm = `select * from leaveApplications where rollno = ${id} and mentor_approval = 'Pending'`
-    dbConnect.query(getForm,(err,result)=>{
-    if(err) throw err;
-    else{
-        console.log(result.rows[0])
-        res.render('../views/facultyapproval.ejs',{data : result.rows[0]})
-    }
-});
+    dbConnect.query(getForm, (err, result) => {
+        if (err) throw err;
+        else {
+            console.log(result.rows[0])
+            res.render('../views/facultyapproval.ejs', { data: result.rows[0] })
+        }
+    });
 });
 
 

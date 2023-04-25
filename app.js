@@ -6,7 +6,6 @@ const ejs = require("ejs");
 const path = require("path");
 require("dotenv").config();
 const { dbConnect } = require("./data/database");
-const adminrouter = require("./routes/admin");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 
@@ -18,16 +17,14 @@ app.use( express.static( "public" ) );
 
 app.use(flash());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-    secret: "key", // can be anything
+    secret: process.env.SESSION_SECRETE, // can be anything
     resave: false,
     saveUninitialized: false,
     // local server has http, if we have https we can set it to true
-    cookie: { secure: false, maxAge : 1000000000 },
+    cookie: { secure: false },
 }));
-
-app.use("/admin",adminrouter);
 
 
 app.use(passport.initialize())
@@ -38,7 +35,7 @@ app.use(passport.session())
 passport.use(new GoogleStrategy({
 
     clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret:process.env.GOOGLE_CLIENT_SECRET,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.REDIRECT_URL
     // where we want to go ?
     // can be any route
@@ -63,17 +60,112 @@ app.get('/',(req,res)=>{
     res.redirect('/login')
 })
 
-app.get('/login', (req, res) => {
-    if (req.isAuthenticated()) {
-        console.log(req.user)
-        res.render("dashbord.ejs", {
-            user: req.user
-        });
-    } else {
+app.get('/temp', (req, res) => {
+    console.log(req.user.emails)
+});
+
+
+
+app.get('/login', async (req, res, next) => {
+
+    if (req.user == undefined) {
         res.render("login.ejs");
+        return
     }
-    
+
+    const userEmail = req.user.emails[0].value;
+
+    console.log(userEmail)
+
+    if (userEmail == process.env.ADMIN_EMAIL) {
+        // req.admin = {"admin":"true"}
+        res.redirect("/admin");
+        return
+    }
+
+    // checking for faculty
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT * FROM studentfaculty WHERE faculty_email = '${userEmail}'`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        if (result.rows.length > 0) {
+            // res.redirect(`/faculty/${userEmail}`)
+            res.redirect(`/faculty`)
+            return
+        }
+
+    } catch (err) {
+        next(err);
+    }
+
+    // checking for pm
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT * FROM studentfaculty WHERE projectmentor_email = '${userEmail}'`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        if (result.rows.length > 0) {
+            // res.redirect(`/pm/${userEmail}`)
+            res.redirect(`/pm`)
+            return
+        }
+
+    } catch (err) {
+        next(err);
+    }
+
+
+    // checking for students
+
+    console.log(userEmail.split('@')[0])
+
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT * FROM studentinfo WHERE rollno = '${userEmail.split('@')[0]}'`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        if (result.rows.length > 0) {
+            // res.redirect(`/pm/${userEmail}`)
+            res.redirect(`/student`)
+            return
+        }
+
+    } catch (err) {
+        next(err);
+    }
+
+
+    redirect("/failed")
 })
+
 
 app.get("/auth/google", passport.authenticate("google", {
     scope: ["profile", "email"],
@@ -82,24 +174,25 @@ app.get("/auth/google", passport.authenticate("google", {
 ));
 
 
-app.get("/dashboard", (req, res) => {
-    if (req.isAuthenticated()) {
-        console.log(req.user)
-        res.render("dashbord.ejs", {
-            user: req.user
-        });
-    } else {
-        res.redirect("/login");
-    }
-})
 
 // verifying again
 app.get("/auth/google/callback", passport.authenticate("google", {
     failureRedirect: "/login"
 }), async (req, res) => {
-    res.redirect("/dashboard")
+    res.redirect("/login")
 }
 );
+
+
+app.use((req, res, next) => {
+    if (req.isAuthenticated()) {
+        next();
+    }
+    else {
+        res.render("login.ejs");
+    }
+})
+
 
 app.get("/logout", (req, res) => {
     req.logout(function (err) {
@@ -114,22 +207,29 @@ app.get("/logout", (req, res) => {
 
 
 const studentRoute = require('./routes/student');
-app.use("/student",studentRoute);
+app.use("/student", studentRoute);
 
 const submittRoute = require('./routes/submit');
-app.use("/submit",submittRoute);
+app.use("/submit", submittRoute);
 
 const facultyRoute = require('./routes/faculty');
-app.use("/faculty",facultyRoute);
+app.use("/faculty", facultyRoute);
 
 const pmRoute = require('./routes/project_mentor');
-app.use("/pm",pmRoute);
+app.use("/pm", pmRoute);
+
+const adminrouter = require("./routes/admin");
+app.use("/admin", adminrouter);
+
+app.get('/failed', (req, res) => {
+    res.send('Hello')
+})
 
 app.listen(5000, () => {
     console.log("server working")
 })
 
-
+// console.log(2+3)
 
 // dbConnect.query('select * from studentInfo',(err,result)=>{
 //     if(!err){
@@ -137,3 +237,24 @@ app.listen(5000, () => {
 //     }
 //     dbConnect.end();
 // });
+
+
+
+// app.get("/dashboard", (req, res) => {
+//     if (req.isAuthenticated()) {
+//         // console.log(req.user.emails[0].value)
+
+//         if (req.user.emails[0].value == process.env.ADMIN_EMAIL) {
+
+//             res.redirect("/admin")
+
+//         } else {
+//             res.redirect("/failed");
+//         }
+//         // res.render("dashbord.ejs", {
+//         //     user: req.user
+//         // });
+//     } else {
+//         res.redirect("/");
+//     }
+// })

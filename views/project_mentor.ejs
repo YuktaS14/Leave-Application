@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Project Manager Page</title>
     <!-- <link rel = "stylesheet" href ="styles/asmin.css"></link> -->
     <link rel="shortcut icon" href="#">
     <!-- Latest compiled and minified CSS -->
@@ -150,12 +150,13 @@
                             <td>
                                 <%= record.mentor_approval %>
                             </td>
-                            
+
                             <td>
-                                
-                                <form method = 'get' action = /pm/<%=record.rollno%> >
-                                    <input type="submit" value="Open Form" style="font-family: Arial, sans-serif; font-size: 16px;" >
-                                </form> 
+
+                                <form method='get' action=/pm/<%=record.rollno%> >
+                                    <input type="submit" value="Open Form"
+                                        style="font-family: Arial, sans-serif; font-size: 16px;">
+                                </form>
 
                             </td>
 

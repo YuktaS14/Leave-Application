@@ -3,8 +3,58 @@ const { dbConnect } = require("../data/database");
 const router = express.Router();
 
 
+router.use( async (req,res,next) => {
+    if (req.isAuthenticated()) {
+
+
+    var userEmail = req.user.emails[0].value
+
+    // console.log(facultyemail)
+    
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `SELECT * FROM studentinfo WHERE rollno = '${userEmail.split('@')[0]}'`,
+                (err, result) => {
+                    if (err) {
+                        // reject(err);
+                        res.redirect('/failed')
+                        return
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        // temp.studentInfo = result.rows;
+        // data = result.rows
+        if( !result.rows.length ) {
+            res.redirect('/failed')
+            return
+        }
+
+        // res.render("studentHomePage.ejs", obj );
+    } catch (err) {
+        next(err);
+    }
+
+        next();
+    }
+    else {
+        res.render("login.ejs");
+    }
+} )
+
+
+
 router.get("/", async (req, res, next) => {
-    const rollno = 112001010;
+
+    console.log(req.user.emails)
+
+    const rollno = req.user.emails[0].value.split('@')[0];
+
+
     let temp = {};
 
     try {

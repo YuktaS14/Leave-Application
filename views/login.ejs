@@ -5,14 +5,343 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeaveApplication</title>
-</head>
-<body>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+<style>
     
-   <h1>
-    login to google
-   </h1>
+    @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;	
+	font-family: Raleway, sans-serif;
+    /* overflow-y:hidden; */
+}
 
-   <a href="/auth/google"> Click here </a>
+body {
+	background: linear-gradient(90deg, #C7C5F4, #776BCC);	
+}
+
+/* .logo {} */
+
+.screen {		
+
+	background: linear-gradient(90deg, #5D54A4, #7C78B8);		
+	position: relative;	
+    font-weight:800;
+	height: 650px;
+	max-width: 450px;	
+    /* margin-top: 20px; */
+    /* margin-left: 300px; */
+    justify-self: center;
+	box-shadow: 0px 0px 24px #5C5696;
+}
+
+.screen__content {
+	z-index: 1;
+	position: relative;	
+	height: 100%;
+}
+
+.screen__background {		
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 0;
+	-webkit-clip-path: inset(0 0 0 0);
+	clip-path: inset(0 0 0 0);	
+}
+
+.screen__background__shape {
+	transform: rotate(45deg);
+	position: absolute;
+}
+
+.screen__background__shape1 {
+	height: 520px;
+	width: 540px;
+	background: #FFF;	
+	top: -50px;
+	right: 120px;	
+	border-radius: 0 72px 0 0;
+}
+
+.screen__background__shape2 {
+	height: 220px;
+	width: 240px;
+	background: #6C63AC;	
+	top: -172px;
+	right: 0;	
+	border-radius: 32px;
+}
+
+.screen__background__shape3 {
+	height: 540px;
+	width: 210px;
+	background: linear-gradient(270deg, #5D54A4, #6A679E);
+	top: -24px;
+	right: 0;	
+	border-radius: 32px;
+}
+
+.screen__background__shape4 {
+	height: 400px;
+	width: 200px;
+	background: #7E7BB9;	
+	top: 420px;
+	right: 50px;	
+	border-radius: 60px;
+}
+
+.login {
+	width: 50%px;
+    height:75%;
+	padding: 30px;
+	padding-top: 120px;
+    font-size: 2rem;
+    font-family:sans-serif;
+}
+
+.login__field {
+	padding: 20px 0px;	
+	position: relative;	
+}
+
+.login__icon {
+	position: absolute;
+	top: 30px;
+	color: #7875B5;
+}
+
+.login__input {
+	border: none;
+	border-bottom: 2px solid #D1D1D4;
+	background: none;
+	padding: 10px;
+	padding-left: 2px;
+	font-weight: 700;
+	width: 75%;
+	transition: .2s;
+}
+
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+	outline: none;
+	border-bottom-color: #6A679E;
+}
+
+.login__submit {
+	background: #fff;
+	font-size: 14px;
+	margin-top: 30px;
+	padding: 16px 20px;
+	border-radius: 26px;
+	border: 1px solid #D4D3E8;
+	text-transform: uppercase;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	color: #4C489D;
+	box-shadow: 0px 2px 2px #5C5696;
+	cursor: pointer;
+	transition: .2s;
+}
+
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+	border-color: #6A679E;
+	outline: none;
+}
+
+/* .button__icon {
+	font-size: 30px;
+	color: #7875B5;
+    border-radius: 4px;
+} */
+
+.material-icons {
+  font-size: 24px; /* Change the size of the icon */
+  color: #4285f4; /* Change the color of the icon */
+}
+
+.logo{
+    margin-top: 10px;
+    align-self: center;
+    margin-left: 10px;
+}
+/* $white: #fff; */
+/* $google-blue: #4285f4; */
+/* $button-active-blue: #1669F2;  */
+
+.google-btn {
+  width: 250px;
+  height: 42px;
+  background-color: rgb(110, 108, 215);
+  border-radius: 4px;
+  box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);}
+.google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: white;
+  }
+  .google-icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+    
+  }
+  .btn-text {
+    float: right;
+    margin: 11px 11px 0 0;
+    color: white;
+    font-size: 20px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+  }
+  /* &:hover {
+    box-shadow: 0 0 6px rgb(110, 108, 215);
+  }
+  &:active {
+    background: blue;
+  } */
+
+.header{
+    
+    font-size: 27px;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: underline;
+    padding-top: 20px;
+}
+
+.grid-container {
+	display: grid;
+    padding-left: 50px;
+    padding-right: 50px;
+    /* justify-content: center; */
+    min-height: 100vh;
+    /* gap: 20px; */
+    /* grid-template-columns: 3fr 1fr; */
+    grid-template-areas: 
+    "header"
+    "content"
+    ;
+    grid-auto-rows: minmax(50%,auto);
+}
+
+.grid-item-1 {
+    grid-area: header;
+    justify-content: space-evenly;
+}
+.grid-item-2 {
+    justify-self: center;
+
+    grid-area: content;
+}
+
+.sidebar{
+    font-size: 1.3rem;
+    padding-top: 220px;
+    padding-left: 130px;
+    font-style: italic;
+    color:aliceblue
+}
+a:hover {
+  color: hotpink;
+}
+a:link {
+  color: violet;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+
+
+
+</style>
+
+</head>
+
+<body>
+    <div class="logo">
+        <img src="logo_2.png" style="width:80%; height:180px; "></div>
+
+    <div class="grid-container">
+        <div class=" header grid-item-1"><h3>Leave  Application</h3></div>   
+        <div class="grid-item-2" >
+            <div class="screen">
+            <div class="screen__content">
+
+                <form class="login" method="post" action="/login">
+                    <div class="login__field">
+                        <label for="loginRole" style="color: #4C489D;font-size:20px;">Login As:</label>
+                        <br>
+                        <select name="selectRole" id="loginRole" required style="height:40px ;width: 250px; font-size: 1.5rem;" >
+                            <option value="" disabled selected> Select Login Role </option>
+                            <option value= "Student" >Student</option>
+                            <option value= "Faculty" >Faculty</option>
+                            <option value= "Admin" >Admin</option>            
+                        </select>
+                    </div>
+                    <div class="google-btn login_field button__icon ">
+                        <div class="google-icon-wrapper">
+                        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                        </div>
+                        <p class="btn-text"><b><a href="/auth/google">Sign in with google </a></b></p>
+                    </div>
+
+                    <div class="sidebar">
+                        <h4>Rules Regarding Leaves: </h4>
+                        <a href="https://drive.google.com/file/d/18VS446epraJI6bTua3-z-kwPVXPbMrNH/view">View Rules</a>
+                        <h4>List of Holidays: </h4>
+                        <a href = "https://drive.google.com/file/d/1Hkz2muG7LzgIhe8Nbhd4fyFSv2RBLzdi/view">View List</a>
+               
+                    </div>
+                            <!-- </div> -->
+                            <!-- <button class="button login__submit">
+                                <span class="button__text">Log In Now</span>
+                                <i class="button__icon fas fa-chevron-right"></i>
+                            </button>				 -->
+                </form>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                    <span class="screen__background__shape screen__background__shape3"></span>		
+                    <span class="screen__background__shape screen__background__shape2"></span>
+                    <span class="screen__background__shape screen__background__shape1"></span>
+                </div>	
+            </div>
+        </div>
+        <!-- <div class="grid-item-3"> -->
+            <!-- <div>
+                <h2>Rules Regarding Leaves: </h2>
+                <a href="https://drive.google.com/file/d/18VS446epraJI6bTua3-z-kwPVXPbMrNH/view">View Rules</a>
+                <h2>List of Holidays: </h2>
+                <a href = "https://drive.google.com/file/d/1Hkz2muG7LzgIhe8Nbhd4fyFSv2RBLzdi/vie">View List</a>
+
+
+            </div> -->
+        <!-- </div> -->
+      
+    </div>
+
+   <!-- <h1>
+    login to google
+   </h1> -->
+
 
 </body>
 </html>

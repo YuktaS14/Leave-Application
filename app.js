@@ -13,6 +13,8 @@ const app = express();
 
 app.set("view engine", "ejs");
 
+app.use( express.static( "public" ) );
+
 app.use(flash());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,6 +56,9 @@ passport.deserializeUser(function (obj, cb) {
     cb(null, obj)
 })
 
+app.get('/',(req,res)=>{
+    res.redirect('/login')
+})
 
 app.get('/temp', (req, res) => {
     console.log(req.user.emails)

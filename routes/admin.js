@@ -367,30 +367,49 @@ router.post("/:rollId", async (req, res) => {
             if (err) throw err;
         });
     }
-    else if (status == 'Approved') {
-        const newLeft = leftleaves - applied;
+    else{
+     comment = req.body.comment;
+    }
+
+    
+    if(status == 'Not Approved')
+    {
+        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
+        dbConnect.query(updateStatus,(err,result)=>{
+            if(err) throw err;
+            // else{
+            //     res.redirect('/admin')
+            // }
+        });
+    }
+    else if(status == 'Approved')
+    {
+        const newLeft = leftleaves-applied ;
         // console.log(newLeft)
         var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
         var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id}`
-        dbConnect.query(updateStatus, (err, result) => {
-            if (err) throw err;
-            else {
-                dbConnect.query(updateLeaves, (err, result2) => {
-                    if (err) throw err;
+        dbConnect.query(updateStatus,(err,result)=>{
+        if(err) throw err;
+        else{
+            dbConnect.query(updateLeaves,(err,result2)=>{
+                if(err) throw err;
+                // else{                
+                //     res.redirect('/admin')
+                                       
+                // }
                 })
             }
-
+        
         });
 
     }
 
-
-    if (status !== 'Pending') {
-        const mailOptions = {
-            from: process.env.USER_EMAIL,
-            to: 'salunkheyukta14@gmail.com',
-            subject: 'Leave Application',
-            text: `Your Leave has been ${status}
+    if(status !== 'Pending'){
+    const mailOptions = {
+        from: process.env.USER_EMAIL,
+        to: 'salunkheyukta14@gmail.com',
+        subject: 'Leave Application',
+        text: `Your Leave has been ${status}
             Details: 
             Roll No: ${id}
             Name:  ${nameOfScholar}
@@ -403,23 +422,25 @@ router.post("/:rollId", async (req, res) => {
             Additional Comment: ${comment}
             
         `
-        }
-        await transporter
-            .sendMail(mailOptions)
-            .then(() => {
-                // res.json({
-                // status:"Success",
-                // message: "Message Sent Successfully!! "})
-                res.redirect('/admin')
-            })
-            .catch((error) => {
-                console.log(error);
-                res.json({ status: 'Failed', message: "An Error Occurred!! " })
-            })
+    }
+    transporter
+        .sendMail(mailOptions)
+        .then(()=>{
+            res.redirect('/admin')
+        })
+        .catch((error)=>{
+            console.log(error);
+            res.json({status: 'Failed',message:"An Error Occurred!! "})
+        })
+    }
+    else{
+        res.redirect('/admin')
     }
 
-    
-    // console.log(data)
+
+
+
+// console.log(data)
 });
 
 
@@ -434,24 +455,6 @@ router.post("/:rollId", async (req, res) => {
 //     });
 // });
 
-///4 buttons
-///render in the same page
-
-// router.get("/updateData",(req,res)=>{
-//     res.render("admin.ejs")
-// });
-
-// router.get("/taFaculty",(req,res)=>{
-//     res.render("admin.ejs")
-// });
-
-// router.get("/view",(req,res)=>{
-//     res.render("admin.ejs")
-// });
-
-// router.get("/addHolidays",(req,res)=>{
-//     res.render("admin.ejs")
-// });
 
 
 module.exports = router;

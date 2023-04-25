@@ -4,10 +4,10 @@ const router = express.Router();
 
 router.use(async (req, res, next) => {
     if (req.isAuthenticated()) {
-        var pmEmail = req.user.email[0].value
+        var pmEmail = req.user.emails[0].value
         
         try{
-            const result = await new Promise((resolve,request)=>{
+            const result = await new Promise((resolve,reject)=>{
                 dbConnect.query(
                     `select * from faculty where email = '${pmEmail}';`,
                     (err,result) => {
@@ -19,7 +19,8 @@ router.use(async (req, res, next) => {
                     }
                 );
             });
-            if(result.rows.length<=0){
+            // console.log(result)
+            if(result.rows.length == 0){
                 res.redirect("/failed")
                 return}
         }catch(err) {next(err)};
@@ -36,13 +37,12 @@ router.get("/", async (req, res, next) => {
     // var projectMentorEmail = 'johnson@smail.iitpkd.ac.in'
     // var projectMentorEmail = req.params.EMAIL_ID
     const projectMentorEmail = req.user.emails[0].value
-
     var data = null
 
     try {
         const result = await new Promise((resolve, reject) => {
             dbConnect.query(
-                `select * from leaveapplications natural join studentfaculty where projectmentor_email = '${projectMentorEmail}';`,
+                `select * from leaveapplications natural join studentfaculty where projectmentor_email = '${projectMentorEmail}' and mentor_approval = 'Pending' and fa_approval <> 'Pending';`,
                 (err, result) => {
                     if (err) {
                         reject(err);
@@ -53,6 +53,7 @@ router.get("/", async (req, res, next) => {
             );
         });
 
+        // console.log(results)
         // temp.studentInfo = result.rows;
         data = result.rows
 
@@ -70,6 +71,8 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:rollId", async (req, res) => {
     // res.render("../views/approveForm.ejs")
+    // var data = null
+
     const id = req.params.rollId;
 
     const pmEmail = req.user.emails[0].value
@@ -77,9 +80,9 @@ router.get("/:rollId", async (req, res) => {
 
     //check if valid pm is viewing the student details
     try{
-        const result = await new Promise((reject,resolve)=>{
+        const results = await new Promise((resolve,reject)=>{
             dbConnect.query(
-                `select * from studentfaculty where rollno = ${id} and mentor_email = '${pmEmail}'  ;`,
+                `select * from studentfaculty where rollno = ${id} and projectmentor_email = '${pmEmail}'  ;`,
                 (err,result) =>{
                     if(err)
                         reject(err)
@@ -88,7 +91,8 @@ router.get("/:rollId", async (req, res) => {
                 }
             );
         });
-        data = result.rows
+        // console.log(results)
+        data = results.rows
     } 
     catch(err){
         next(err);
@@ -101,12 +105,12 @@ router.get("/:rollId", async (req, res) => {
         return
     }
 
-    var getForm = `select * from leaveApplications where rollno = ${id} and mentor_approval = 'Pending'`
+    var getForm = `select * from leaveApplications where rollno = ${id} and mentor_approval = 'Pending' and fa_approval <> 'Pending'`
     dbConnect.query(getForm, (err, result) => {
         if (err) throw err;
         else {
             console.log(result.rows[0])
-            res.render('../views/facultyapproval.ejs', { data: result.rows[0] })
+            res.render('../views/pmapproval.ejs', { data: result.rows[0] })
         }
     });
 });

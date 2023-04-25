@@ -59,7 +59,7 @@ router.get("/", (req, res) => {
 
     // console.log('Here')
 
-    var viewData = `select * from leaveApplications where admin_approval = 'Pending'`
+    var viewData = `select * from leaveApplications where admin_approval = 'Pending' and fa_approval <> 'Pending' and mentor_approval <> 'Pending'`
     dbConnect.query(viewData, (err, result) => {
         if (err) throw err;
         else {
@@ -330,7 +330,7 @@ router.get("/:rollId", (req, res) => {
     // res.render("../views/approveForm.ejs")
     const id = req.params.rollId;
     // console.log(req.params)
-    var getForm = `select * from leaveApplications where rollno = ${id} and admin_approval = 'Pending'`
+    var getForm = `select * from leaveApplications where rollno = ${id} and admin_approval = 'Pending' and fa_approval != 'Pending' and mentor_approval != 'Pending'`
     dbConnect.query(getForm, (err, result) => {
         if (err) throw err;
         else {

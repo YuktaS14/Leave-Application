@@ -62,7 +62,7 @@ router.get("/", async (req, res, next) => {
     try {
         const result = await new Promise((resolve, reject) => {
             dbConnect.query(
-                `select * from leaveapplications natural join studentfaculty where faculty_email = '${facultyemail}';`,
+                `select * from leaveapplications natural join studentfaculty where faculty_email = '${facultyemail}' and fa_approval = 'Pending';`,
                 (err, result) => {
                     if (err) {
                         reject(err);

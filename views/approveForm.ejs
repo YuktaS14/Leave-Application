@@ -172,8 +172,8 @@
         <hr>
 
         <label for="typeOfLeave"> Type of leave </label>
-        <select name="leaveType" id="typeOfLeave"  readonly>
-        <option value="" disabled selected><%= data.typeofleave %></option>
+        <!-- <select name="leaveType" id="typeOfLeave"  readonly> -->
+        <input type="text" value="" disabled selected><%= data.typeofleave %></option>
         </select>
 
         <p type="text" id="typeOfLeaveReason" style="display:none" readonly> </p>
@@ -193,7 +193,7 @@
         <br>
 
         <label>Leave applied for:</label>
-        <input type="number" name="leaveDays" id="noOfDays" readonly  value="<%= data.daysapplied %>"/>
+        <input type="text" name="leaveDays" id="noOfDays" readonly  value="<%= data.daysapplied %>"/>
 
         <hr>
 
@@ -204,7 +204,7 @@
         <label>Nature of HTTA/ HTRA duty</label>
         <input type="text" name="dutyNature" id="duty-nature" value="<%= data.natureofduty%>"  readonly/>
         <label> Roll Number of the alternate scholar handling the duties</label>
-        <input type="number" name="alternateScholarRollno" id="alternate-scholar-rollno"  value="<%= data.alternatestudrolno %>" readonly/>
+        <input type="text" name="alternateScholarRollno" id="alternate-scholar-rollno"  value="<%= data.alternatestudrolno %>" readonly/>
         <label> Name of the alternate scholar handling the duties</label>
         <input type="text" name="alternateScholarName" id="alternate-scholar-name" value="<%= data.alternatestudname%>" readonly/>
         <hr>

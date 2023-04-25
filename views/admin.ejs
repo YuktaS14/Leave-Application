@@ -33,18 +33,25 @@
       margin-right: 20px;
       margin-top: 10px; margin-bottom: 10px;
       width:fit-content;
-      font-size: larger;
-      
+      font-size: 20px;
+      height: 40px;
       /* padding: 0px 10px; */
     }
     .formMain{
       border-radius: 5px;
+
       background-color: #f2f2f2;
       padding: 20px;
       text-align: center;
       display: block inline;
       font-size: 20px;
       border: 1rem;
+      font-family: 'Times New Roman', Times, serif;
+    }
+    #hol
+
+    h1 {
+      font-size: 30px;
       font-family: 'Times New Roman', Times, serif;
     }
 
@@ -57,6 +64,7 @@
 #applications td, #applications th {
   border: 1px solid #ddd;
   padding: 8px;
+  font-size: 15px;
 }
 
 #applications tr:nth-child(even){background-color: #f2f2f2;}
@@ -66,18 +74,25 @@
 #applications th {
   padding-top: 12px;
   padding-bottom: 12px;
+  font-size: 15px;
   text-align: left;
   background-color: #04AA6D;
   color: white;
 }
 
-    
+.dropdown-item {
+  font-size: 15px;
+}
+
+.row{
+  justify-content: space-evenly;
+}
     
 	</style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to the Admin Page</h1>
+        <h1 style="text-align: center;">Welcome to the Admin Page</h1>
         <!-- <div class="btn-group btn-group-toggle btn-group-justified" data-togle="buttons"> -->
            <div class ="row">
             <button type = "button" class="col-sm-3 btn btn-primary btn-lg options" onclick="showContent('button1')" >View Applications</button>
@@ -107,7 +122,7 @@
         <div class="content" style="display: block; "id="button1-content">
             <!-- Content for button 1 -->
 
-            <h2 style="margin-left: 40%;"> 
+            <h2 style="text-align: center;"> 
               <%= title %>
             </h2>
             <div>

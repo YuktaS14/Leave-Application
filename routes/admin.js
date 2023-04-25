@@ -322,40 +322,42 @@ router.post("/:rollId",(req,res)=>{
      comment = "-";
     }
     else{
-     comment = "req.body.comment";
+     comment = req.body.comment;
     }
 
-
-    // if(status == 'Not Approved')
-    // {
-    //     var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
-    //     dbConnect.query(updateStatus,(err,result)=>{
-    //         if(err) throw err;
-    //         else{
-    //             res.redirect('/admin')
-    //         }});
-    // }
-    // else if(status == 'Approved')
-    // {
-    //     const newLeft = leftleaves-applied ;
-    //     // console.log(newLeft)
-    //     var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
-    //     var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id}`
-    //     dbConnect.query(updateStatus,(err,result)=>{
-    //     if(err) throw err;
-    //     else{
-    //         dbConnect.query(updateLeaves,(err,result2)=>{
-    //             if(err) throw err;
-    //             else{                
-    //                 res.redirect('/admin')
+    
+    if(status == 'Not Approved')
+    {
+        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
+        dbConnect.query(updateStatus,(err,result)=>{
+            if(err) throw err;
+            // else{
+            //     res.redirect('/admin')
+            // }
+        });
+    }
+    else if(status == 'Approved')
+    {
+        const newLeft = leftleaves-applied ;
+        // console.log(newLeft)
+        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
+        var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id}`
+        dbConnect.query(updateStatus,(err,result)=>{
+        if(err) throw err;
+        else{
+            dbConnect.query(updateLeaves,(err,result2)=>{
+                if(err) throw err;
+                // else{                
+                //     res.redirect('/admin')
                                        
-    //             }
-    //             })
-    //         }
+                // }
+                })
+            }
         
-    //     });
+        });
 
-    // }
+    }
+
     if(status !== 'Pending'){
     const mailOptions = {
         from: process.env.USER_EMAIL,
@@ -378,17 +380,18 @@ router.post("/:rollId",(req,res)=>{
     transporter
         .sendMail(mailOptions)
         .then(()=>{
-            res.json({
-            status:"Success",
-            message: "Message Sent Successfully!! "})
+            res.redirect('/admin')
         })
         .catch((error)=>{
             console.log(error);
             res.json({status: 'Failed',message:"An Error Occurred!! "})
         })
     }
+    else{
+        res.redirect('/admin')
+    }
 
-    res.redirect('/admin')
+
 
 
 // console.log(data)

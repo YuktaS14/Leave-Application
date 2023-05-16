@@ -28,16 +28,18 @@
 
     <!-- new new -->
 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
+    <!-- CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    
 
 
     <style>
+
         body {
             padding: 35px;
             font-size: 15px;
@@ -85,6 +87,27 @@
             border: 1px solid #ccc !important;
             border-radius: 0px !important;
         }
+
+        .select2-dropdown--large .select2-results__options {
+            max-height: 300px;
+            /* adjust the value as needed */
+        }
+
+    /* Rest of your CSS styles */
+
+    /* Set the height of the select field */
+    .select2-container .select2-selection--single {
+        height: 47px !important; /* Adjust the value as needed */
+        border-radius: 5px !important;
+        line-height: 38px !important;
+    }
+    
+    /* Adjust the position of the select field to align with other input fields */
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 38px !important;
+    }
+
+
     </style>
 </head>
 
@@ -190,7 +213,7 @@
                                     </select> -->
 
 
-                                    <label for="pm">Project Mentor </label>
+                                    <label for="pm" style="margin-bottom: 0.8%;">Project Mentor </label>
                                     <select name="fa" style="background-color: white;" class="form-control select2">
                                         <option value="" selected disabled> select project mentor </option>
                                         <% faculty_list.forEach( row=> { %>
@@ -199,26 +222,46 @@
                                             <%})%>
                                     </select>
 
-                                    <script>
-                                        $('.select2').select2();
-                                    </script>
 
 
-
-                                    <label for="fa">Faculty Advisor </label>
+                                    <!-- <label for="fa">Faculty Advisor </label> -->
                                     <!-- <input type="text" id="lname" name="FA" required  placeholder="FA..">-->
-                                    <select name="fa" style="background-color: white;" required>
+                                    <!-- <select name="fa" style="background-color: white;" required>
                                         <option value="" selected disabled> select faculty advisor </option>
                                         <% faculty_list.forEach( row=> { %>
                                             <option value="<%-row.email%>"> <%- row.name %> ( <%- row.email %> )
                                             </option>
                                             <%})%>
+                                    </select> -->
+
+
+                                    <label for="fa" style="margin-bottom: 0.8%;margin-top: 0.8%;" >Faculty Advisor</label>
+                                    <select name="fa" class="select2" style="background-color: white; height: 15%;"
+                                        required>
+                                        <option value="" selected disabled> select faculty advisor </option>
+                                        <% faculty_list.forEach(row=> { %>
+                                            <option value="<%- row.email %>"> <%- row.name %> ( <%- row.email %> )
+                                            </option>
+                                            <% }) %>
                                     </select>
 
+                                    <script>
+
+                                        $(document).ready(function () {
+                                            $('.select2').select2({
+                                                placeholder: "search for faculty",
+                                                allowClear: true,
+                                                width: "100%",
+                                                dropdownAutoWidth: true,
+                                            });
+                                        });
+                                    </script>
 
 
 
-                                    <input type="submit" value="Add Student">
+
+
+                                    <input type="submit" value="Add Student" style="margin-top: 1%" >
                                 </form>
                             </div>
                         </div>

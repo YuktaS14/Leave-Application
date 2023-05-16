@@ -13,7 +13,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 
-app.use( express.static( "public" ) );
+app.use(express.static("public"));
 
 app.use(flash());
 app.use(bodyParser.json());
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SESSION_SECRETE, // can be anything
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     // local server has http, if we have https we can set it to true
     cookie: { secure: false },
 }));
@@ -56,7 +56,7 @@ passport.deserializeUser(function (obj, cb) {
     cb(null, obj)
 })
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.redirect('/login')
 })
 
@@ -100,8 +100,10 @@ app.get('/login', async (req, res, next) => {
 
         if (result.rows.length > 0) {
             // res.redirect(`/faculty/${userEmail}`)
-            res.redirect(`/faculty`)
-            return
+            if (req.session.select_userrole == 'faculty') {
+                res.redirect(`/faculty`)
+                return
+            }
         }
 
     } catch (err) {
@@ -125,8 +127,10 @@ app.get('/login', async (req, res, next) => {
 
         if (result.rows.length > 0) {
             // res.redirect(`/pm/${userEmail}`)
-            res.redirect(`/pm`)
-            return
+            if (req.session.select_userrole == 'project_mentor') {
+                res.redirect(`/pm`)
+                return
+            }
         }
 
     } catch (err) {
@@ -154,8 +158,11 @@ app.get('/login', async (req, res, next) => {
 
         if (result.rows.length > 0) {
             // res.redirect(`/pm/${userEmail}`)
-            res.redirect(`/student`)
-            return
+            console.log('student checked --> ', req.session.select_userrole)
+            if (req.session.select_userrole == 'student') {
+                res.redirect(`/student`)
+                return
+            }
         }
 
     } catch (err) {
@@ -163,25 +170,55 @@ app.get('/login', async (req, res, next) => {
     }
 
 
-    redirect("/failed")
+    res.redirect("/failed")
 })
 
 
-app.get("/auth/google", passport.authenticate("google", {
+app.get("/auth/google", (req, res, next) => {
+
+    req.session.select_userrole = req.query.selectRole
+    console.log('req session role ---> ', req.session.select_userrole)
+    next()
+
+}, passport.authenticate("google", {
     scope: ["profile", "email"],
     prompt: "select_account"
-}
-));
-
-
+})
+);
 
 // verifying again
 app.get("/auth/google/callback", passport.authenticate("google", {
     failureRedirect: "/login"
 }), async (req, res) => {
+    console.log(req.session.select_userrole)
+    // console.log('req session role ---> ', req.cookies.select_userrole)
     res.redirect("/login")
 }
 );
+
+
+
+
+// app.get("/auth/google", (req, res, next) => {
+//     req.session.select_userrole = req.query.selectRole;
+//     const state = JSON.stringify({
+//         select_userrole: req.session.select_userrole
+//     });
+//     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=profile email&access_type=offline&include_granted_scopes=true&state=${state}&response_type=code&redirect_uri=${process.env.REDIRECT_URL}&client_id=${process.env.GOOGLE_CLIENT_ID}`;
+//     res.redirect(googleAuthUrl);
+// });
+
+
+// app.get("/auth/google/callback", passport.authenticate("google", {
+//     failureRedirect: "/login"
+// }), async (req, res) => {
+//     const state = JSON.parse(req.query.state);
+//     req.session.select_userrole = state.select_userrole;
+//     console.log(req.session.select_userrole);
+//     res.redirect("/login");
+// });
+
+
 
 
 app.use((req, res, next) => {
@@ -219,6 +256,7 @@ const pmRoute = require('./routes/project_mentor');
 app.use("/pm", pmRoute);
 
 const adminrouter = require("./routes/admin");
+const { chownSync } = require("fs");
 app.use("/admin", adminrouter);
 
 app.get('/failed', (req, res) => {

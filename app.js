@@ -13,6 +13,14 @@ const app = express();
 
 app.set("view engine", "ejs");
 
+// app.use(express.static(path.join(path.resolve(),"public")));
+
+app.use(express.static(__dirname + "/public", {
+    index: false, 
+    immutable: true, 
+    cacheControl: true,
+    maxAge: "30d"
+}));
 app.use(express.static("public"));
 
 app.use(flash());

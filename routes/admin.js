@@ -211,6 +211,7 @@ router.get("/addFaculty", (req, res) => {
 
 
 router.post("/addFaculty", (req, res) => {
+    console.log(req.body)
     var name = req.body.name;
     var email = req.body.email;
     var insertFaculty = `
@@ -329,16 +330,16 @@ router.post("/updateInstructor", (req, res) => {
 router.get("/:rollId", (req, res) => {
     // res.render("../views/approveForm.ejs")
     const id = req.params.rollId;
-    // console.log(req.params)
+    console.log(id)
     var getForm = `select * from leaveApplications where rollno = ${id} and admin_approval = 'Pending' and fa_approval != 'Pending' and mentor_approval != 'Pending'`
     dbConnect.query(getForm, (err, result) => {
         if (err) throw err;
         else {
-            console.log(result.rows[0])
             res.render('../views/approveForm.ejs', { data: result.rows[0] })
         }
     });
 });
+
 
 router.post("/:rollId", async (req, res) => {
     console.log(req.body);

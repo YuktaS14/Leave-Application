@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,186 +15,257 @@
     <script src="https://smtpjs.com/v3/smtp.js"></script>
 
     <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/styles.css"  />
+    <link rel="stylesheet" type="text/css" href="/styles.css" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
-<style>
 
-body{
-    padding:35px;
-    font-size: 15px;
+    <!-- new new -->
 
-}
-input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  input[type=submit] {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  input[type=submit]:hover {
-    background-color: #45a049;
-  }
-  
-  form div {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-  }
-  </style>
-  </head>
-  <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/admin">Admin Page</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" id = "viewAppl" href="/admin" onclick="showContent('viewAppl');">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Back to Dashboard
-                            </a>
-                            <div class="sb-sidenav-menu-heading">Interface</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
-                                Update Data
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <!-- <a class="nav-link" href="layout-static.html">Static Navigation</a>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+
+    <style>
+        body {
+            padding: 35px;
+            font-size: 15px;
+
+        }
+
+        input[type=text],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        form div {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        /* topper topper */
+        .select2-container .select2-selection--single {
+            height: 34px !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #ccc !important;
+            border-radius: 0px !important;
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="/admin">Admin Page</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" id="viewAppl" href="/admin" onclick="showContent('viewAppl');">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Back to Dashboard
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Interface</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
+                            Update Data
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <!-- <a class="nav-link" href="layout-static.html">Static Navigation</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a> -->
-                                    <a class="nav-link" href="/admin/addStudent" >Add Student Data</a>
-                                    <a class="nav-link" href="/admin/deleteStudent" >Delete Student Data</a>
-                                    <a class="nav-link" href="/admin/updateFA" >Change FA</a>
-                                    <a class="nav-link" href="/admin/updatePM" >Change Project Mentor</a>
-                                    <a class="nav-link" href="/admin/addTA" >Add TA</a>
-                                    <a class="nav-link" href="/admin/deleteTA" >Delete TA</a>          
-                                    <a class="nav-link" href="/admin/updateInstructor" >Change Instructor</a>
-                                    <a class="nav-link" href="/admin/addFaculty" >Add Faculty</a>
-                                    <a class="nav-link" href="/admin/deleteFaculty" >Delete Faculty</a>
-                                    <a class="nav-link" href="#"></a>
-                                </nav>
-                            </div>
-      
-                            <div class="sb-sidenav-menu-heading">Logout</div>
-                            <a class="nav-link" href="/logout">
-                                <div class="sb-nav-link-icon"><i class="fas fa-power-off"></i></div>
-                                Logout
-                            </a>
+                                <a class="nav-link" href="/admin/addStudent">Add Student Data</a>
+                                <a class="nav-link" href="/admin/deleteStudent">Delete Student Data</a>
+                                <a class="nav-link" href="/admin/updateFA">Change FA</a>
+                                <a class="nav-link" href="/admin/updatePM">Change Project Mentor</a>
+                                <a class="nav-link" href="/admin/addTA">Add TA</a>
+                                <a class="nav-link" href="/admin/deleteTA">Delete TA</a>
+                                <a class="nav-link" href="/admin/updateInstructor">Change Instructor</a>
+                                <a class="nav-link" href="/admin/addFaculty">Add Faculty</a>
+                                <a class="nav-link" href="/admin/deleteFaculty">Delete Faculty</a>
+                                <a class="nav-link" href="#"></a>
+                            </nav>
                         </div>
-                    </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
-                    </div>
-                </nav>
-            </div>
-            <div id="layoutSidenav_content">
-              <main>
-                  <div class="container-fluid px-4">
-                      <h1 class="mt-4">Add Student in the database</h1>
-                      <ol class="breadcrumb mb-4">
-                          <li class="breadcrumb-item active">Admin</li>
-                      </ol>
-                   
 
-                      <div class="card mb-4 content" id = "holidays-content">
+                        <div class="sb-sidenav-menu-heading">Logout</div>
+                        <a class="nav-link" href="/logout">
+                            <div class="sb-nav-link-icon"><i class="fas fa-power-off"></i></div>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Admin
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Add Student in the database</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Admin</li>
+                    </ol>
+
+
+                    <div class="card mb-4 content" id="holidays-content">
                         <div class="card-header">
                             <i class="fas fa-table me-2"></i>
                             Add Students
                         </div>
                         <div class="card-body">
-                          <div class="alert alert-success">
-                            <%
-                            if(message.length > 0){
-                            %>
-                            <%= message %> <%}%> </div>
+                            <div class="alert alert-success">
+                                <% if(message.length> 0){
+                                    %>
+                                    <%= message %>
+                                        <%}%>
+                            </div>
                             <div>
-                              <form action="/admin/addStudent" method = "post">
-                                <label for="rollNo">Roll No* :</label>
-                                <input type="text" id="rollNo" name="RollNo" required placeholder="Roll No..">
-                            
-                                <label for="name">Name* :</label>
-                                <input type="text" id="lname" name="name" required  placeholder="Name..">
-                            
-                                <label for="leaves">Leaves Alloted* :</label>
-                                <input type="text" id="lname" name="leavesAlloted" required  placeholder="Leaves Alloted..">
-                            
-                                <label for="fa">Faculty Advisor's Name* :</label>
-                                <input type="text" id="lname" name="FA" required  placeholder="FA..">
-                            
-                                <label for="pm">Project Mentor's Name* :</label>
-                                <input type="text" id="lname" name="PM"  required placeholder="PM..">
-                            
-                                <input type="submit" value="Add Student">
-                              </form>
-                            </div> 
+                                <form action="/admin/addStudent" method="post">
+                                    <label for="rollNo">Roll No</label>
+                                    <input type="text" id="rollNo" name="RollNo" required placeholder="Roll No..">
+
+                                    <label for="name">Name</label>
+                                    <input type="text" id="lname" name="name" required placeholder="Name..">
+
+                                    <label for="leaves">Leaves Alloted</label>
+                                    <input type="text" id="lname" name="leavesAlloted" required
+                                        placeholder="Leaves Alloted..">
+
+
+                                    <!-- <input type="text" id="lname" name="PM"  required placeholder="PM..">
+                                 -->
+                                    <!-- 
+                                    <select name="fa" style="background-color: white;">
+                                        <option value="" selected disabled> select project mentor </option>
+                                        <% faculty_list.forEach( row=> { %>
+                                            <option value="<%-row.email%>"> <%- row.name %> ( <%- row.email %> )
+                                            </option>
+                                            <%})%>
+                                    </select> -->
+
+
+                                    <label for="pm">Project Mentor </label>
+                                    <select name="fa" style="background-color: white;" class="form-control select2">
+                                        <option value="" selected disabled> select project mentor </option>
+                                        <% faculty_list.forEach( row=> { %>
+                                            <option value="<%-row.email%>"> <%- row.name %> ( <%- row.email %> )
+                                            </option>
+                                            <%})%>
+                                    </select>
+
+                                    <script>
+                                        $('.select2').select2();
+                                    </script>
+
+
+
+                                    <label for="fa">Faculty Advisor </label>
+                                    <!-- <input type="text" id="lname" name="FA" required  placeholder="FA..">-->
+                                    <select name="fa" style="background-color: white;" required>
+                                        <option value="" selected disabled> select faculty advisor </option>
+                                        <% faculty_list.forEach( row=> { %>
+                                            <option value="<%-row.email%>"> <%- row.name %> ( <%- row.email %> )
+                                            </option>
+                                            <%})%>
+                                    </select>
+
+
+
+
+                                    <input type="submit" value="Add Student">
+                                </form>
+                            </div>
                         </div>
-                      </div>
-                  
-                  
-              </main>
-              <footer class="py-4 bg-light mt-auto">
-                  <div class="container-fluid px-4">
-                      <div class="d-flex align-items-center justify-content-between small">
-                          <div class="text-muted">Copyright &copy; __</div>
-                           <!-- <div>
+                    </div>
+
+
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; __</div>
+                        <!-- <div>
                               <a href="#">Privacy Policy</a>
                               &middot;
                               <a href="#">Terms &amp; Conditions</a>
                           </div>  -->
-                      </div>
-                  </div>
-              </footer> 
-          </div>
-      </div>
-  
-  </body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-  <script>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+    crossorigin="anonymous"></script>
+<script>
 
     window.addEventListener('DOMContentLoaded', event => {
 
-    // Toggle the side navigation
-    const sidebarToggle = document.body.querySelector('#sidebarToggle');
-    if (sidebarToggle) {
-        // Uncomment Below to persist sidebar toggle between refreshes
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-        //     document.body.classList.toggle('sb-sidenav-toggled');
-        // }
-        sidebarToggle.addEventListener('click', event => {
-            event.preventDefault();
-            document.body.classList.toggle('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-        });
-    }
+        // Toggle the side navigation
+        const sidebarToggle = document.body.querySelector('#sidebarToggle');
+        if (sidebarToggle) {
+            // Uncomment Below to persist sidebar toggle between refreshes
+            // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+            //     document.body.classList.toggle('sb-sidenav-toggled');
+            // }
+            sidebarToggle.addEventListener('click', event => {
+                event.preventDefault();
+                document.body.classList.toggle('sb-sidenav-toggled');
+                localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+            });
+        }
 
     });
-  </script>
-  </html>
+</script>
+
+</html>

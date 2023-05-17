@@ -2,6 +2,13 @@ const express = require("express")
 const router = express.Router();
 const { dbConnect } = require("../data/database");
 
+const multer = require('multer');
+const csv = require('csv-parser');
+const fs = require('fs');
+const { Readable } = require('stream');
+
+const upload = multer();
+
 const nodemailer = require("nodemailer")
 
 const transporter = nodemailer.createTransport({
@@ -496,6 +503,35 @@ router.post("/updateInstructor", (req, res) => {
     })
 });
 
+
+router.get('/upload', (req, res) => {
+    console.log('csv');
+})
+
+router.post('/upload', upload.single('fileToUpload'), (req, res) => {
+    // Get the uploaded file buffer from req.file.buffer
+    const fileBuffer = req.file.buffer;
+    
+    console.log('buffer')
+
+    // Convert the file buffer to a readable stream
+    const fileStream = new Readable();
+    fileStream.push(fileBuffer.toString('utf16le'));    
+    fileStream.push(null);
+  
+    // Parse the CSV file using csv-parser
+    const results = [];
+    fileStream
+      .pipe(csv({ encoding: 'utf16le' }))
+      .on('data', (data) => results.push(data))
+      .on('end', () => {
+        // Do something with the CSV data
+        console.log(results);
+        res.send('File uploaded and processed successfully');
+      });
+  });
+
+
 router.get("/:rollId", (req, res) => {
     // res.render("../views/approveForm.ejs")
     const id = req.params.rollId;
@@ -610,7 +646,6 @@ router.post("/:rollId", async (req, res) => {
 
     // console.log(data)
 });
-
 
 // router.post("/",(req,res)=>{
 //     consolr.log(req);

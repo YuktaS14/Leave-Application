@@ -2,3 +2,6 @@
 2. Do every student have project manager
     --> if no at start and one request is pending always
     --> so when he get project manager how to find latest pending request
+
+
+3. changing the name fields in all admin pages

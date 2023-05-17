@@ -22,16 +22,16 @@ transporter.verify((error, success) => {
     }
 })
 
-router.use( async (req,res,next) => {
-    
+router.use(async (req, res, next) => {
+
     if (req.isAuthenticated()) {
 
         const email = req.user.emails[0].value
 
-        if( email == process.env.ADMIN_EMAIL ) {
+        if (email == process.env.ADMIN_EMAIL) {
             next()
         }
-        else{
+        else {
             res.redirect('/failed')
         }
 
@@ -39,7 +39,7 @@ router.use( async (req,res,next) => {
     else {
         res.render("login.ejs");
     }
-} )
+})
 
 
 
@@ -52,7 +52,7 @@ router.get("/", (req, res) => {
 
     console.log('Here')
 
-    if( req.user == undefined ) {
+    if (req.user == undefined) {
         res.redirect('/login')
         return
     }
@@ -63,6 +63,7 @@ router.get("/", (req, res) => {
     dbConnect.query(viewData, (err, result) => {
         if (err) throw err;
         else {
+            console.log(result.rows)
             res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
         }
     });
@@ -94,7 +95,20 @@ router.post("/", async (req, res) => {
 
 
 router.get("/addStudent", (req, res) => {
-    res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert') });
+
+    var q = ` select * from faculty `;
+
+    dbConnect.query(q, async (err, result) => {
+        if (err) throw err;
+        else {
+            // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+            result.rows.sort((a, b) => a.name.localeCompare(b.name))
+            console.log(result.rows)
+            res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+        }
+    });
+    // error
+    return
 });
 
 
@@ -129,7 +143,21 @@ router.post("/addStudent", (req, res) => {
 });
 
 router.get("/deleteStudent", (req, res) => {
-    res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') });
+
+    var q = ` select * from studentInfo `;
+
+    dbConnect.query(q, async (err, result) => {
+        if (err) throw err;
+        else {
+            // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+            result.rows.sort((a, b) => a.name.localeCompare(b.name))
+            console.log(result.rows)
+            // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+            res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete'), student_list: result.rows });
+        }
+    });
+    // error
+    return
 });
 
 
@@ -158,7 +186,37 @@ router.post("/deleteStudent", (req, res) => {
 });
 
 router.get("/addTA", (req, res) => {
-    res.render("../views/AddTA.ejs", { message: req.flash('taInsert') });
+
+
+    var q = ` select studentinfo.name as s_name,studentinfo.rollno as s_rollno from studentInfo`;
+
+    dbConnect.query(q, async (err, result) => {
+        if (err) throw err;
+        else {
+            // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+            // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+            // res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') , student_list : result.rows});
+
+            q = ` select faculty.name as f_name,faculty.email as f_email from faculty`;
+
+            dbConnect.query(q, async (err, result1) => {
+                if (err) throw err;
+                else {
+                    // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+                    // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+                    // res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') , student_list : result.rows});
+                    console.log(result1.rows)
+                    res.render("../views/AddTA.ejs", { message: req.flash('taInsert'), data: result1.rows, data1: result.rows });
+                    // res.render("../views/AddTA.ejs", { message: req.flash('taInsert') });
+                }
+            });
+
+            // console.log(result.rows)
+            // res.render("../views/ChangeFa.ejs", { message: req.flash('updateFA') , data : result.rows});
+        }
+    });
+    // error
+    return
 });
 
 
@@ -183,7 +241,21 @@ router.post("/addTA", (req, res) => {
 });
 
 router.get("/deleteTA", (req, res) => {
-    res.render("../views/DeleteTA.ejs", { message: req.flash('taDelete') });
+
+
+    var q = ` select * from studentInfo `;
+
+    dbConnect.query(q, async (err, result) => {
+        if (err) throw err;
+        else {
+            // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+            // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+            res.render("../views/DeleteTA.ejs", { message: req.flash('taDelete'), student_list: result.rows });
+        }
+    });
+    // error
+    return
+    // res.render("../views/DeleteTA.ejs", { message: req.flash('taDelete') });
 });
 
 
@@ -234,7 +306,21 @@ router.post("/addFaculty", (req, res) => {
 
 
 router.get("/deleteFaculty", (req, res) => {
-    res.render("../views/DeleteFaculty.ejs", { message: req.flash('deleteFaculty') });
+
+    var q = `select * from faculty`;
+
+    dbConnect.query(q, async (err, result) => {
+        if (err) throw err;
+        else {
+            // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+            // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+            res.render("../views/DeleteFaculty.ejs", { message: req.flash('taDelete'), faculty_list: result.rows });
+        }
+    });
+    // error
+    return
+
+    // res.render("../views/DeleteFaculty.ejs", { message: req.flash('deleteFaculty') });
 
 });
 
@@ -256,7 +342,35 @@ router.post("/deleteFaculty", (req, res) => {
 });
 
 router.get("/updateFA", (req, res) => {
-    res.render("../views/ChangeFa.ejs", { message: req.flash('updateFA') });
+
+    var q = ` select studentinfo.name as s_name,studentinfo.rollno as s_rollno from studentInfo`;
+
+    dbConnect.query(q, async (err, result) => {
+        if (err) throw err;
+        else {
+            // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+            // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+            // res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') , student_list : result.rows});
+
+            q = ` select faculty.name as f_name,faculty.email as f_email from faculty`;
+
+            dbConnect.query(q, async (err, result1) => {
+                if (err) throw err;
+                else {
+                    // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+                    // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+                    // res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') , student_list : result.rows});
+                    console.log(result1.rows)
+                    res.render("../views/ChangeFa.ejs", { message: req.flash('updateFA'), data: result1.rows, data1: result.rows });
+                }
+            });
+
+            // console.log(result.rows)
+            // res.render("../views/ChangeFa.ejs", { message: req.flash('updateFA') , data : result.rows});
+        }
+    });
+    // error
+    return
 
 });
 
@@ -280,7 +394,32 @@ router.post("/updateFA", (req, res) => {
 
 
 router.get("/updatePM", (req, res) => {
-    res.render("../views/ChangeProjectMentor.ejs", { message: req.flash('updatePM') });
+    // res.render("../views/ChangeProjectMentor.ejs", { message: req.flash('updatePM') });
+    var q = ` select studentinfo.name as s_name,studentinfo.rollno as s_rollno from studentInfo`;
+
+    dbConnect.query(q, async (err, result) => {
+        if (err) throw err;
+        else {
+            // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+            // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+            // res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') , student_list : result.rows});
+
+            q = ` select faculty.name as f_name,faculty.email as f_email from faculty`;
+
+            dbConnect.query(q, async (err, result1) => {
+                if (err) throw err;
+                else {
+                    // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+                    // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+                    // res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') , student_list : result.rows});
+                    console.log(result1.rows)
+                    res.render("../views/ChangeProjectMentor.ejs", { message: req.flash('updateFA'), data: result1.rows, data1: result.rows });
+                }
+            });
+        }
+    });
+    // error
+    return
 
 });
 
@@ -305,7 +444,37 @@ router.post("/updatePM", (req, res) => {
 
 
 router.get("/updateInstructor", (req, res) => {
-    res.render("../views/ChangeInstructor.ejs", { message: req.flash('updateInstructor') });
+
+    var q = ` select studentinfo.name as s_name,studentinfo.rollno as s_rollno from studentInfo`;
+
+    dbConnect.query(q, async (err, result) => {
+        if (err) throw err;
+        else {
+            // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+            // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+            // res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') , student_list : result.rows});
+
+            q = ` select faculty.name as f_name,faculty.email as f_email from faculty`;
+
+            dbConnect.query(q, async (err, result1) => {
+                if (err) throw err;
+                else {
+                    // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+                    // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+                    // res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') , student_list : result.rows});
+                    console.log(result1.rows)
+                    res.render("../views/ChangeInstructor.ejs", { message: req.flash('updateInstructor'), data: result1.rows, data1: result.rows });
+                }
+            });
+
+            // console.log(result.rows)
+            // res.render("../views/ChangeFa.ejs", { message: req.flash('updateFA') , data : result.rows});
+        }
+    });
+    // error
+    return
+
+    // res.render("../views/ChangeInstructor.ejs", { message: req.flash('updateInstructor') });
 
 });
 
@@ -368,49 +537,47 @@ router.post("/:rollId", async (req, res) => {
             if (err) throw err;
         });
     }
-    else{
-     comment = req.body.comment;
+    else {
+        comment = req.body.comment;
     }
 
-    
-    if(status == 'Not Approved')
-    {
+
+    if (status == 'Not Approved') {
         var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
-        dbConnect.query(updateStatus,(err,result)=>{
-            if(err) throw err;
+        dbConnect.query(updateStatus, (err, result) => {
+            if (err) throw err;
             // else{
             //     res.redirect('/admin')
             // }
         });
     }
-    else if(status == 'Approved')
-    {
-        const newLeft = leftleaves-applied ;
+    else if (status == 'Approved') {
+        const newLeft = leftleaves - applied;
         // console.log(newLeft)
         var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
         var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id}`
-        dbConnect.query(updateStatus,(err,result)=>{
-        if(err) throw err;
-        else{
-            dbConnect.query(updateLeaves,(err,result2)=>{
-                if(err) throw err;
-                // else{                
-                //     res.redirect('/admin')
-                                       
-                // }
+        dbConnect.query(updateStatus, (err, result) => {
+            if (err) throw err;
+            else {
+                dbConnect.query(updateLeaves, (err, result2) => {
+                    if (err) throw err;
+                    // else{                
+                    //     res.redirect('/admin')
+
+                    // }
                 })
             }
-        
+
         });
 
     }
 
-    if(status !== 'Pending'){
-    const mailOptions = {
-        from: process.env.USER_EMAIL,
-        to: 'salunkheyukta14@gmail.com',
-        subject: 'Leave Application',
-        text: `Your Leave has been ${status}
+    if (status !== 'Pending') {
+        const mailOptions = {
+            from: process.env.USER_EMAIL,
+            to: 'salunkheyukta14@gmail.com',
+            subject: 'Leave Application',
+            text: `Your Leave has been ${status}
             Details: 
             Roll No: ${id}
             Name:  ${nameOfScholar}
@@ -423,25 +590,25 @@ router.post("/:rollId", async (req, res) => {
             Additional Comment: ${comment}
             
         `
+        }
+        transporter
+            .sendMail(mailOptions)
+            .then(() => {
+                res.redirect('/admin')
+            })
+            .catch((error) => {
+                console.log(error);
+                res.json({ status: 'Failed', message: "An Error Occurred!! " })
+            })
     }
-    transporter
-        .sendMail(mailOptions)
-        .then(()=>{
-            res.redirect('/admin')
-        })
-        .catch((error)=>{
-            console.log(error);
-            res.json({status: 'Failed',message:"An Error Occurred!! "})
-        })
-    }
-    else{
+    else {
         res.redirect('/admin')
     }
 
 
 
 
-// console.log(data)
+    // console.log(data)
 });
 
 

@@ -21,14 +21,6 @@ app.use(express.static(__dirname + "/public", {
     cacheControl: true,
     maxAge: "30d"
 }));
-// app.use(express.static(path.join(path.resolve(),"public")));
-
-app.use(express.static(__dirname + "/public", {
-    index: false, 
-    immutable: true, 
-    cacheControl: true,
-    maxAge: "30d"
-}));
 
 app.use(flash());
 app.use(bodyParser.json());
@@ -115,10 +107,10 @@ app.get('/login', async (req, res, next) => {
 
         if (result.rows.length > 0) {
             // res.redirect(`/faculty/${userEmail}`)
-            if (req.session.select_userrole == 'faculty') {
+            // if (req.session.select_userrole == 'faculty') {
                 res.redirect(`/faculty`)
                 return
-            }
+            // }
         }
 
     } catch (err) {
@@ -142,10 +134,10 @@ app.get('/login', async (req, res, next) => {
 
         if (result.rows.length > 0) {
             // res.redirect(`/pm/${userEmail}`)
-            if (req.session.select_userrole == 'project_mentor') {
+            // if (req.session.select_userrole == 'project_mentor') {
                 res.redirect(`/pm`)
                 return
-            }
+            // }
         }
 
     } catch (err) {
@@ -174,10 +166,10 @@ app.get('/login', async (req, res, next) => {
         if (result.rows.length > 0) {
             // res.redirect(`/pm/${userEmail}`)
             console.log('student checked --> ', req.session.select_userrole)
-            if (req.session.select_userrole == 'student') {
+            // if (req.session.select_userrole == 'student') {
                 res.redirect(`/student`)
                 return
-            }
+            // }
         }
 
     } catch (err) {

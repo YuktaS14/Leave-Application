@@ -1,201 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculty Page</title>
-    <!-- <link rel = "stylesheet" href ="styles/asmin.css"></link> -->
+    <title>Admin Page</title>
     <link rel="shortcut icon" href="#">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
 
     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+  <link href="styles.css" rel="stylesheet" />
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  
     <style>
-        .content {
-            display: none;
-            margin-top: 40px;
-        }
-
-        .margin-right {
-            margin-right: 20px !important;
-        }
-
-        .options {
-            margin-right: 20px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            width: fit-content;
-            font-size: larger;
-
-            /* padding: 0px 10px; */
-        }
-
-        .formMain {
-            border-radius: 5px;
-            background-color: #f2f2f2;
-            padding: 20px;
-            text-align: center;
-            display: block inline;
-            font-size: 20px;
-            border: 1rem;
-            font-family: 'Times New Roman', Times, serif;
-        }
-    </style>
+		/* .content {
+			display: none;
+      margin-top: 40px;
+		}     */
+	</style>
 </head>
 
-<body>
-    <div class="container">
-        <h1>Welcome to the Faculy Page</h1>
-        <!-- <div class="btn-group btn-group-toggle btn-group-justified" data-togle="buttons"> -->
-        <div class="row">
-            <button type="button" class="col-sm-3 btn btn-primary btn-lg options" onclick="showContent('button1')">View
-                Applications</button>
-            <!-- <button type = "" class="col-sm-3 btn btn-primary btn-lg options" onclick="showContent('button2')">Update Data</button> -->
-            <!-- <button type = "button" class="col-sm-2 btn btn-primary btn-lg options" onclick="showContent('button3')">Update TA-Instructors</button> -->
-            <button type="button" class="col-sm-1 btn btn-primary btn-lg options" onclick="logout()">Logout</button>
-        </div>
+    <body class="sb-nav-fixed">
+      <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+          <!-- Navbar Brand-->
+          <a class="navbar-brand ps-3" href="/faculty">Faculty Page</a>
+          <!-- Sidebar Toggle-->
+          <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+      </nav>
+      <div id="layoutSidenav">
+          <div id="layoutSidenav_nav">
+              <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                  <div class="sb-sidenav-menu">
+                      <div class="nav">
+                          <!-- <div class="sb-sidenav-menu-heading">Core</div> -->
+                          <a class="nav-link" id = "viewAppl" href="#" onclick="showContent('viewAppl');">
+                              <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                              View Applications
+                          </a>
 
-        <div class="content" id="button1-content">
-            <!-- Content for button 1 -->
+                          <div class="sb-sidenav-menu-heading">Logout</div>
+                          <a class="nav-link" href="/logout">
+                              <div class="sb-nav-link-icon"><i class="fas fa-power-off"></i></div>
+                              Logout
+                          </a>
+                      </div>
+                  </div>
+                  <div class="sb-sidenav-footer">
+                      <div class="small">Logged in as:</div>
+                      Faculty Advisor
+                  </div>
+              </nav>
+          </div>
+          <div id="layoutSidenav_content">
+              <main>
+                  <div class="container-fluid px-4">
+                      <h1 class="mt-4">Dashboard</h1>
+                      <ol class="breadcrumb mb-4">
+                          <li class="breadcrumb-item active">Dashboard</li>
+                      </ol>
 
-            <h2 style="margin-left: 40%;">
-                <%= title %>
-            </h2>
-            <div>
-                <table class="table table-bordered table-responsive">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Roll No</th>
-                            <th>Name Of Scholar</th>
-                            <th>Department</th>
-                            <th>Program</th>
-                            <th>Leaves Left</th>
-                            <th>Type of Leave</th>
-                            <th>Purpose</th>
-                            <th>No. of Days</th>
-                            <th>From</th>
-                            <th>Till Date</th>
-                            <th>Nature Of Duty</th>
-                            <th>Alternate Student Roll No</th>
-                            <th>Alternate Student Name</th>
-                            <th>FA's Approval</th>
-                            <th>Project Mentor's Approval</th>
-                            <th>Final Approval</th>
-                        </tr>
-                    </thead>
-                    <% if(data.length>0){
-                        data.forEach((record)=>{
-                        %>
-                        <tr>
-                            <td>
-                                <%= record.rollno %>
-                            </td>
-                            <td>
-                                <%= record.nameofscholar %>
-                            </td>
-                            <td>
-                                <%= record.department %>
-                            </td>
-                            <td>
-                                <%= record.program %>
-                            </td>
-                            <td>
-                                <%= record.leavesleft %>
-                            </td>
-                            <td>
-                                <%= record.typeofleave %>
-                            </td>
-                            <td>
-                                <%= record.leavepurpose %>
-                            </td>
-                            <td>
-                                <%= record.daysapplied %>
-                            </td>
-                            <td>
-                                <%= record.fromdate.toISOString().slice(0, 10);%>
-                            </td>
-                            <td>
-                                <%= record.todate.toISOString().slice(0, 10); %>
-                            </td>
-                            <td>
-                                <%= record.natureofduty %>
-                            </td>
-                            <td>
-                                <%= record.alternatestudrolno %>
-                            </td>
-                            <td>
-                                <%= record.alternatestudname %>
-                            </td>
-                            <!-- <td><%= record.alternatestudname %></td> -->
-                            <td>
-                                <%= record.fa_approval %>
-                            </td>
-                            <td>
-                                <%= record.mentor_approval %>
-                            </td>
-                            <td>
+                      <div class="card mb-4 content" id = "viewAppl-content"  style="display:block;">
+                          <div class="card-header">
+                              <i class="fas fa-table me-2"></i>
+                              Leave Applications
+                          </div>
+                          <div class="card-body" >
+                           
+                              <table id="datatablesSimple">
+                                  <thead>
+                                      <tr>
+                                        <th>Roll No</th>
+                                        <th>Name Of Scholar</th>
+                                        <th>Department</th>
+                                        <th>Program</th>
+                                        <th>FA's Approval</th>
+                                        <th>Project Mentor's Approval</th>
+                                        <th>View Form</th>
+                                      </tr>
+                                  </thead>
+                                  <tfoot>
+                                      <tr>
+                                        <th>Roll No</th>
+                                        <th>Name Of Scholar</th>
+                                        <th>Department</th>
+                                        <th>Program</th>
+                                        <th>FA's Approval</th>
+                                        <th>Project Mentor's Approval</th>
+                                        <th>View Form</th>
+                                      </tr>
+                                  </tfoot>
+                                  <tbody> 
+                                    <% 
+                                    i = 0;
+                                    if(data.length>0){
+                                      data.forEach((record)=>{
+                                    %>
+                                      <tr>
+                                      <td><%= record.rollno %></td>
+                                      <td><%= record.nameofscholar %></td>
+                                      <td><%= record.department %></td>
+                                      <td><%= record.program %></td>
+                                      <td><%= record.fa_approval%></td>
+                                      <td><%= record.mentor_approval%></td>                  
+                                      <td >
+                                      <div>
+                                    <form method = 'get' action = /faculty/<%= record.rollno%> >
+                                      <input type="submit" value="Open Form" style="font-family: Arial, sans-serif; font-size: 16px;" >
+                                    </form> 
+                                    </div>
+                                  </td>
+                                  </tr>
+                                  <% i++;
+                                  });} %>
 
-                                <form method='get' action=/faculty/<%=record.rollno%> >
-                                    <input type="submit" value="Open Form"
-                                        style="font-family: Arial, sans-serif; font-size: 16px;">
-                                </form>
-
-                            </td>
-                        </tr>
-                        <% });} else{ %>
-                            <tr>
-                                <td colspan="12" style="color: red;"> No Data Found</td>
-                            </tr>
-                            <% } %>
-                </table>
-            </div>
-        </div>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                
+                  
+              </main>
+              <footer class="py-4 bg-light mt-auto">
+                  <div class="container-fluid px-4">
+                      <div class="d-flex align-items-center justify-content-between small">
+                          <div class="text-muted">Copyright &copy; __</div>
+                          <!-- <div>
+                              <a href="#">Privacy Policy</a>
+                              &middot;
+                              <a href="#">Terms &amp; Conditions</a>
+                          </div> -->
+                      </div>
+                  </div>
+              </footer>
+          </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+      <!-- <script src="js/scripts.js"></script> -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+      <!-- <script src="assets/demo/chart-area-demo.js"></script> -->
+      <!-- <script src="assets/demo/chart-bar-demo.js"></script> -->
+      <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+      <!-- <script src="js/datatables-simple-demo.js"></script> -->
 
 
-    </div>
 
-    <script>
-        var lastClick = null;
-        // var isNone = null;
-        function showContent(buttonId) {
-            const selectedContenthiv = document.getElementById(buttonId + '-content');
-            var content = selectedContenthiv.style.display;
+    
 
-            var contenthivs = document.getElementsByClassName('content');
-            for (var i = 0; i < contenthivs.length; i++) {
-                contenthivs[i].style.display = 'none';
-            }
+	<script>
+    var lastClick = 'button1';
+		function showContent(buttonId) {
+      const selectedContenthiv = document.getElementById(buttonId + '-content');
+      var content = selectedContenthiv.style.display;
 
-            if (lastClick == buttonId && content == 'block') {
-                selectedContenthiv.style.display = 'none';
-            }
-            else
-                selectedContenthiv.style.display = 'block';
-            lastClick = buttonId;
-        }
+      var contenthivs = document.getElementsByClassName('content');
+			for (var i = 0; i < contenthivs.length; i++) {
+				contenthivs[i].style.display = 'none';
+			}
 
-        function logout() {
-            window.location.href = '/logout';
-        }
+      if(lastClick == buttonId  && content == 'block'){
+          selectedContenthiv.style.display = 'none';}
+      else
+        selectedContenthiv.style.display = 'block';
+      lastClick = buttonId;
+		}
 
-    </script>
+		function logout() {
+			window.location.href = '/logout';
+		}
+
+
+   function added(){
+      document.getElementById("onAdd").innerHTML = "Added Successfully!! ";
+      setTimeout(()=>{
+        document.getElementById("onAdd").innerHTML = '';
+
+      },2000);
+    }
+
+    window.addEventListener('DOMContentLoaded', event => {
+
+// Toggle the side navigation
+const sidebarToggle = document.body.querySelector('#sidebarToggle');
+if (sidebarToggle) {
+    // Uncomment Below to persist sidebar toggle between refreshes
+    // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+    //     document.body.classList.toggle('sb-sidenav-toggled');
+    // }
+    sidebarToggle.addEventListener('click', event => {
+        event.preventDefault();
+        document.body.classList.toggle('sb-sidenav-toggled');
+        localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+    });
+}
+
+});
+
+// Call the dataTables jQuery plugin
+// $(document).ready(function() {
+//   $('#dataTable').DataTable();
+// });
+
+window.addEventListener('DOMContentLoaded', event => {
+    // Simple-DataTables
+    // https://github.com/fiduswriter/Simple-DataTables/wiki
+
+    const datatablesSimple = document.getElementById('datatablesSimple');
+    if (datatablesSimple) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+});
+
+
+
+	</script>
+
+
+
+
+
 </body>
-
 </html>

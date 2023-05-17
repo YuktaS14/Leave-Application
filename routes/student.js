@@ -147,6 +147,10 @@ router.get("/", async (req, res, next) => {
     res.render("studentHomePage.ejs", temp)
 });
 
+router.get('*', (req, res) => {
+    res.render('../views/page_not_found.ejs')
+})
+
 // router.get("/", async (req,res,next)=>{
 
 //     rollno = 112001010

@@ -329,6 +329,8 @@
                                       <th>Project Mentor's Approval</th>
                                       <th>Leave Type</th>
                                       <th>Reason</th>
+                                      <th>Total overflow</th>
+                                      <th>current overflow</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -353,6 +355,8 @@
                                             <td> <%- record.mentor_approval %> </td>
                                             <td> <%- record.typeofleave %> </td>
                                             <td> <%- record.leavepurpose %> </td>
+                                            <td> <%- record.total_overflow %> </td>
+                                            <td> <%- record.current_overflow %> </td>
             
                                         </tr>
                
@@ -417,14 +421,14 @@
                     
                                     <option value="" disabled selected> select appropriate option </option>
                     
-                                    <option value="Leave with stipend not exceeding 30 days"> Leave with stipend not exceeding 30 days
+                                    <option value="1"> Leave with stipend not exceeding 30 days
                                     </option>
-                                    <option value="for attending conferences/seminars"> for attending conferences/seminars </option>
-                                    <option value="Women Fellows with less than two surviving children"> Women Fellows with less than two
+                                    <option value="2"> for attending conferences/seminars </option>
+                                    <option value="3"> Women Fellows with less than two
                                         surviving children </option>
-                                    <option value="Second maternity leave applications"> Second maternity leave applications </option>
-                                    <option value="Male Fellows of institute HTRA / CSIR"> Male Fellows of institute HTRA / CSIR </option>
-                                    <option value="Other"> Other </option>
+                                    <option value="4"> Second maternity leave applications </option>
+                                    <option value="5"> Male Fellows of institute HTRA / CSIR </option>
+                                    <option value="6"> Other </option>
                     
                                 </select>
                     
@@ -455,7 +459,16 @@
                     
                                 <label>Leave applied for:</label>
                                 <input type="number" name="leave-days" id="noOfDays" readonly />
+                                
+                                <label>Total Overflow days</label>
+                                <input type="number" name="Total-overflow-days" id="totaloverflowDays" readonly value="<%-studentInfo[0].overflow%>"/>
+
+                                <label>Current Overflow days</label>
+                                <input type="number" name="current-overflow-days" id="overflowDays" readonly value="0"/>
+
                     
+                                
+
                                 <hr>
                     
                                 <label> <b> Arrangement of HTRA/HTTA duties during the period of leave </b></label>
@@ -499,8 +512,8 @@
                                 <script>
                                     var currentDate = new Date().toISOString().slice(0, 10);
                                     document.getElementById("applicationDate").value = currentDate;
-                                    document.getElementById("from").setAttribute("min", currentDate);
-                                    document.getElementById("to").setAttribute("min", currentDate);
+                                    // document.getElementById("from").setAttribute("min", currentDate);
+                                    // document.getElementById("to").setAttribute("min", currentDate);
                                 </script>
                     
                                 <div style="display:flex; flex-direction: row;  padding: auto 0;">
@@ -697,13 +710,17 @@ function countWeekendDays(startDate, endDate) {
             const numdays = numDays - countWeekendDays(startDate, endDate) + 1 - counter;
 
             const allow = document.getElementById('noOfLeavesLeft').value
-
+            let flag = false
             if (numdays >= allow) {
-                alert(`You can apply for max ${allow} days`);
-                document.getElementById("to").value = ""
-                return;
+                alert(`You are applying for more days than allocated days`);
+                document.getElementById("overflowDays").value = (numdays - allow)
+                document.getElementById("overflowDays").style = 'color:red'
+                flag = true
             }
-
+            if(!flag){
+                document.getElementById("overflowDays").value = 0
+                document.getElementById("overflowDays").style = 'color:black'
+            }
             document.getElementById("noOfDays").value = numdays;
         }
 
@@ -712,19 +729,19 @@ function countWeekendDays(startDate, endDate) {
             const val = document.getElementById("typeOfLeave").value;
             var inputbox = document.getElementById("typeOfLeaveReason");
             var text = "None"
-            if (val == "Leave with stipend not exceeding 30 days") {
+            if (val == "1") {
                 text = `Leave with stipend not exceeding 30 days for each completed year of tenure may be allowed. Sanction of leave without stipend may be considered under special circumstances. If the Fellow is away from the Institute for more than a period of 7 days, then all the holidays that come within that period will be counted as leave.`
             }
-            else if (val == "for attending conferences/seminars") {
+            else if (val == "2") {
                 text = `The Fellow should take permission for visits abroad for attending conferences/seminars etc. The absence for such foreign visits will be treated as on duty.`
             }
-            else if (val == "Women Fellows with less than two surviving children") {
+            else if (val == "3") {
                 text = `Women Fellows with less than two surviving children are entitled to full stipend plus HRA, during the period of absence up to 180 days on grounds of maternity once in the entire duration of PhD. The Fellowship amount for leave period will be paid after the fellow resumes duty and submits a medical certificate in support of actual confinement. It is expected that the Fellow will make up for the research work during the remaining tenure.`
             }
-            else if (val == "Second maternity leave applications") {
+            else if (val == "4") {
                 text = `Second maternity leave applications from the women research scholars shall be considered as under “other valid reasons” for grant of leave. Accordingly, the second maternity leave, if granted, shall be without any fellowship. The total duration of the fellowship should be five years from the date of joining and any extension provided beyond five years shall be without fellowship.`
             }
-            else if (val == "Male Fellows of institute HTRA / CSIR") {
+            else if (val == "5") {
                 text = `Male Fellows of institute HTRA / CSIR are entitled for 15 days paternity leave during the confinement of his wife on submission of relevant documentary proof. The leave shall be taken at a single stretch, without a break and can be availed only once during the period of fellowship.`
             }
             else {
@@ -733,8 +750,7 @@ function countWeekendDays(startDate, endDate) {
             }
 
             inputbox.style.display = "block"
-            inputbox.innerHTML = text;
-
+            inputbox.innerHTML = '<i>' + text + '</i>';
         }
 
 

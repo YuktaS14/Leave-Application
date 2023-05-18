@@ -9,7 +9,8 @@ const { Readable } = require('stream');
 
 const upload = multer();
 
-const nodemailer = require("nodemailer")
+const nodemailer = require("nodemailer");
+const { resolve } = require("path");
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -53,11 +54,11 @@ router.use(async (req, res, next) => {
 router.get("/", (req, res) => {
     // res.render("admin.ejs")
 
-    console.log('Here')
+    // console.log('Here')
 
-    console.log(req.admin)
+    // console.log(req.admin)
 
-    console.log('Here')
+    // console.log('Here')
 
     if (req.user == undefined) {
         res.redirect('/login')
@@ -65,17 +66,38 @@ router.get("/", (req, res) => {
     }
 
     // console.log('Here')
+    const pendingAppl = new Promise((resolve,reject) =>{
+        let viewData = `select * from leaveApplications where admin_approval = 'Pending' and fa_approval <> 'Pending' and mentor_approval <> 'Pending'`;
+        dbConnect.query(viewData, (err, result) => {
+            if (err) reject(err);
+            else {
+                resolve(result);
+            }
+        });
 
-    var viewData = `select * from leaveApplications where admin_approval = 'Pending' and fa_approval <> 'Pending' and mentor_approval <> 'Pending'`
-    dbConnect.query(viewData, (err, result) => {
-        if (err) throw err;
-        else {
-            console.log(result.rows)
-            res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
-        }
     });
 
+    // const allAppl = new Promise((resolve,reject) =>{
+    //     let allData = `select * from leaveApplications` ;
+    //     dbConnect.query(allData, (err, result) => {
+    //         if (err) reject(err);
+    //         else {
+    //             resolve(result);
+    //         }
+    //     }); 
+
+    // });
+
+    Promise.all([pendingAppl])
+    .then((results) =>{
+        // console.log(results[0].rows);
+        res.render("admin.ejs",{data: (results[0].rows)})
+    })
+    .catch(error=>{
+        console.error(error);
+    });
 });
+
 
 router.post("/", async (req, res) => {
     var event = req.body.event;
@@ -461,7 +483,20 @@ router.post("/updatePM", (req, res) => {
     })
 });
 
+router.get("/getAll",(req,res)=>{
+    
+    let getAppl = `
+        select * from leaveapplications`;
 
+    dbConnect.query(getAppl, (err, result) => {
+        if (err) throw err;
+        else {
+
+            console.log(result.rows)
+         res.render("allAppl.ejs", {allAppl:result.rows})   
+        }
+    })
+})
 
 router.get("/updateInstructor", (req, res) => {
 

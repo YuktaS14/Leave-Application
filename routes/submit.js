@@ -24,6 +24,18 @@ router.post("/", async (req, res,next) => {
     var natureofduty = req.body['duty-nature']
     var alternatestudrolno = Number(req.body['alternate-scholar-rollno'])
     var alternatestudname = req.body['alternate-scholar-name']
+    var totaloverflow = Number(req.body['Total-overflow-days'])
+    var currentoverflow = Number(req.body['current-overflow-days'])
+
+    console.log(`
+    INSERT INTO leaveapplications
+    VALUES 
+    ( 
+        ${rollno},'${nameofscholar}','${department}','${program}',${leavesleft},'${leavepurpose}',${daysapplied},
+        '${fromdate}', '${todate}', '${natureofduty}',${alternatestudrolno},'${alternatestudname}','Pending','Pending','Pending','${typeofleave}',
+        ${totaloverflow},${currentoverflow}
+    );
+    `)
 
     try {
         const result = await new Promise((resolve, reject) => {
@@ -33,7 +45,8 @@ router.post("/", async (req, res,next) => {
                 VALUES 
                 ( 
                     ${rollno},'${nameofscholar}','${department}','${program}',${leavesleft},'${leavepurpose}',${daysapplied},
-                    '${fromdate}', '${todate}', '${natureofduty}',${alternatestudrolno},'${alternatestudname}','Pending','Pending','Pending','${typeofleave}'
+                    '${fromdate}', '${todate}', '${natureofduty}',${alternatestudrolno},'${alternatestudname}','Pending','Pending','Pending','${typeofleave}',
+                    ${totaloverflow},${currentoverflow}
                 );
                 `
                 ,
@@ -57,9 +70,9 @@ router.post("/", async (req, res,next) => {
 
 })
 
-router.get('*', (req, res) => {
-    res.render('../views/page_not_found.ejs')
-})
+// router.get('*', (req, res) => {
+//     res.render('../views/page_not_found.ejs')
+// })
 
 
 module.exports = router;

@@ -493,9 +493,7 @@ router.get("/updateInstructor", (req, res) => {
     });
     // error
     return
-
     // res.render("../views/ChangeInstructor.ejs", { message: req.flash('updateInstructor') });
-
 });
 
 router.post("/updateInstructor", (req, res) => {
@@ -553,6 +551,11 @@ router.get("/:rollId(\\d{9})", (req, res) => {
     dbConnect.query(getForm, (err, result) => {
         if (err) throw err;
         else {
+            // console.log(result.rows.length==0)
+            if(result.rows.length==0){
+                res.redirect('/yukta')
+                return
+            }
             res.render('../views/approveForm.ejs', { data: result.rows[0] })
         }
     });
@@ -618,7 +621,6 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
             }
 
         });
-
     }
 
     if (status !== 'Pending') {

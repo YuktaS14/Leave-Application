@@ -83,7 +83,7 @@ app.get('/login', async (req, res, next) => {
     const userEmail = req.user.emails[0].value;
 
     console.log(userEmail)
-    console.log('inside login-->',req.session.select_userrole)
+    console.log('inside login-->', req.session.select_userrole)
 
     if (userEmail == process.env.ADMIN_EMAIL) {
         // req.admin = {"admin":"true"}
@@ -198,7 +198,8 @@ app.get('/login', async (req, res, next) => {
 // app.get("/auth/google/callback", passport.authenticate("google", {
 //     failureRedirect: "/login"
 // }), async (req, res) => {
-//     console.log(req.session.select_userrole)
+//     // console.log(req.session.select_userrole)
+//     console.log('inside callback')
 //     // console.log('req session role ---> ', req.cookies.select_userrole)
 //     res.redirect("/login")
 // }
@@ -226,7 +227,7 @@ app.get("/auth/google/callback", passport.authenticate("google", {
 }), async (req, res) => {
     const state = JSON.parse(req.query.state);
     req.session.select_userrole = state.select_userrole;
-    console.log('----> Mangesh',req.session.select_userrole);
+    console.log('----> Mangesh', req.session.select_userrole);
     res.redirect("/login");
 });
 

@@ -8,7 +8,7 @@ require("dotenv").config();
 const { dbConnect } = require("./data/database");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
-
+const { OAuth2Client } = require("google-auth-library");
 const app = express();
 
 app.set("view engine", "ejs");
@@ -16,8 +16,8 @@ app.set("view engine", "ejs");
 // app.use(express.static(path.join(path.resolve(),"public")));
 
 app.use(express.static(__dirname + "/public", {
-    index: false, 
-    immutable: true, 
+    index: false,
+    immutable: true,
     cacheControl: true,
     maxAge: "30d"
 }));
@@ -83,6 +83,7 @@ app.get('/login', async (req, res, next) => {
     const userEmail = req.user.emails[0].value;
 
     console.log(userEmail)
+    console.log('inside login-->',req.session.select_userrole)
 
     if (userEmail == process.env.ADMIN_EMAIL) {
         // req.admin = {"admin":"true"}
@@ -108,8 +109,8 @@ app.get('/login', async (req, res, next) => {
         if (result.rows.length > 0) {
             // res.redirect(`/faculty/${userEmail}`)
             // if (req.session.select_userrole == 'faculty') {
-                res.redirect(`/faculty`)
-                return
+            res.redirect(`/faculty`)
+            return
             // }
         }
 
@@ -135,8 +136,8 @@ app.get('/login', async (req, res, next) => {
         if (result.rows.length > 0) {
             // res.redirect(`/pm/${userEmail}`)
             // if (req.session.select_userrole == 'project_mentor') {
-                res.redirect(`/pm`)
-                return
+            res.redirect(`/pm`)
+            return
             // }
         }
 
@@ -167,8 +168,8 @@ app.get('/login', async (req, res, next) => {
             // res.redirect(`/pm/${userEmail}`)
             console.log('student checked --> ', req.session.select_userrole)
             // if (req.session.select_userrole == 'student') {
-                res.redirect(`/student`)
-                return
+            res.redirect(`/student`)
+            return
             // }
         }
 
@@ -181,49 +182,53 @@ app.get('/login', async (req, res, next) => {
 })
 
 
-app.get("/auth/google", (req, res, next) => {
-
-    req.session.select_userrole = req.query.selectRole
-    console.log('req session role ---> ', req.session.select_userrole)
-    next()
-
-}, passport.authenticate("google", {
-    scope: ["profile", "email"],
-    prompt: "select_account"
-})
-);
-
-// verifying again
-app.get("/auth/google/callback", passport.authenticate("google", {
-    failureRedirect: "/login"
-}), async (req, res) => {
-    console.log(req.session.select_userrole)
-    // console.log('req session role ---> ', req.cookies.select_userrole)
-    res.redirect("/login")
-}
-);
-
-
-
-
 // app.get("/auth/google", (req, res, next) => {
-//     req.session.select_userrole = req.query.selectRole;
-//     const state = JSON.stringify({
-//         select_userrole: req.session.select_userrole
-//     });
-//     const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=profile email&access_type=offline&include_granted_scopes=true&state=${state}&response_type=code&redirect_uri=${process.env.REDIRECT_URL}&client_id=${process.env.GOOGLE_CLIENT_ID}`;
-//     res.redirect(googleAuthUrl);
-// });
 
+//     req.session.select_userrole = req.query.selectRole
+//     console.log('req session role ---> ', req.session.select_userrole)
+//     next()
 
+// }, passport.authenticate("google", {
+//     scope: ["profile", "email"],
+//     prompt: "select_account"
+// })
+// );
+
+// // verifying again
 // app.get("/auth/google/callback", passport.authenticate("google", {
 //     failureRedirect: "/login"
 // }), async (req, res) => {
-//     const state = JSON.parse(req.query.state);
-//     req.session.select_userrole = state.select_userrole;
-//     console.log(req.session.select_userrole);
-//     res.redirect("/login");
-// });
+//     console.log(req.session.select_userrole)
+//     // console.log('req session role ---> ', req.cookies.select_userrole)
+//     res.redirect("/login")
+// }
+// );
+
+
+
+
+app.get("/auth/google", (req, res, next) => {
+    req.session.select_userrole = req.query.selectRole;
+    const state = JSON.stringify({
+        select_userrole: req.session.select_userrole
+    });
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=profile email&access_type=offline&include_granted_scopes=true&state=${state}&response_type=code&redirect_uri=${process.env.REDIRECT_URL}&client_id=${process.env.GOOGLE_CLIENT_ID}`;
+
+    // const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=profile email&access_type=offline&include_granted_scopes=true&state=${state}&response_type=code&redirect_uri=${process.env.REDIRECT_URL}&client_id=${process.env.GOOGLE_CLIENT_ID}&prompt=consent`;
+
+
+    res.redirect(googleAuthUrl);
+});
+
+
+app.get("/auth/google/callback", passport.authenticate("google", {
+    failureRedirect: "/login"
+}), async (req, res) => {
+    const state = JSON.parse(req.query.state);
+    req.session.select_userrole = state.select_userrole;
+    console.log('----> Mangesh',req.session.select_userrole);
+    res.redirect("/login");
+});
 
 
 
@@ -249,7 +254,6 @@ app.get("/logout", (req, res) => {
     });
 });
 
-
 const studentRoute = require('./routes/student');
 app.use("/student", studentRoute);
 
@@ -263,11 +267,10 @@ const pmRoute = require('./routes/project_mentor');
 app.use("/pm", pmRoute);
 
 const adminrouter = require("./routes/admin");
-const { chownSync } = require("fs");
 app.use("/admin", adminrouter);
 
-app.get('/failed', (req, res) => {
-    res.send('Hello')
+app.get('*', (req, res) => {
+    res.render('page_not_found.ejs')
 })
 
 app.listen(5000, () => {

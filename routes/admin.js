@@ -2,6 +2,13 @@ const express = require("express")
 const router = express.Router();
 const { dbConnect } = require("../data/database");
 
+const multer = require('multer');
+const csv = require('csv-parser');
+const fs = require('fs');
+const { Readable } = require('stream');
+
+const upload = multer();
+
 const nodemailer = require("nodemailer")
 
 const transporter = nodemailer.createTransport({
@@ -93,6 +100,19 @@ router.post("/", async (req, res) => {
 
 });
 
+router.get("/viewstudentfaculty", (req, res) => {
+
+    var q = `select * from studentfaculty`;
+
+    dbConnect.query(q, async (err, result) => {
+        if (err) throw err;
+        else {
+            res.render("../views/student_faculty.ejs", { title: 'Leave Applications', action: 'list', data: result.rows });
+        }
+    });
+    // error
+    return
+});
 
 router.get("/addStudent", (req, res) => {
 
@@ -496,7 +516,36 @@ router.post("/updateInstructor", (req, res) => {
     })
 });
 
-router.get("/:rollId", (req, res) => {
+
+router.get('/upload', (req, res) => {
+    console.log('csv');
+})
+
+router.post('/upload', upload.single('fileToUpload'), (req, res) => {
+    // Get the uploaded file buffer from req.file.buffer
+    const fileBuffer = req.file.buffer;
+
+    console.log('buffer')
+
+    // Convert the file buffer to a readable stream
+    const fileStream = new Readable();
+    fileStream.push(fileBuffer.toString('utf16le'));
+    fileStream.push(null);
+
+    // Parse the CSV file using csv-parser
+    const results = [];
+    fileStream
+        .pipe(csv({ encoding: 'utf16le' }))
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+            // Do something with the CSV data
+            console.log(results);
+            res.send('File uploaded and processed successfully');
+        });
+});
+
+
+router.get("/:rollId(\\d{9})", (req, res) => {
     // res.render("../views/approveForm.ejs")
     const id = req.params.rollId;
     console.log(id)
@@ -510,7 +559,7 @@ router.get("/:rollId", (req, res) => {
 });
 
 
-router.post("/:rollId", async (req, res) => {
+router.post("/:rollId(\\d{9})", async (req, res) => {
     console.log(req.body);
 
     const id = req.body.regno;
@@ -611,6 +660,9 @@ router.post("/:rollId", async (req, res) => {
     // console.log(data)
 });
 
+router.get('*', (req, res) => {
+    res.render('../views/page_not_found.ejs')
+})
 
 // router.post("/",(req,res)=>{
 //     consolr.log(req);

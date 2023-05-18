@@ -57,6 +57,11 @@ router.post("/", async (req, res,next) => {
 
 })
 
+router.get('*', (req, res) => {
+    res.render('../views/page_not_found.ejs')
+})
+
+
 module.exports = router;
 
 // '${req.body.dept}' , '${req.body.program}',

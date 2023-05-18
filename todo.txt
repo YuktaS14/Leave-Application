@@ -5,3 +5,6 @@
 
 
 3. changing the name fields in all admin pages
+
+
+4. Adding CSV data to database

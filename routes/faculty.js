@@ -94,7 +94,7 @@ router.get("/", async (req, res, next) => {
 })
 
 
-router.get("/:rollId",async (req,res)=>{
+router.get("/:rollId(\\d{9})",async (req,res)=>{
     // res.render("../views/approveForm.ejs")
 
     const facultyemail = req.user.emails[0].value
@@ -141,6 +141,10 @@ router.get("/:rollId",async (req,res)=>{
 });
 });
 
+
+router.get('*', (req, res) => {
+    res.render('../views/page_not_found.ejs')
+})
 
 module.exports = router;
 

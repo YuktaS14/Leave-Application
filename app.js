@@ -209,6 +209,7 @@ app.get('/login', async (req, res, next) => {
 
 app.get("/auth/google", (req, res, next) => {
     req.session.select_userrole = req.query.selectRole;
+    console.log(req.session.select_userrole)
     const state = JSON.stringify({
         select_userrole: req.session.select_userrole
     });
@@ -224,6 +225,7 @@ app.get("/auth/google", (req, res, next) => {
 app.get("/auth/google/callback", passport.authenticate("google", {
     failureRedirect: "/login"
 }), async (req, res) => {
+    console.log('---->')
     const state = JSON.parse(req.query.state);
     req.session.select_userrole = state.select_userrole;
     console.log('----> Mangesh', req.session.select_userrole);

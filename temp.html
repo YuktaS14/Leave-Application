@@ -8,16 +8,22 @@
   <style>
     .login-form {
       opacity: 0;
-      animation: fadeIn 1s forwards;
+      transform: translateY(-100%);
+      animation: slideIn 1s forwards;
     }
     
     .shake {
       animation: shake 0.5s;
     }
     
-    @keyframes fadeIn {
+    @keyframes slideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-100%);
+      }
       100% {
         opacity: 1;
+        transform: translateY(0);
       }
     }
     
@@ -70,6 +76,12 @@
   </div>
 
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var loginForm = document.querySelector('.login-form');
+      loginForm.style.opacity = '1';
+      loginForm.style.transform = 'translateY(0)';
+    });
+
     document.querySelector('.login-form').addEventListener('submit', function(e) {
       e.preventDefault();
       

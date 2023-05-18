@@ -115,6 +115,67 @@ router.get("/:rollId(\\d{9})", async (req, res) => {
     });
 });
 
+
+router.post("/:rollId(\\d{9})", async (req, res) => {
+
+    console.log('----------------<<<<')
+
+    console.log(req.body);
+
+    const id = req.body.regno;
+    const status = req.body.status;
+    const applied = req.body.leaveDays;
+    const leftleaves = req.body.noOfLeavesLeft;
+    const nameOfScholar = req.body.name;
+    const typeOfLeave = req.body.leaveType;
+    const startDate = req.body.leavefromdate;
+    const tillDate = req.body.leaveToDate;
+    // const FA_approval = req.body.FA_approval;
+    // const PM_approval = req.body.PM_approval;
+    if (req.body.comment == '') {
+        comment = "-";
+    }
+    else {
+        comment = req.body.comment;
+    }
+
+
+    if (status !== 'Pending') {
+        const mailOptions = {
+            from: process.env.USER_EMAIL,
+            to: 'dalvimangesh000@gmail.com',
+            subject: 'Leave Application',
+            text: `
+            Kindly check the leave Application form of:
+
+            Roll No: ${id}
+            Name:  ${nameOfScholar}
+            Type Of Leave: ${typeOfLeave}
+            Leave From:  ${startDate}       TO: ${tillDate} 
+            FA Approval Status: ${status}            
+            Additional Comment: ${comment}   
+        `
+        }
+        transporter
+            .sendMail(mailOptions)
+            .then(() => {
+                res.redirect('/pm')
+            })
+            .catch((error) => {
+                console.log(error);
+                res.json({ status: 'Failed', message: "An Error Occurred!! " })
+            })
+    }
+    else {
+        res.redirect('/pm')
+    }
+
+    // console.log(data)
+});
+
+
+
+
 router.get('*', (req, res) => {
     res.render('../views/page_not_found.ejs')
 })

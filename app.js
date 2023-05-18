@@ -8,7 +8,6 @@ require("dotenv").config();
 const { dbConnect } = require("./data/database");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
-const { OAuth2Client } = require("google-auth-library");
 const app = express();
 
 app.set("view engine", "ejs");
@@ -106,12 +105,12 @@ app.get('/login', async (req, res, next) => {
             );
         });
 
+        console.log('faculty checking')
+        console.log(result.rows.length)
+
         if (result.rows.length > 0) {
-            // res.redirect(`/faculty/${userEmail}`)
-            // if (req.session.select_userrole == 'faculty') {
-            res.redirect(`/faculty`)
-            return
-            // }
+            res.redirect('/faculty');
+            return;
         }
 
     } catch (err) {
@@ -270,9 +269,9 @@ app.use("/pm", pmRoute);
 const adminrouter = require("./routes/admin");
 app.use("/admin", adminrouter);
 
-app.get('*', (req, res) => {
-    res.render('page_not_found.ejs')
-})
+// app.get('*', (req, res) => {
+//     res.render('page_not_found.ejs')
+// })
 
 app.listen(5000, () => {
     console.log("server working")

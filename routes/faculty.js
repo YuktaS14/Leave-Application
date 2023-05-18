@@ -3,6 +3,27 @@ const { dbConnect } = require("../data/database");
 const router = express.Router();
 
 
+const nodemailer = require("nodemailer");
+const { resolve } = require("path");
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.USER_EMAIL,
+        pass: process.env.PASSWORD
+
+    }
+})
+transporter.verify((error, success) => {
+    if (error) {
+        console.log(error)
+    }
+    else {
+        console.log("Ready for message");
+        console.log(success)
+    }
+})
+
 
 router.use( async (req,res,next) => {
     if (req.isAuthenticated()) {
@@ -142,11 +163,113 @@ router.get("/:rollId(\\d{9})",async (req,res)=>{
 });
 
 
+router.post("/:rollId(\\d{9})", async (req, res) => {
+
+    console.log('----------------<<<<')
+
+    console.log(req.body);
+
+    const id = req.body.regno;
+    const status = req.body.status;
+    const applied = req.body.leaveDays;
+    const leftleaves = req.body.noOfLeavesLeft;
+    const nameOfScholar = req.body.name;
+    const typeOfLeave = req.body.leaveType;
+    const startDate = req.body.leavefromdate;
+    const tillDate = req.body.leaveToDate;
+    // const FA_approval = req.body.FA_approval;
+    // const PM_approval = req.body.PM_approval;
+    if (req.body.comment == '') {
+        comment = "-";
+    }
+    else {
+        comment = req.body.comment;
+    }
+
+
+    // if (status == 'Not Approved') {
+    //     var updateStatus = `Update leaveApplications set fa_approval = '${status}' where rollno = ${id}`
+    //     dbConnect.query(updateStatus, (err, result) => {
+    //         if (err) throw err;
+    //     });
+    // }
+    // else {
+    //     comment = req.body.comment;
+    // }
+
+
+    // if (status == 'Not Approved') {
+    //     var updateStatus = `Update leaveApplications set fa_approval = '${status}' where rollno = ${id}`
+    //     dbConnect.query(updateStatus, (err, result) => {
+    //         if (err) throw err;
+    //         // else{
+    //         //     res.redirect('/admin')
+    //         // }
+    //     });
+    // }
+    // else if (status == 'Approved') {
+    //     const newLeft = leftleaves - applied;
+    //     // console.log(newLeft)
+    //     var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
+    //     var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id}`
+    //     dbConnect.query(updateStatus, (err, result) => {
+    //         if (err) throw err;
+    //         else {
+    //             dbConnect.query(updateLeaves, (err, result2) => {
+    //                 if (err) throw err;
+    //                 // else{                
+    //                 //     res.redirect('/admin')
+
+    //                 // }
+    //             })
+    //         }
+
+    //     });
+    // }
+
+    if (status !== 'Pending') {
+        const mailOptions = {
+            from: process.env.USER_EMAIL,
+            to: 'dalvimangesh000@gmail.com',
+            subject: 'Leave Application',
+            text: `
+            Kindly check the leave Application form of:
+
+            Roll No: ${id}
+            Name:  ${nameOfScholar}
+            Type Of Leave: ${typeOfLeave}
+            Leave From:  ${startDate}       TO: ${tillDate} 
+            FA Approval Status: ${status}            
+            Additional Comment: ${comment}   
+        `
+        }
+        transporter
+            .sendMail(mailOptions)
+            .then(() => {
+                res.redirect('/faculty')
+            })
+            .catch((error) => {
+                console.log(error);
+                res.json({ status: 'Failed', message: "An Error Occurred!! " })
+            })
+    }
+    else {
+        res.redirect('/faculty')
+    }
+
+    // console.log(data)
+});
+
+
+
+
 router.get('*', (req, res) => {
     res.render('../views/page_not_found.ejs')
 })
 
+
 module.exports = router;
+
 
 
 

@@ -151,7 +151,7 @@
         <!-- <input type = "button" value="Back" onclick="back();" style="width: 200px; margin: 20px;align-self: center; border-style: solid;">-->
         <a href="#" onclick="back();"> <-- Back</a> 
     </div>
-    <form id="main_form" method ='post' action = "/admin/<%= data.rollno %>">
+    <form id="main_form" method ='post' action = "/pm/<%-data.rollno%>">
 
         <label> Name of the Scholar: </label>
         <input type="text" name="name" id="Name" readonly  value=" <%= data.nameofscholar %>  ">
@@ -214,12 +214,11 @@
         <hr>
         <label> FA Approval Status: </label>
         <input type="text" name="FA_approval" value="<%= data.fa_approval%>" readonly/>
-        <label>Project Manager Approval Status:</label>
-        <input type="text" name="PM_approval" value="<%= data.mentor_approval%>" readonly/>
+
         <hr>
-        <label> Admin Approval: Please Choose: </label>
+        <label> Project Mentor's Approval: Please Choose: </label>
         <select name="status" id="approvalStatus"  readonly>
-            <option value="Pending" selected><%= data.admin_approval %></option>
+            <option value="Pending" selected><%= data.pm_approval %></option>
             <option value="Approved" > Approve </option>
             <option value="Not Approved" > Reject </option>
 

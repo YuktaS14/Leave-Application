@@ -6,7 +6,7 @@ pkg.types.setTypeParser(1114, function (value) {
   return value
 })
 
-pkg.types.setTypeParser(1082, function(value) { //date
+pkg.types.setTypeParser(1082, function(value) { 
     return value;
 });
 

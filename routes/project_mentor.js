@@ -2,6 +2,32 @@ const express = require("express");
 const { dbConnect } = require("../data/database");
 const router = express.Router();
 
+
+const nodemailer = require("nodemailer");
+const { resolve } = require("path");
+const { start } = require("repl");
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.USER_EMAIL,
+        pass: process.env.PASSWORD
+
+    }
+})
+
+
+transporter.verify((error, success) => {
+    if (error) {
+        console.log(error)
+    }
+    else {
+        console.log("Ready for message");
+        console.log(success)
+    }
+})
+
+
 router.use(async (req, res, next) => {
     if (req.isAuthenticated()) {
         var pmEmail = req.user.emails[0].value
@@ -143,7 +169,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
 
     if (status == 'Not Approved') {
         var updateStatus = `Update leaveApplications set mentor_approval = '${status}' 
-        where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        where rollno = ${id} and leavesleft = ${leftleaves}`
         dbConnect.query(updateStatus, (err, result) => {
             if (err) throw err;
             else{
@@ -154,7 +180,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     else if (status == 'Approved') {
         const newLeft = leftleaves - applied;
         // console.log(newLeft)
-        var updateStatus = `Update leaveApplications set mentor_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        var updateStatus = `Update leaveApplications set mentor_approval = '${status}' where rollno = ${id} and leavesleft = ${leftleaves}`
         // var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
         dbConnect.query(updateStatus, (err, result) => {
             if (err) throw err;

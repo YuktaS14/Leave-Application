@@ -5,6 +5,7 @@ const router = express.Router();
 
 const nodemailer = require("nodemailer");
 const { resolve } = require("path");
+const { start } = require("repl");
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -180,6 +181,9 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     const startDate = req.body.leavefromdate;
     const endDate = req.body.leaveToDate;
     const tillDate = req.body.leaveToDate;
+
+    console.log(startDate)
+
     // const FA_approval = req.body.FA_approval;
     // const PM_approval = req.body.PM_approval;
     if (req.body.comment == '') {
@@ -203,18 +207,20 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     
     if (status == 'Not Approved') {
         var updateStatus = `Update leaveApplications set fa_approval = '${status}' 
-        where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        where rollno = ${id} and and leavesleft = ${leftleaves}`
         dbConnect.query(updateStatus, (err, result) => {
             if (err) throw err;
             else{
                 res.redirect('/faculty')
+                return
             }
         });
     }
     else if (status == 'Approved') {
         const newLeft = leftleaves - applied;
         // console.log(newLeft)
-        var updateStatus = `Update leaveApplications set fa_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        // var updateStatus = `Update leaveApplications set fa_approval = 'Approved' where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        var updateStatus = `Update leaveApplications set fa_approval = 'Approved' where rollno = ${id} and leavesleft = ${leftleaves}`
         // var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
         dbConnect.query(updateStatus, (err, result) => {
             if (err) throw err;
@@ -260,9 +266,9 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
 
 
 
-router.get('*', (req, res) => {
-    res.render('../views/page_not_found.ejs')
-})
+// router.get('*', (req, res) => {
+//     res.render('../views/page_not_found.ejs')
+// })
 
 
 module.exports = router;

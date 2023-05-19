@@ -504,8 +504,9 @@ router.get("/getAll", (req, res) => {
     dbConnect.query(getAppl, (err, result) => {
         if (err) throw err;
         else {
-
+            console.log('-----------------------------------------------------')
             console.log(result.rows)
+            console.log('-----------------------------------------------------')
             res.render("allAppl.ejs", { allAppl: result.rows })
         }
     })
@@ -568,7 +569,7 @@ router.get('/upload', (req, res) => {
 
 router.post('/upload', upload.single('fileToUpload'), (req, res) => {
     // Get the uploaded file buffer from req.file.buffer
-    const fileBuffer = req.file.buffer; ata.typeofl
+    const fileBuffer = req.file.buffer;
 
     console.log('buffer')
 
@@ -606,6 +607,7 @@ router.get("/:rollId(\\d{9})", (req, res) => {
             res.render('../views/approveForm.ejs', { data: result.rows[0] })
         }
     });
+    return
 });
 
 
@@ -634,19 +636,19 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
 
 
     if (status == 'Not Approved') {
-        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}
-        and fromdate='${startDate}' and todate='${tillDate}'`
+        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and leavesleft = ${leftleaves}`
         dbConnect.query(updateStatus, (err, result) => {
             if (err) throw err;
             else {
                 res.redirect('/admin')
+                return
             }
         });
     }
     else if (status == 'Approved') {
         // console.log(newLeft)
         var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}
-        and fromdate='${startDate}' and todate='${tillDate}'
+        and leavesleft = ${leftleaves} '
         `
 
         if (typeOfLeave == 1 || typeOfLeave == 6 ) {
@@ -678,7 +680,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
 
             let total = 0
 
-            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${tillDate}'`
+            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and leavesleft = ${leftleaves}`
 
             var q = `select sum(daysapplied) from leaveApplications where admin_approval = 'Approved' and rollno=${id}`
             dbConnect.query(q, (err, result) => {
@@ -722,7 +724,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
 
         else{
 
-            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${tillDate}'`
+            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and leavesleft = ${leftleaves}`
             dbConnect.query(updateStatus, (err, result) => {
                 if (err) throw err;
                 else {
@@ -765,6 +767,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     }
 
     // console.log(data)
+    return
 });
 
 router.get('*', (req, res) => {

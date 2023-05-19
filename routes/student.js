@@ -165,8 +165,6 @@ router.get("/", async (req, res, next) => {
         next(err);
     }
 
-    console.log(temp)
-
     res.render("studentHomePage.ejs", temp)
 });
 

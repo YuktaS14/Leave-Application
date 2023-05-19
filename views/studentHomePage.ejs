@@ -354,8 +354,8 @@
                                     <% leaveapplications.forEach((record)=> { %>
 
                                         <tr>
-                                            <td> <%- record.fromdate.toISOString().slice(0, 10); %> </td>
-                                            <td> <%- record.todate.toISOString().slice(0, 10); %> </td>
+                                            <td> <%- new Date(record.fromdate ).toISOString().slice(0, 10); %> </td>
+                                            <td> <%- new Date(record.todate).toISOString().slice(0, 10); %> </td>
                                             <td> <%- record.admin_approval %> </td>
                                             <td> <%- record.fa_approval %> </td>
                                             <td> <%- record.mentor_approval %> </td>
@@ -683,9 +683,9 @@
 
             // Get the start and end dates
             const startDate = new Date(document.getElementById("from").value);
-            startDate.setHours(0, 0, 0, 0);
+            startDate.setHours(18, 30, 0, 0);
             const endDate = new Date(document.getElementById("to").value);
-            endDate.setHours(0, 0, 0, 0);
+            endDate.setHours(18, 30, 0, 0);
 
             if ((!endDate) || (!startDate)) {
                 return;
@@ -763,8 +763,8 @@
                             document.getElementById("overflowDays").style = 'color:black'
                         }
                     }
-
                 }
+                document.getElementById("noOfDays").value = numdays;
                 return
             }
 
@@ -815,9 +815,6 @@
 
 
     </script>
-
-
-
 
 
 </body>

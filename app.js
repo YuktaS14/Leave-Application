@@ -79,13 +79,14 @@ app.get('/login', async (req, res, next) => {
         return
     }
 
+    dbConnect.query(`SET TIMEZONE TO 'Asia/Kolkata';`);
+
     const userEmail = req.user.emails[0].value;
 
     console.log(userEmail)
     console.log('inside login-->', req.session.select_userrole)
 
-    if (userEmail == process.env.ADMIN_EMAIL) {
-        // req.admin = {"admin":"true"}
+    if (userEmail == process.env.ADMIN_EMAIL && req.session.select_userrole == 'admin') {
         res.redirect("/admin");
         return
     }
@@ -94,7 +95,7 @@ app.get('/login', async (req, res, next) => {
     try {
         const result = await new Promise((resolve, reject) => {
             dbConnect.query(
-                `SELECT * FROM studentfaculty WHERE faculty_email = '${userEmail}'`,
+                `SELECT * FROM faculty WHERE email = '${userEmail}'`,
                 (err, result) => {
                     if (err) {
                         reject(err);
@@ -109,41 +110,18 @@ app.get('/login', async (req, res, next) => {
         console.log(result.rows.length)
 
         if (result.rows.length > 0) {
-            res.redirect('/faculty');
+            if (req.session.select_userrole == 'faculty') {
+                res.redirect('/faculty');
+            }
+            else if (req.session.select_userrole == 'project_mentor') {
+                res.redirect(`/pm`)
+            }
             return;
         }
 
     } catch (err) {
         next(err);
     }
-
-    // checking for pm
-    try {
-        const result = await new Promise((resolve, reject) => {
-            dbConnect.query(
-                `SELECT * FROM studentfaculty WHERE projectmentor_email = '${userEmail}'`,
-                (err, result) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(result);
-                    }
-                }
-            );
-        });
-
-        if (result.rows.length > 0) {
-            // res.redirect(`/pm/${userEmail}`)
-            // if (req.session.select_userrole == 'project_mentor') {
-            res.redirect(`/pm`)
-            return
-            // }
-        }
-
-    } catch (err) {
-        next(err);
-    }
-
 
     // checking for students
 
@@ -166,18 +144,17 @@ app.get('/login', async (req, res, next) => {
         if (result.rows.length > 0) {
             // res.redirect(`/pm/${userEmail}`)
             console.log('student checked --> ', req.session.select_userrole)
-            // if (req.session.select_userrole == 'student') {
-            res.redirect(`/student`)
+            if (req.session.select_userrole == 'student') {
+                res.redirect(`/student`)
+            }
             return
-            // }
         }
 
     } catch (err) {
         next(err);
     }
-
-
     res.redirect("/failed")
+    return
 })
 
 
@@ -187,9 +164,9 @@ app.get("/auth/google", (req, res, next) => {
     const state = JSON.stringify({
         select_userrole: req.session.select_userrole
     });
-    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=profile email&access_type=offline&include_granted_scopes=true&state=${state}&response_type=code&redirect_uri=${process.env.REDIRECT_URL}&client_id=${process.env.GOOGLE_CLIENT_ID}`;
+    // const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=profile email&access_type=offline&include_granted_scopes=true&state=${state}&response_type=code&redirect_uri=${process.env.REDIRECT_URL}&client_id=${process.env.GOOGLE_CLIENT_ID}`;
 
-    // const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=profile email&access_type=offline&include_granted_scopes=true&state=${state}&response_type=code&redirect_uri=${process.env.REDIRECT_URL}&client_id=${process.env.GOOGLE_CLIENT_ID}&prompt=consent`;
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=profile email&access_type=offline&include_granted_scopes=true&state=${state}&response_type=code&redirect_uri=${process.env.REDIRECT_URL}&client_id=${process.env.GOOGLE_CLIENT_ID}&prompt=consent`;
 
 
     res.redirect(googleAuthUrl);
@@ -245,40 +222,10 @@ app.use("/pm", pmRoute);
 const adminrouter = require("./routes/admin");
 app.use("/admin", adminrouter);
 
-// app.get('*', (req, res) => {
-//     res.render('page_not_found.ejs')
-// })
+app.get('*', (req, res) => {
+    res.render('page_not_found.ejs')
+})
 
 app.listen(5000, () => {
     console.log("server working")
 })
-
-// console.log(2+3)
-
-// dbConnect.query('select * from studentInfo',(err,result)=>{
-//     if(!err){
-//         console.log(result.rows);
-//     }
-//     dbConnect.end();
-// });
-
-
-
-// app.get("/dashboard", (req, res) => {
-//     if (req.isAuthenticated()) {
-//         // console.log(req.user.emails[0].value)
-
-//         if (req.user.emails[0].value == process.env.ADMIN_EMAIL) {
-
-//             res.redirect("/admin")
-
-//         } else {
-//             res.redirect("/failed");
-//         }
-//         // res.render("dashbord.ejs", {
-//         //     user: req.user
-//         // });
-//     } else {
-//         res.redirect("/");
-//     }
-// })

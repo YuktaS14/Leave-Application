@@ -199,6 +199,14 @@
         <label>Leave applied for:</label>
         <input type="number" name="leaveDays" id="noOfDays" readonly  value="<%= data.daysapplied %>"/>
 
+        <label>Total Overflow days</label>
+        <input type="number" name="Total-overflow-days" id="totaloverflowDays" readonly
+            value="<%-data.total_overflow%>" />
+
+        <label>Current Overflow days</label>
+        <input type="number" name="current-overflow-days" id="overflowDays" readonly
+            value="<%-data.current_overflow%>" />
+
         <hr>
 
         <label> <b> Arrangement of HTRA/HTTA duties during the period of leave </b></label>

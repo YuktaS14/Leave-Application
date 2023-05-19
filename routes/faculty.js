@@ -14,6 +14,8 @@ const transporter = nodemailer.createTransport({
 
     }
 })
+
+
 transporter.verify((error, success) => {
     if (error) {
         console.log(error)
@@ -176,6 +178,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     const nameOfScholar = req.body.name;
     const typeOfLeave = req.body.leaveType;
     const startDate = req.body.leavefromdate;
+    const endDate = req.body.leaveToDate;
     const tillDate = req.body.leaveToDate;
     // const FA_approval = req.body.FA_approval;
     // const PM_approval = req.body.PM_approval;
@@ -197,35 +200,29 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     //     comment = req.body.comment;
     // }
 
-
-    // if (status == 'Not Approved') {
-    //     var updateStatus = `Update leaveApplications set fa_approval = '${status}' where rollno = ${id}`
-    //     dbConnect.query(updateStatus, (err, result) => {
-    //         if (err) throw err;
-    //         // else{
-    //         //     res.redirect('/admin')
-    //         // }
-    //     });
-    // }
-    // else if (status == 'Approved') {
-    //     const newLeft = leftleaves - applied;
-    //     // console.log(newLeft)
-    //     var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
-    //     var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id}`
-    //     dbConnect.query(updateStatus, (err, result) => {
-    //         if (err) throw err;
-    //         else {
-    //             dbConnect.query(updateLeaves, (err, result2) => {
-    //                 if (err) throw err;
-    //                 // else{                
-    //                 //     res.redirect('/admin')
-
-    //                 // }
-    //             })
-    //         }
-
-    //     });
-    // }
+    
+    if (status == 'Not Approved') {
+        var updateStatus = `Update leaveApplications set fa_approval = '${status}' 
+        where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        dbConnect.query(updateStatus, (err, result) => {
+            if (err) throw err;
+            else{
+                res.redirect('/faculty')
+            }
+        });
+    }
+    else if (status == 'Approved') {
+        const newLeft = leftleaves - applied;
+        // console.log(newLeft)
+        var updateStatus = `Update leaveApplications set fa_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        // var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        dbConnect.query(updateStatus, (err, result) => {
+            if (err) throw err;
+            else {
+                console.log(result)
+            }
+        });
+    }
 
     if (status !== 'Pending') {
         const mailOptions = {
@@ -269,111 +266,3 @@ router.get('*', (req, res) => {
 
 
 module.exports = router;
-
-
-
-
-// router.get("/", async (req, res, next) => {
-//     // res.render("admin.ejs")
-
-//     var facultyemail = 'archana@smail.iitpkd.ac.in'
-
-//     var fname = null
-
-//     try {
-//         const result = await new Promise((resolve, reject) => {
-//             dbConnect.query(
-//                 `SELECT * FROM faculty WHERE email = '${facultyemail}'`,
-//                 (err, result) => {
-//                     if (err) {
-//                         reject(err);
-//                     } else {
-//                         resolve(result);
-//                     }
-//                 }
-//             );
-//         });
-
-//         // temp.studentInfo = result.rows;
-//         fname = result.rows[0].name
-
-//         // res.render("studentHomePage.ejs", obj );
-//     } catch (err) {
-//         next(err);
-//     }
-
-//     var rollnumbers = null
-
-//     try {
-//         const result = await new Promise((resolve, reject) => {
-//             dbConnect.query(
-//                 `SELECT rollno FROM studentfaculty WHERE  facultyadvisor like '%${fname}%' `,
-//                 (err, result) => {
-//                     if (err) {
-//                         reject(err);
-//                     } else {
-//                         resolve(result);
-//                     }
-//                 }
-//             );
-//         });
-
-//         // temp.studentInfo = result.rows;
-//         // fname = result.rows[0].name
-//         rollnumbers = result.rows
-
-//         // res.render("studentHomePage.ejs", obj );
-//     } catch (err) {
-//         next(err);
-//     }
-
-//     console.log(rollnumbers)
-
-//     var res = []
-
-//     await rollnumbers.forEach( async element => {
-
-//         try {
-//             const result = await new Promise((resolve, reject) => {
-//                 dbConnect.query(
-//                     `SELECT * FROM leaveApplications WHERE rollno = ${element.rollno} `,
-//                     (err, result) => {
-//                         if (err) {
-//                             reject(err);
-//                         } else {
-//                             resolve(result);
-//                         }
-//                     }
-//                 );
-//             });
-
-//             // temp.studentInfo = result.rows;
-//             // fname = result.rows[0].name
-//             console.log(result.rows)
-//             res.push(...result.rows)
-//             // temp = result.rows
-
-
-//             // res.render("studentHomePage.ejs", obj );
-//         } catch (err) {
-//             next(err);
-//         }
-
-//     });
-    
-//     // console.log('hello')
-//     // console.log(res)
-//     // console.log('hello')
-
-
-//     // var viewData = 'select * from leaveApplications'
-//     // dbConnect.query(viewData, (err, result) => {
-//     //     if (err) throw err;
-//     //     else {
-//     //         res.render('faculty.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
-//     //     }
-//     // })
-// })
-
-
-// module.exports = router;

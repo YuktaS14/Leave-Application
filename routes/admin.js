@@ -11,6 +11,7 @@ const upload = multer();
 
 const nodemailer = require("nodemailer");
 const { resolve } = require("path");
+const { title } = require("process");
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -66,7 +67,7 @@ router.get("/", (req, res) => {
     }
 
     // console.log('Here')
-    const pendingAppl = new Promise((resolve,reject) =>{
+    const pendingAppl = new Promise((resolve, reject) => {
         let viewData = `select * from leaveApplications where admin_approval = 'Pending' and fa_approval <> 'Pending' and mentor_approval <> 'Pending'`;
         dbConnect.query(viewData, (err, result) => {
             if (err) reject(err);
@@ -89,13 +90,13 @@ router.get("/", (req, res) => {
     // });
 
     Promise.all([pendingAppl])
-    .then((results) =>{
-        // console.log(results[0].rows);
-        res.render("admin.ejs",{data: (results[0].rows)})
-    })
-    .catch(error=>{
-        console.error(error);
-    });
+        .then((results) => {
+            // console.log(results[0].rows);
+            res.render("admin.ejs", { data: (results[0].rows) })
+        })
+        .catch(error => {
+            console.error(error);
+        });
 });
 
 
@@ -122,6 +123,7 @@ router.post("/", async (req, res) => {
 
 });
 
+// incomplete
 router.get("/viewstudentfaculty", (req, res) => {
 
     var q = `select * from studentfaculty`;
@@ -138,7 +140,7 @@ router.get("/viewstudentfaculty", (req, res) => {
 
 router.get("/addStudent", (req, res) => {
 
-    var q = ` select * from faculty `;
+    var q = `select * from faculty`;
 
     dbConnect.query(q, async (err, result) => {
         if (err) throw err;
@@ -158,16 +160,16 @@ router.post("/addStudent", (req, res) => {
     var rollNo = req.body.RollNo;
     var name = req.body.name;
     var leaves = req.body.leavesAlloted;
-    var FA = req.body.FA;
-    var PM = req.body.PM;
+    var FA = req.body.fa;
+    var PM = req.body.pm;
     var insertData = `
-    INSERT INTO studentfaculty (rollno,name,facultyadvisor,projectmentor)
+    INSERT INTO studentfaculty (rollno,name,faculty_email,projectmentor_email)
     VALUES (${rollNo},'${name}','${FA}','${PM}')
     `;
 
     var insertData2 = `
-    INSERT INTO studentinfo (rollno,name,leavesleft)
-    VALUES (${rollNo},'${name}',${leaves})
+    INSERT INTO studentinfo (rollno,name,leavesleft,overflow)
+    VALUES (${rollNo},'${name}',${leaves},0)
     `;
     dbConnect.query(insertData, (err, result) => {
         if (err) throw err;
@@ -186,7 +188,7 @@ router.post("/addStudent", (req, res) => {
 
 router.get("/deleteStudent", (req, res) => {
 
-    var q = ` select * from studentInfo `;
+    var q = `select * from studentInfo`;
 
     dbConnect.query(q, async (err, result) => {
         if (err) throw err;
@@ -207,10 +209,10 @@ router.post("/deleteStudent", (req, res) => {
     var rollNo = req.body.RollNo;
     var name = req.body.name;
     var deleteData = `
-    DELETE FROM studentFaculty where rollNo = ${rollNo}
+    DELETE FROM studentFaculty where rollno = ${rollNo}
     `;
     var deleteData2 = `
-    DELETE FROM studentInfo where rollNo = ${rollNo}
+    DELETE FROM studentInfo where rollno = ${rollNo}
     `;
     dbConnect.query(deleteData, (err, result) => {
         if (err) throw err;
@@ -268,7 +270,7 @@ router.post("/addTA", (req, res) => {
     var course = req.body.course;
     var insertTA = `
     INSERT INTO tainstructor values
-    (${rollNo},'${name}', '${course}');
+    (${rollNo},'${course}','${name}');
     `;
 
     dbConnect.query(insertTA, (err, result) => {
@@ -336,7 +338,6 @@ router.post("/addFaculty", (req, res) => {
     dbConnect.query(insertFaculty, (err, result) => {
         if (err) throw err;
         else {
-
             req.flash('facultyInsert', 'Inserted faculty into database successfully!! ');
             res.redirect("/admin/addFaculty")
         }
@@ -356,7 +357,20 @@ router.get("/deleteFaculty", (req, res) => {
         else {
             // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
             // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
-            res.render("../views/DeleteFaculty.ejs", { message: req.flash('taDelete'), faculty_list: result.rows });
+
+            q = `select faculty_email as not_available from studentfaculty union select projectmentor_email as not_available from studentfaculty`;
+
+            dbConnect.query(q, async (err, result1) => {
+                if (err) throw err;
+                else {
+                    // res.render('admin.ejs', { title: 'Leave Applications', action: 'list', data: result.rows })
+                    // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
+                    console.log(result1.rows)
+                    res.render("../views/DeleteFaculty.ejs", { message: req.flash('taDelete'), faculty_list: result.rows, not_available: result1.rows });
+                }
+            });
+
+            // res.render("../views/DeleteFaculty.ejs", { message: req.flash('taDelete'), faculty_list: result.rows });
         }
     });
     // error
@@ -385,7 +399,7 @@ router.post("/deleteFaculty", (req, res) => {
 
 router.get("/updateFA", (req, res) => {
 
-    var q = ` select studentinfo.name as s_name,studentinfo.rollno as s_rollno from studentInfo`;
+    var q = `select studentinfo.name as s_name,studentinfo.rollno as s_rollno from studentInfo`;
 
     dbConnect.query(q, async (err, result) => {
         if (err) throw err;
@@ -394,7 +408,7 @@ router.get("/updateFA", (req, res) => {
             // res.render("../views/AddStudent.ejs", { message: req.flash('studentInsert'), faculty_list: result.rows });
             // res.render("../views/DeleteStudent.ejs", { message: req.flash('studentDelete') , student_list : result.rows});
 
-            q = ` select faculty.name as f_name,faculty.email as f_email from faculty`;
+            q = `select faculty.name as f_name,faculty.email as f_email from faculty`;
 
             dbConnect.query(q, async (err, result1) => {
                 if (err) throw err;
@@ -413,14 +427,13 @@ router.get("/updateFA", (req, res) => {
     });
     // error
     return
-
 });
 
 router.post("/updateFA", (req, res) => {
     var rollNo = req.body.RollNo;
     var FAnew = req.body.FAnew
     var updateFA = `
-    UPDATE studentFaculty SET facultyadvisor = '${FAnew}' where rollNo = ${rollNo} 
+    UPDATE studentFaculty SET faculty_email = '${FAnew}' where rollNo = ${rollNo} 
     `;
 
     dbConnect.query(updateFA, (err, result) => {
@@ -469,7 +482,7 @@ router.post("/updatePM", (req, res) => {
     var rollNo = req.body.RollNo;
     var PMnew = req.body.PMnew;
     var updatePM = `
-    UPDATE studentFaculty SET projectmentor = '${PMnew}' where rollNo = ${rollNo} 
+    UPDATE studentFaculty SET projectmentor_email = '${PMnew}' where rollNo = ${rollNo} 
     `;
 
     dbConnect.query(updatePM, (err, result) => {
@@ -483,8 +496,8 @@ router.post("/updatePM", (req, res) => {
     })
 });
 
-router.get("/getAll",(req,res)=>{
-    
+router.get("/getAll", (req, res) => {
+
     let getAppl = `
         select * from leaveapplications`;
 
@@ -493,14 +506,14 @@ router.get("/getAll",(req,res)=>{
         else {
 
             console.log(result.rows)
-         res.render("allAppl.ejs", {allAppl:result.rows})   
+            res.render("allAppl.ejs", { allAppl: result.rows })
         }
     })
 })
 
 router.get("/updateInstructor", (req, res) => {
 
-    var q = ` select studentinfo.name as s_name,studentinfo.rollno as s_rollno from studentInfo`;
+    var q = `select studentinfo.name as s_name,studentinfo.rollno as s_rollno from studentInfo`;
 
     dbConnect.query(q, async (err, result) => {
         if (err) throw err;
@@ -535,14 +548,13 @@ router.post("/updateInstructor", (req, res) => {
     var rollNo = req.body.RollNo;
     var instructor = req.body.Instructor;
     var updateInstructor = `
-    UPDATE tainstructor SET instructorname = '${instructor}' where rollNo = ${rollNo} 
-    `;
+    UPDATE tainstructor SET instructor_email = '${instructor}' where rollNo = ${rollNo} `;
 
     dbConnect.query(updateInstructor, (err, result) => {
         if (err) throw err;
         else {
 
-            req.flash('updateInstructor', 'Updated Instructor successfully!! ');
+            req.flash('updateInstructor', 'Updated Instructor successfully!!');
             res.redirect("/admin/updateInstructor")
         }
         console.log(req.body);
@@ -556,7 +568,7 @@ router.get('/upload', (req, res) => {
 
 router.post('/upload', upload.single('fileToUpload'), (req, res) => {
     // Get the uploaded file buffer from req.file.buffer
-    const fileBuffer = req.file.buffer;
+    const fileBuffer = req.file.buffer; ata.typeofl
 
     console.log('buffer')
 
@@ -587,8 +599,8 @@ router.get("/:rollId(\\d{9})", (req, res) => {
         if (err) throw err;
         else {
             // console.log(result.rows.length==0)
-            if(result.rows.length==0){
-                res.redirect('/yukta')
+            if (result.rows.length == 0) {
+                res.redirect('/failed')
                 return
             }
             res.render('../views/approveForm.ejs', { data: result.rows[0] })
@@ -610,6 +622,8 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     const tillDate = req.body.leaveToDate;
     const FA_approval = req.body.FA_approval;
     const PM_approval = req.body.PM_approval;
+    const total_overflow = req.body['Total-overflow-days']
+    const current_overflow = req.body['current-overflow-days']
     if (req.body.comment == '') {
         comment = "-";
     }
@@ -618,44 +632,105 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     }
 
 
-    if (status == 'Not Approved') {
-        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
-        dbConnect.query(updateStatus, (err, result) => {
-            if (err) throw err;
-        });
-    }
-    else {
-        comment = req.body.comment;
-    }
-
 
     if (status == 'Not Approved') {
-        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
-        dbConnect.query(updateStatus, (err, result) => {
-            if (err) throw err;
-            // else{
-            //     res.redirect('/admin')
-            // }
-        });
-    }
-    else if (status == 'Approved') {
-        const newLeft = leftleaves - applied;
-        // console.log(newLeft)
-        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}`
-        var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id}`
+        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}
+        and fromdate='${startDate}' and todate='${tillDate}'`
         dbConnect.query(updateStatus, (err, result) => {
             if (err) throw err;
             else {
-                dbConnect.query(updateLeaves, (err, result2) => {
-                    if (err) throw err;
-                    // else{                
-                    //     res.redirect('/admin')
+                res.redirect('/admin')
+            }
+        });
+    }
+    else if (status == 'Approved') {
+        // console.log(newLeft)
+        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}
+        and fromdate='${startDate}' and todate='${tillDate}'
+        `
 
-                    // }
-                })
+        if (typeOfLeave == 1 || typeOfLeave == 6 ) {
+
+            const newLeft = leftleaves - applied;
+
+            if (newLeft < 0) {
+                newLeft = 0;
             }
 
-        });
+            var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id};
+            Update studentinfo set overflow = overflow + ${current_overflow} where rollno = ${id}
+            `
+            dbConnect.query(updateStatus, (err, result) => {
+                if (err) throw err;
+                else {
+                    dbConnect.query(updateLeaves, (err, result2) => {
+                        if (err) throw err;
+                        else {
+                            console.log(result)
+
+                        }
+                    })
+                }
+            });
+        }
+
+        else if( typeOfLeave == '5' ) {
+
+            let total = 0
+
+            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${tillDate}'`
+
+            var q = `select sum(daysapplied) from leaveApplications where admin_approval = 'Approved' and rollno=${id}`
+            dbConnect.query(q, (err, result) => {
+                if (err) throw err;
+                else {
+                    console.log(result.rows[0].sum)
+                    total = result.rows[0].sum
+                }
+            });
+
+            const newLeft1 = (15-total-applied);
+            var newLeft = leftleaves
+
+            if( newLeft1 < 0 ) {
+                let extra =  applied - (15-total)
+                if( leftleaves - extra < 0 ) {
+                    current_overflow = extra - leftleaves
+                }
+                else{
+                    newLeft = leftleaves - extra
+                    current_overflow = 0
+                }
+            }
+
+            var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id};
+            Update studentinfo set overflow = overflow + ${current_overflow} where rollno = ${id}
+            `
+            dbConnect.query(updateStatus, (err, result) => {
+                if (err) throw err;
+                else {
+                    dbConnect.query(updateLeaves, (err, result2) => {
+                        if (err) throw err;
+                        else {
+                            console.log(result)
+
+                        }
+                    })
+                }
+            });
+        }
+
+        else{
+
+            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${tillDate}'`
+            dbConnect.query(updateStatus, (err, result) => {
+                if (err) throw err;
+                else {
+                    console.log(result)
+                }
+            });
+
+        }
     }
 
     if (status !== 'Pending') {
@@ -672,9 +747,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
             FA Approval Status: ${FA_approval}
             Project Mentor Approval Status:  ${PM_approval}
             Admin Approval Status:  ${status}
-            
             Additional Comment: ${comment}
-            
         `
         }
         transporter
@@ -691,27 +764,11 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
         res.redirect('/admin')
     }
 
-
-
-
     // console.log(data)
 });
 
 router.get('*', (req, res) => {
     res.render('../views/page_not_found.ejs')
 })
-
-// router.post("/",(req,res)=>{
-//     consolr.log(req);
-//     var viewData = 'select * from studentInfo'
-//     dbConnect.query(viewData,(err,result)=>{
-//         if(err) throw err;
-//         else{
-//             res.render('admin.ejs',{title:'Leave Applications',action:'list',sampleData:result})
-//         }
-//     });
-// });
-
-
 
 module.exports = router;

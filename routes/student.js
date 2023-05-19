@@ -3,48 +3,48 @@ const { dbConnect } = require("../data/database");
 const router = express.Router();
 
 
-router.use( async (req,res,next) => {
+router.use(async (req, res, next) => {
     if (req.isAuthenticated()) {
 
 
-    var userEmail = req.user.emails[0].value
+        var userEmail = req.user.emails[0].value
 
-    // console.log(facultyemail)
-    
-    try {
-        const result = await new Promise((resolve, reject) => {
-            dbConnect.query(
-                `SELECT * FROM studentinfo WHERE rollno = '${userEmail.split('@')[0]}'`,
-                (err, result) => {
-                    if (err) {
-                        // reject(err);
-                        res.redirect('/failed')
-                        return
-                    } else {
-                        resolve(result);
+        // console.log(facultyemail)
+
+        try {
+            const result = await new Promise((resolve, reject) => {
+                dbConnect.query(
+                    `SELECT * FROM studentinfo WHERE rollno = '${userEmail.split('@')[0]}'`,
+                    (err, result) => {
+                        if (err) {
+                            // reject(err);
+                            res.redirect('/failed')
+                            return
+                        } else {
+                            resolve(result);
+                        }
                     }
-                }
-            );
-        });
+                );
+            });
 
-        // temp.studentInfo = result.rows;
-        // data = result.rows
-        if( !result.rows.length ) {
-            res.redirect('/failed')
-            return
+            // temp.studentInfo = result.rows;
+            // data = result.rows
+            if (!result.rows.length) {
+                res.redirect('/failed')
+                return
+            }
+
+            // res.render("studentHomePage.ejs", obj );
+        } catch (err) {
+            next(err);
         }
-
-        // res.render("studentHomePage.ejs", obj );
-    } catch (err) {
-        next(err);
-    }
 
         next();
     }
     else {
         res.render("login.ejs");
     }
-} )
+})
 
 
 
@@ -140,9 +140,32 @@ router.get("/", async (req, res, next) => {
 
     temp.parseInfo = getDepartment(temp.studentInfo[0].rollno)
 
-    // console.log(temp.studentInfo);
 
-    // console.log(temp)
+
+    try {
+        const result = await new Promise((resolve, reject) => {
+            dbConnect.query(
+                `select sum(daysapplied) from leaveApplications where admin_approval = 'Approved' and rollno=${rollno}`,
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+        });
+
+        // console.table(result.rows)
+
+        temp.total_type_5 = result.rows[0].sum;
+
+        // res.render("studentHomePage.ejs", obj );
+    } catch (err) {
+        next(err);
+    }
+
+    console.log(temp)
 
     res.render("studentHomePage.ejs", temp)
 });

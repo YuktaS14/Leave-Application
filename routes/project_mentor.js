@@ -130,6 +130,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     const typeOfLeave = req.body.leaveType;
     const startDate = req.body.leavefromdate;
     const tillDate = req.body.leaveToDate;
+    const endDate = req.body.leaveToDate;
     // const FA_approval = req.body.FA_approval;
     // const PM_approval = req.body.PM_approval;
     if (req.body.comment == '') {
@@ -137,6 +138,30 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     }
     else {
         comment = req.body.comment;
+    }
+
+
+    if (status == 'Not Approved') {
+        var updateStatus = `Update leaveApplications set mentor_approval = '${status}' 
+        where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        dbConnect.query(updateStatus, (err, result) => {
+            if (err) throw err;
+            else{
+                res.redirect('/pm')
+            }
+        });
+    }
+    else if (status == 'Approved') {
+        const newLeft = leftleaves - applied;
+        // console.log(newLeft)
+        var updateStatus = `Update leaveApplications set mentor_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        // var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
+        dbConnect.query(updateStatus, (err, result) => {
+            if (err) throw err;
+            else {
+                console.log(result)
+            }
+        });
     }
 
 
@@ -169,7 +194,6 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     else {
         res.redirect('/pm')
     }
-
     // console.log(data)
 });
 

@@ -220,7 +220,7 @@
                                     </select> -->
 
 
-                                    <label for="pm" style="margin-bottom: 0.8%;">Project Mentor </label>
+                                    <label for="fa" style="margin-bottom: 0.8%;">Project Mentor </label>
                                     <select name="fa" style="background-color: white;" class="form-control select2">
                                         <option value="" selected disabled> select project mentor </option>
                                         <% faculty_list.forEach( row=> { %>
@@ -242,12 +242,12 @@
                                     </select> -->
 
 
-                                    <label for="fa" style="margin-bottom: 0.8%;margin-top: 0.8%;" >Faculty Advisor</label>
-                                    <select name="fa" class="select2" style="background-color: white; height: 15%;"
+                                    <label for="pm" style="margin-bottom: 0.8%;margin-top: 0.8%;" >Faculty Advisor</label>
+                                    <select name="pm" class="select2" style="background-color: white; height: 15%;"
                                         required>
                                         <option value="" selected disabled> select faculty advisor </option>
                                         <% faculty_list.forEach(row=> { %>
-                                            <option value="<%- row.email %>"> <%- row.name %> ( <%- row.email %> )
+                                            <option value="<%-row.email%>"> <%- row.name %> ( <%- row.email %> )
                                             </option>
                                             <% }) %>
                                     </select>

@@ -126,6 +126,9 @@
                     <th>Program</th>
                     <th>FA's Approval</th>
                     <th>Project Mentor's Approval</th>
+                    <th>Current Overflow</th>
+                    <th>Total Overflow</th>
+                    <th>Leave type</th>
                     <th>View Form</th>
                   </tr>
                 </thead>
@@ -137,6 +140,9 @@
                     <th>Program</th>
                     <th>FA's Approval</th>
                     <th>Project Mentor's Approval</th>
+                    <th>Current Overflow</th>
+                    <th>Total Overflow</th>
+                    <th>Leave type</th>
                     <th>View Form</th>
                   </tr>
                 </tfoot>
@@ -162,6 +168,15 @@
                       </td>
                       <td>
                         <%= record.mentor_approval%>
+                      </td>
+                      <td>
+                        <%= record.current_overflow%>
+                      </td>
+                      <td>
+                        <%= record.total_overflow%>
+                      </td>
+                      <td>
+                        <%= record.typeofleave%>
                       </td>
                       <td>
                         <div>

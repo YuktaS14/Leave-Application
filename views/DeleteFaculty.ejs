@@ -166,11 +166,11 @@
                             Delete Faculty
                         </div>
                         <div class="card-body">
-                            <div class="alert alert-success">
+                            <div class="alert alert-success" id="alert-msg" >
                                 <% if(message.length> 0){
                                     %>
                                     <%= message %>
-                                        <%}%>
+                                <%}%>
                             </div>
                             <div>
                                 <form action="/admin/deleteFaculty" method="post">
@@ -239,6 +239,17 @@
 
     function writeName(email) {
         console.log('here')
+
+        '<% not_available.forEach( ( row ) => { %>'
+            if(email=='<%-row.not_available%>'){
+                document.getElementById('select-value').value = ""
+                alertmsg = 'faculty is already present as faculty advisor or project mentor for atleast one student, first please change the faculty for those students'
+                // document.getElementById('alert-msg').innerHTML=` <p style="color:red;"> ${alertmsg} </p>`
+                alert(alertmsg)
+                return
+            }
+        '<% }) %>'
+
         let name = null
         '<% faculty_list.forEach(row=> { %>'
         if (email == '<%-row.email%>') {

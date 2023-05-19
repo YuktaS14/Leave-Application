@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
     <!-- <link rel = "stylesheet" href ="styles/asmin.css"></link> -->
-    
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
@@ -16,160 +17,183 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 </head>
 <style>
     .header {
-            background-color: #4CAF50;
-            text-align: center;
-            padding: 20px;
-        }
-        .header h1,
-        .header h2 {
-            margin: 0;
-            color: white;
-        }
-        #main_form {
-            display: block;
-        }
-        form {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            display: block;
-            margin: 10px 0;
-            color: #333;
-        }
-        input,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            border: none;
-            border-radius: 5px;
-            background-color: #f8f9fa;
-            color: #333;
-            outline: none;
-        }
-        textarea {
-            resize: vertical;
-            height: 130px;
-        }
-        select {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            border: none;
-            border-radius: 5px;
-            background-color: #f8f9fa;
-            color: #333;
-            outline: none;
-        }
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        .form-group label {
-            float: left;
-            width: 25%;
-            text-align: right;
-            margin-right: 2.5%;
-            padding-top: 10px;
-            font-weight: bold;
-            color: #666;
-        }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            float: left;
-            width: 70%;
-            margin-left: 2.5%;
-        }
-        .form-group::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        button[type="submit"] {
-            background-color: #4CAF50;
-            color: #fff;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-        button[type="submit"]:hover {
-            background-color: #45a049;
-        }
+        background-color: #4CAF50;
+        text-align: center;
+        padding: 20px;
+    }
 
-        input[type="date"] {
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 0.5em;
-            cursor: auto;
-            width: 30%;
-        }
-        input[type="date"]:focus {
-            outline: none;
-            box-shadow: 0 0 5px #99c;
-        }
+    .header h1,
+    .header h2 {
+        margin: 0;
+        color: white;
+    }
 
-        #submitBtn {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-}
+    #main_form {
+        display: block;
+    }
 
+    form {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        display: block;
+        margin: 10px 0;
+        color: #333;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        color: #333;
+        outline: none;
+    }
+
+    textarea {
+        resize: vertical;
+        height: 130px;
+    }
+
+    select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        color: #333;
+        outline: none;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .form-group label {
+        float: left;
+        width: 25%;
+        text-align: right;
+        margin-right: 2.5%;
+        padding-top: 10px;
+        font-weight: bold;
+        color: #666;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        float: left;
+        width: 70%;
+        margin-left: 2.5%;
+    }
+
+    .form-group::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    input[type="date"] {
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 0.5em;
+        cursor: auto;
+        width: 30%;
+    }
+
+    input[type="date"]:focus {
+        outline: none;
+        box-shadow: 0 0 5px #99c;
+    }
+
+    #submitBtn {
+        background-color: #4CAF50;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
 </style>
+
 <body>
     <div style="margin: 20px; font-size: 20px;">
-    <!-- <input type = "button" value="Back" onclick="back();" style="width: 200px; margin: 20px;align-self: center; border-style: solid;">-->
-    <a href="#" onclick="back();"> <-- Back</a> 
+        <!-- <input type = "button" value="Back" onclick="back();" style="width: 200px; margin: 20px;align-self: center; border-style: solid;">-->
+        <a href="#" onclick="back();"> <-- Back</a>
     </div>
 
-    <form id="main_form" method ='post' action = "/admin/<%= data.rollno %>">
+    <form id="main_form" method='post' action="/admin/<%= data.rollno %>">
 
         <label> Name of the Scholar: </label>
-        <input type="text" name="name" id="Name" readonly  value=" <%= data.nameofscholar %>  ">
+        <input type="text" name="name" id="Name" readonly value=" <%= data.nameofscholar %>  ">
         <br>
 
         <label>Registration/Roll Number:</label>
-        <input type="text" name="regno" id="RollNo" readonly  value=" <%= data.rollno %>  ">
+        <input type="text" name="regno" id="RollNo" readonly value=" <%= data.rollno %>  ">
         <br>
 
         <label>Department:</label>
-        <input type="text" name="dept" id="Department" readonly  value=" <%= data.department %>  ">
+        <input type="text" name="dept" id="Department" readonly value=" <%= data.department %>  ">
         <br>
 
         <label>Program (MTech/MS/PhD):</label>
-        <input type="text" name="program" id="Program" readonly  value=" <%= data.program %>  ">
+        <input type="text" name="program" id="Program" readonly value=" <%= data.program %>  ">
         <br>
 
 
@@ -180,66 +204,84 @@
 
         <label for="typeOfLeave"> Type of leave </label>
         <!-- <select name="leaveType" id="typeOfLeave"  readonly> -->
-        <input type="text" value="" disabled selected><%= data.typeofleave %></option>
-        </select>
+        <input type="text" value="" disabled selected>
+        <%= data.typeofleave %>
+            </option>
+            </select>
 
-        <p type="text" id="typeOfLeaveReason" style="display:none" readonly> </p>
+            <p type="text" id="typeOfLeaveReason" style="display:none" readonly> </p>
 
-        <hr>
+            <hr>
 
-        <label>Purpose of Leave:</label>
-        <textarea name="leavePurpose" id="leavePurpose"  readonly><%= data.leavepurpose %></textarea>
- 
-        <label for="from"> Start date </label>
-        <input type="text" name="leavefromdate" id="from"  readonly value="<%= data.fromdate.toISOString().slice(0,10); %>">
+            <label>Purpose of Leave:</label>
+            <textarea name="leavePurpose" id="leavePurpose" readonly><%= data.leavepurpose %></textarea>
 
-
-        <label for="from"> End date </label>
-        <input type="text" name="leaveToDate" id="to"  readonly value = "<%= data.todate.toISOString().slice(0,10); %>">
-
-        <br>
-
-        <label>Leave applied for:</label>
-        <input type="text" name="leaveDays" id="noOfDays" readonly  value="<%= data.daysapplied %>"/>
-
-        <hr>
-
-        <label> <b> Arrangement of HTRA/HTTA duties during the period of leave </b></label>
-        <br>
+            <label for="from"> Start date </label>
+            <input type="text" name="leavefromdate" id="from" readonly
+                value="<%= data.fromdate.toISOString().slice(0,10); %>">
 
 
-        <label>Nature of HTTA/ HTRA duty</label>
-        <input type="text" name="dutyNature" id="duty-nature" value="<%= data.natureofduty%>"  readonly/>
-        <label> Roll Number of the alternate scholar handling the duties</label>
-        <input type="text" name="alternateScholarRollno" id="alternate-scholar-rollno"  value="<%= data.alternatestudrolno %>" readonly/>
-        <label> Name of the alternate scholar handling the duties</label>
-        <input type="text" name="alternateScholarName" id="alternate-scholar-name" value="<%= data.alternatestudname%>" readonly/>
-        <hr>
-        <label> FA Approval Status: </label>
-        <input type="text" name="FA_approval" value="<%= data.fa_approval%>" readonly/>
-        <label>Project Manager Approval Status:</label>
-        <input type="text" name="PM_approval" value="<%= data.mentor_approval%>" readonly/>
-        <hr>
-        <label> Admin Approval: Please Choose: </label>
-        <select name="status" id="approvalStatus"  readonly>
-            <option value="Pending" selected><%= data.admin_approval %></option>
-            <option value="Approved" > Approve </option>
-            <option value="Not Approved" > Reject </option>
+            <label for="from"> End date </label>
+            <input type="text" name="leaveToDate" id="to" readonly
+                value="<%= data.todate.toISOString().slice(0,10); %>">
 
-        </select>
-        <label> Any Additional Comments: </label>
-        <input type="text" name="comment"/>
+            <br>
+
+            <label>Leave applied for:</label>
+            <input type="text" name="leaveDays" id="noOfDays" readonly value="<%= data.daysapplied %>" />
+
+            <label>Total Overflow days</label>
+            <input type="number" name="Total-overflow-days" id="totaloverflowDays" readonly
+                value="<%-data.total_overflow%>" />
+
+            <label>Current Overflow days</label>
+            <input type="number" name="current-overflow-days" id="overflowDays" readonly
+                value="<%-data.current_overflow%>" />
+
+            <hr>
+
+            <label> <b> Arrangement of HTRA/HTTA duties during the period of leave </b></label>
+            <br>
 
 
-       <div>
-            <input type="submit" id = "submitBtn" value="Send Email And Update">
-        </div>
-        <hr>
+            <label>Nature of HTTA/ HTRA duty</label>
+            <input type="text" name="dutyNature" id="duty-nature" value="<%= data.natureofduty%>" readonly />
+            <label> Roll Number of the alternate scholar handling the duties</label>
+            <input type="text" name="alternateScholarRollno" id="alternate-scholar-rollno"
+                value="<%= data.alternatestudrolno %>" readonly />
+            <label> Name of the alternate scholar handling the duties</label>
+            <input type="text" name="alternateScholarName" id="alternate-scholar-name"
+                value="<%= data.alternatestudname%>" readonly />
+            <hr>
+            <label> FA Approval Status: </label>
+            <input type="text" name="FA_approval" value="<%= data.fa_approval%>" readonly />
+            <label>Project Manager Approval Status:</label>
+            <input type="text" name="PM_approval" value="<%= data.mentor_approval%>" readonly />
+            <hr>
+            <label> Admin Approval: Please Choose: </label>
+            <select name="status" id="approvalStatus" readonly>
+                <option value="Pending" selected>
+                    <%= data.admin_approval %>
+                </option>
+                <option value="Approved"> Approve </option>
+                <option value="Not Approved"> Reject </option>
+
+            </select>
+            <label> Any Additional Comments: </label>
+            <input type="text" name="comment" />
+
+
+            <div>
+                <input type="submit" id="submitBtn" value="Send Email And Update">
+            </div>
+            <hr>
     </form>
 
     <script>
-         function back() {
-			window.location.href = '/admin'};
+        function back() {
+            window.location.href = '/admin'
+        };
     </script>
 </body>
+
 </html>

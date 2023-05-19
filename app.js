@@ -181,32 +181,6 @@ app.get('/login', async (req, res, next) => {
 })
 
 
-// app.get("/auth/google", (req, res, next) => {
-
-//     req.session.select_userrole = req.query.selectRole
-//     console.log('req session role ---> ', req.session.select_userrole)
-//     next()
-
-// }, passport.authenticate("google", {
-//     scope: ["profile", "email"],
-//     prompt: "select_account"
-// })
-// );
-
-// // verifying again
-// app.get("/auth/google/callback", passport.authenticate("google", {
-//     failureRedirect: "/login"
-// }), async (req, res) => {
-//     // console.log(req.session.select_userrole)
-//     console.log('inside callback')
-//     // console.log('req session role ---> ', req.cookies.select_userrole)
-//     res.redirect("/login")
-// }
-// );
-
-
-
-
 app.get("/auth/google", (req, res, next) => {
     req.session.select_userrole = req.query.selectRole;
     console.log(req.session.select_userrole)

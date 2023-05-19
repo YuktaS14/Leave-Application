@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +10,7 @@
     <!-- Latest compiled and minified CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    
+
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,17 +19,21 @@
     <!-- Latest compiled JavaScript -->
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-  <link href="styles.css" rel="stylesheet" />
-  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-  
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
     <style>
-		.content {
-			display: none;
-      margin-top: 40px;
-		}    
+        .content {
+            display: none;
+            margin-top: 40px;
+        }
 
 
         .header {
@@ -223,7 +228,8 @@
             overflow-x: hidden;
             margin-right: calc(-1 * (100vw - 100%));
         }
-/* 
+
+        /* 
         #my-table-id {
             border: #45a049;
             border-width: 10px;
@@ -262,75 +268,75 @@
             border: 1rem;
             font-family: 'Times New Roman', Times, serif;
         }
-
-
-	</style>
+    </style>
 </head>
 
-    <body class="sb-nav-fixed">
-      <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-          <!-- Navbar Brand-->
-          <a class="navbar-brand ps-3" href="/student">Student Login Page</a>
-          <!-- Sidebar Toggle-->
-          <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-      </nav>
-      <div id="layoutSidenav">
-          <div id="layoutSidenav_nav">
-              <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                  <div class="sb-sidenav-menu">
-                      <div class="nav">
-                          <!-- <div class="sb-sidenav-menu-heading">Core</div> -->
-                          <a class="nav-link" id = "pastAppl" href="#" onclick="showContent('pastAppl');">
-                              <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                              Past Applications
-                          </a>
-                          <div class="sb-sidenav-menu-heading">Interface</div>
-                          <a class="nav-link" id = "leaveForm" href="#" onclick="showContent('leaveForm');">
-                              <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
-                              Casual/Vacation Leave Application Form
-                              <!-- <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
-                          </a>
-                                             
-                        
-                          <div class="sb-sidenav-menu-heading">Logout</div>
-                          <a class="nav-link" href="/logout">
-                              <div class="sb-nav-link-icon"><i class="fas fa-power-off"></i></div>
-                              Logout
-                          </a>
-                      </div>
-                  </div>
-                  <div class="sb-sidenav-footer">
-                      <div class="small">Logged in as:</div>
-                      <%= studentInfo[0].rollno %>
-                  </div>
-              </nav>
-          </div>
-          <div id="layoutSidenav_content">
-              <main>
-                  <div class="container-fluid px-4">
-                      <h1 class="mt-4">Welcome, <%= studentInfo[0].name %></h1>
-                      <ol class="breadcrumb mb-4">
-                          <li class="breadcrumb-item active">Dashboard</li>
-                      </ol>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="/student">Student Login Page</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <!-- <div class="sb-sidenav-menu-heading">Core</div> -->
+                        <a class="nav-link" id="pastAppl" href="#" onclick="showContent('pastAppl');">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Past Applications
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Interface</div>
+                        <a class="nav-link" id="leaveForm" href="#" onclick="showContent('leaveForm');">
+                            <div class="sb-nav-link-icon"><i class="fas fa-database"></i></div>
+                            Casual/Vacation Leave Application Form
+                            <!-- <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
+                        </a>
 
-                      <div class="card mb-4 content" id = "pastAppl-content"  style="display:block;">
-                          <div class="card-header">
-                              <i class="fas fa-table me-2"></i>
-                              Past Applications
-                          </div>
-                          <div class="card-body" >
+
+                        <div class="sb-sidenav-menu-heading">Logout</div>
+                        <a class="nav-link" href="/logout">
+                            <div class="sb-nav-link-icon"><i class="fas fa-power-off"></i></div>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    <%= studentInfo[0].rollno %>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Welcome, <%= studentInfo[0].name %>
+                    </h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+
+                    <div class="card mb-4 content" id="pastAppl-content" style="display:block;">
+                        <div class="card-header">
+                            <i class="fas fa-table me-2"></i>
+                            Past Applications
+                        </div>
+                        <div class="card-body">
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                      <th>Start Date</th>
-                                      <th>End Date</th>
-                                      <th>Admin's Approval</th>
-                                      <th>FA's Approval</th>
-                                      <th>Project Mentor's Approval</th>
-                                      <th>Leave Type</th>
-                                      <th>Reason</th>
-                                      <th>Total overflow</th>
-                                      <th>current overflow</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Admin's Approval</th>
+                                        <th>FA's Approval</th>
+                                        <th>Project Mentor's Approval</th>
+                                        <th>Leave Type</th>
+                                        <th>Reason</th>
+                                        <th>Total overflow</th>
+                                        <th>current overflow</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -344,7 +350,7 @@
                                         <th>Reason</th>
                                     </tr>
                                 </tfoot>
-                                <tbody> 
+                                <tbody>
                                     <% leaveapplications.forEach((record)=> { %>
 
                                         <tr>
@@ -357,70 +363,72 @@
                                             <td> <%- record.leavepurpose %> </td>
                                             <td> <%- record.total_overflow %> </td>
                                             <td> <%- record.current_overflow %> </td>
-            
+
                                         </tr>
-               
+
                                         <% } ); %>
 
                                 </tbody>
                             </table>
 
-                          </div>
-                      </div>
+                        </div>
+                    </div>
 
 
 
-                      <div class="card mb-4 content" id = "leaveForm-content" >
+                    <div class="card mb-4 content" id="leaveForm-content">
                         <div class="card-header">
                             <i class="fas fa-table me-2"></i>
                             Leave Application Form
                         </div>
-                        <div class="card-body" >
-                            
+                        <div class="card-body">
+
                             <form id="main_form" method="post" action="/submit">
 
                                 <label> Name of the Scholar: </label>
-                                <input type="text" name="name" id="Name" readonly required value=" <%= studentInfo[0].name %>  ">
+                                <input type="text" name="name" id="Name" readonly required
+                                    value=" <%= studentInfo[0].name %>  ">
                                 <br>
-                    
-                    
-                    
-                    
+
+
+
+
                                 <label>Registration/Roll Number:</label>
                                 <input type="text" name="regno" id="RollNo" readonly required
                                     value=" <%= studentInfo[0].rollno %>  ">
                                 <br>
-                    
-                    
-                    
+
+
+
                                 <label>Department:</label>
                                 <input type="text" name="dept" id="Department" readonly required
                                     value=" <%= parseInfo.department %>  ">
                                 <br>
-                    
+
                                 <label>Program (MTech/MS/PhD):</label>
-                                <input type="text" name="program" id="Program" readonly required value=" <%= parseInfo.batch %>  ">
+                                <input type="text" name="program" id="Program" readonly required
+                                    value=" <%= parseInfo.batch %>  ">
                                 <br>
-                    
-                    
+
+
                                 <label>Number of Leaves Left:</label>
                                 <input type="text" name="noOfLeavesLeft" id="noOfLeavesLeft" readonly
                                     value=" <%= studentInfo[0].leavesleft %>  ">
                                 <br>
-                    
-                    
+
+
                                 <!-- <label>Type of Leave:</label> -->
                                 <!-- <input type="text" name="leave-type" id="typeOfLeave" required> -->
                                 <!-- <button type="drop" name="leave-type" id="typeOfLeave" required>  -->
-                    
+
                                 <hr>
-                    
+
                                 <label for="typeOfLeave"> Type of leave </label>
-                    
+
                                 <select name="leave-type" id="typeOfLeave" required onchange=handleleavetype()>
-                    
-                                    <option value="" disabled selected> select appropriate option </option>
-                    
+
+                                    <option value="0" disabled selected> select appropriate option </option>
+
                                     <option value="1"> Leave with stipend not exceeding 30 days
                                     </option>
                                     <option value="2"> for attending conferences/seminars </option>
@@ -429,48 +437,50 @@
                                     <option value="4"> Second maternity leave applications </option>
                                     <option value="5"> Male Fellows of institute HTRA / CSIR </option>
                                     <option value="6"> Other </option>
-                    
+
                                 </select>
-                    
+
                                 <p type="text" id="typeOfLeaveReason" style="display:none" readonly> </p>
-                    
+
                                 <hr>
-                    
+
                                 <!-- <hr> -->
-                    
+
                                 <!-- <br> -->
-                    
+
                                 <label>Purpose of Leave:</label>
                                 <textarea name="leave-purpose" id="leavePurpose" required></textarea>
                                 <!-- <br> -->
-                    
-                    
-                    
+
+
+
                                 <!-- <input type="number" min="1" max="10" name="leave-days" id="noOfDays" required> Day(s), From -->
-                    
+
                                 <label for="from"> Start date </label>
                                 <input type="date" name="leave-from-date" id="from" onchange=calculateDays() required>
-                    
-                    
+
+
                                 <label for="from"> End date </label>
                                 <input type="date" name="leave-to-date" id="to" onchange=calculateDays() required>
-                    
+
                                 <br>
-                    
+
                                 <label>Leave applied for:</label>
                                 <input type="number" name="leave-days" id="noOfDays" readonly />
-                                
+
                                 <label>Total Overflow days</label>
-                                <input type="number" name="Total-overflow-days" id="totaloverflowDays" readonly value="<%-studentInfo[0].overflow%>"/>
+                                <input type="number" name="Total-overflow-days" id="totaloverflowDays" readonly
+                                    value="<%-studentInfo[0].overflow%>" />
 
                                 <label>Current Overflow days</label>
-                                <input type="number" name="current-overflow-days" id="overflowDays" readonly value="0"/>
+                                <input type="number" name="current-overflow-days" id="overflowDays" readonly
+                                    value="0" />
 
-                    
-                                
+
+
 
                                 <hr>
-                    
+
                                 <label> <b> Arrangement of HTRA/HTTA duties during the period of leave </b></label>
                                 <br>
                                 <!-- <table>
@@ -485,83 +495,88 @@
                                     <td><input type="text" name="alternate-scholar-signature" id="alternateScholarSignature"></td>
                                 </tr>
                             </table> -->
-                    
+
                                 <label>Nature of HTTA/ HTRA duty</label>
                                 <input type="text" name="duty-nature" id="duty-nature"" />
                     
                             <label> Roll Number of the alternate scholar handling the duties</label>
                             <input type=" number" name="alternate-scholar-rollno" id="alternate-scholar-rollno" />
-                    
+
                                 <label> Name of the alternate scholar handling the duties</label>
                                 <input type="text" name="alternate-scholar-name" id="alternate-scholar-name" />
-                    
-                    
-                                <p> <i>* only if the alternate person(s) agree to carry out the duties of the scholar applying for
+
+
+                                <p> <i>* only if the alternate person(s) agree to carry out the duties of the scholar
+                                        applying for
                                         leave. </i>
                                 </p>
-                    
+
                                 <!-- <label>Date:</label>
                             <input type="date" name="application-date" id="applicationDate" required>
                         <br> -->
-                    
+
                                 <hr>
-                    
+
                                 <label>Date:</label>
                                 <input type="date" name="application-date" id="applicationDate" readonly>
-                    
+
                                 <script>
                                     var currentDate = new Date().toISOString().slice(0, 10);
                                     document.getElementById("applicationDate").value = currentDate;
                                     // document.getElementById("from").setAttribute("min", currentDate);
                                     // document.getElementById("to").setAttribute("min", currentDate);
                                 </script>
-                    
+
                                 <div style="display:flex; flex-direction: row;  padding: auto 0;">
                                     <div>
-                                <label for="applicantSignature" >Signature of Applicant:</label>
+                                        <label for="applicantSignature">Signature of Applicant:</label>
                                     </div>
                                     <div style="width:50%">
-                                <input type="checkbox" name="applicant-signature" id="applicantSignature" required style="height: 20px; margin-top: 3%;">
-                            </div>
+                                        <input type="checkbox" name="applicant-signature" id="applicantSignature"
+                                            required style="height: 20px; margin-top: 3%;">
+                                    </div>
                                 </div>
                                 <br>
                                 <br>
-                    
-                                <input type="submit" value="Apply For Leave" class="btn btn-primary" onclick="Apply()" />
+
+                                <input type="submit" value="Apply For Leave" class="btn btn-primary"
+                                    onclick="Apply()" />
                                 <span id="display"></span>
                         </div>
                         <!-- <label>Recommendation of the Guide/Project Mentor:</label> -->
                         <hr>
-                    
-                        </form>
-                    
 
-                        </div>
+                        </form>
+
+
                     </div>
-                    
-                  
-              </main>
-              <footer class="py-4 bg-light mt-auto">
-                  <div class="container-fluid px-4">
-                      <div class="d-flex align-items-center justify-content-between small">
-                          <div class="text-muted">Copyright &copy; __</div>
-                          <!-- <div>
+                </div>
+
+
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; __</div>
+                        <!-- <div>
                               <a href="#">Privacy Policy</a>
                               &middot;
                               <a href="#">Terms &amp; Conditions</a>
                           </div> -->
-                      </div>
-                  </div>
-              </footer>
-          </div>
-      </div>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-      <!-- <script src="js/scripts.js"></script> -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-      <!-- <script src="assets/demo/chart-area-demo.js"></script> -->
-      <!-- <script src="assets/demo/chart-bar-demo.js"></script> -->
-      <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-      <!-- <script src="js/datatables-simple-demo.js"></script> -->
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <!-- <script src="js/scripts.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="assets/demo/chart-area-demo.js"></script> -->
+    <!-- <script src="assets/demo/chart-bar-demo.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <!-- <script src="js/datatables-simple-demo.js"></script> -->
 
 
 
@@ -571,76 +586,77 @@
 
 
 
-	<script>
-    var lastClick = 'button1';
-		function showContent(buttonId) {
-      const selectedContenthiv = document.getElementById(buttonId + '-content');
-      var content = selectedContenthiv.style.display;
+    <script>
+        var lastClick = 'button1';
+        function showContent(buttonId) {
+            const selectedContenthiv = document.getElementById(buttonId + '-content');
+            var content = selectedContenthiv.style.display;
 
-      var contenthivs = document.getElementsByClassName('content');
-			for (var i = 0; i < contenthivs.length; i++) {
-				contenthivs[i].style.display = 'none';
-			}
+            var contenthivs = document.getElementsByClassName('content');
+            for (var i = 0; i < contenthivs.length; i++) {
+                contenthivs[i].style.display = 'none';
+            }
 
-      if(lastClick == buttonId  && content == 'block'){
-          selectedContenthiv.style.display = 'none';}
-      else
-        selectedContenthiv.style.display = 'block';
-      lastClick = buttonId;
-		}
+            if (lastClick == buttonId && content == 'block') {
+                selectedContenthiv.style.display = 'none';
+            }
+            else
+                selectedContenthiv.style.display = 'block';
+            lastClick = buttonId;
+        }
 
-		function logout() {
-			window.location.href = '/logout';
-		}
-
-
-   function added(){
-      document.getElementById("onAdd").innerHTML = "Added Successfully!! ";
-      setTimeout(()=>{
-        document.getElementById("onAdd").innerHTML = '';
-
-      },2000);
-    }
-
-    window.addEventListener('DOMContentLoaded', event => {
-
-// Toggle the side navigation
-const sidebarToggle = document.body.querySelector('#sidebarToggle');
-if (sidebarToggle) {
-    // Uncomment Below to persist sidebar toggle between refreshes
-    // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-    //     document.body.classList.toggle('sb-sidenav-toggled');
-    // }
-    sidebarToggle.addEventListener('click', event => {
-        event.preventDefault();
-        document.body.classList.toggle('sb-sidenav-toggled');
-        localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-    });
-}
-
-});
-
-// Call the dataTables jQuery plugin
-// $(document).ready(function() {
-//   $('#dataTable').DataTable();
-// });
-
-window.addEventListener('DOMContentLoaded', event => {
-    // Simple-DataTables
-    // https://github.com/fiduswriter/Simple-DataTables/wiki
-
-    const datatablesSimple = document.getElementById('datatablesSimple');
-    if (datatablesSimple) {
-        new simpleDatatables.DataTable(datatablesSimple);
-    }
-});
+        function logout() {
+            window.location.href = '/logout';
+        }
 
 
+        function added() {
+            document.getElementById("onAdd").innerHTML = "Added Successfully!! ";
+            setTimeout(() => {
+                document.getElementById("onAdd").innerHTML = '';
 
+            }, 2000);
+        }
+
+        window.addEventListener('DOMContentLoaded', event => {
+
+            // Toggle the side navigation
+            const sidebarToggle = document.body.querySelector('#sidebarToggle');
+            if (sidebarToggle) {
+                // Uncomment Below to persist sidebar toggle between refreshes
+                // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+                //     document.body.classList.toggle('sb-sidenav-toggled');
+                // }
+                sidebarToggle.addEventListener('click', event => {
+                    event.preventDefault();
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                    localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+                });
+            }
+
+        });
+
+        // Call the dataTables jQuery plugin
+        // $(document).ready(function() {
+        //   $('#dataTable').DataTable();
+        // });
+
+        window.addEventListener('DOMContentLoaded', event => {
+            // Simple-DataTables
+            // https://github.com/fiduswriter/Simple-DataTables/wiki
+
+            const datatablesSimple = document.getElementById('datatablesSimple');
+            if (datatablesSimple) {
+                new simpleDatatables.DataTable(datatablesSimple);
+            }
+        });
 
 
 
-function countWeekendDays(startDate, endDate) {
+
+
+
+        function countWeekendDays(startDate, endDate) {
             let count = 0;
             let currentDate = new Date(startDate);
 
@@ -657,6 +673,14 @@ function countWeekendDays(startDate, endDate) {
 
 
         async function calculateDays() {
+
+            if (document.getElementById('typeOfLeave').value == "0") {
+                alert('Please select type of leave first')
+                document.getElementById("from").value = "";
+                document.getElementById("to").value = "";
+                return
+            }
+
             // Get the start and end dates
             const startDate = new Date(document.getElementById("from").value);
             startDate.setHours(0, 0, 0, 0);
@@ -709,6 +733,41 @@ function countWeekendDays(startDate, endDate) {
             // Set the value of the "Number of Days" input field
             const numdays = numDays - countWeekendDays(startDate, endDate) + 1 - counter;
 
+            if (document.getElementById('typeOfLeave').value == '5') {
+
+                var total = Number('<%total_type_5%>')
+                if ((15 - total) < 0) {
+                    total = 0
+                }
+                else {
+                    total = 15 - total
+                }
+
+                if (numdays > total) {
+
+                    alert('You are applying for more than allocated 15 days')
+
+                    const newLeft1 = total - numdays;
+                    var leftleaves = Number('<%-studentInfo[0].leavesleft%>')
+                    current_overflow = 0
+
+                    if (newLeft1 < 0) {
+                        let extra = numdays - total
+                        if (leftleaves - extra < 0) {
+                            current_overflow = extra - leftleaves
+                            document.getElementById("overflowDays").value = current_overflow
+                            document.getElementById("overflowDays").style = 'color:red'
+                        }
+                        else {
+                            document.getElementById("overflowDays").value = 0
+                            document.getElementById("overflowDays").style = 'color:black'
+                        }
+                    }
+
+                }
+                return
+            }
+
             const allow = document.getElementById('noOfLeavesLeft').value
             let flag = false
             if (numdays >= allow) {
@@ -717,7 +776,7 @@ function countWeekendDays(startDate, endDate) {
                 document.getElementById("overflowDays").style = 'color:red'
                 flag = true
             }
-            if(!flag){
+            if (!flag) {
                 document.getElementById("overflowDays").value = 0
                 document.getElementById("overflowDays").style = 'color:black'
             }
@@ -755,11 +814,12 @@ function countWeekendDays(startDate, endDate) {
 
 
 
-	</script>
+    </script>
 
 
 
 
 
 </body>
+
 </html>

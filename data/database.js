@@ -24,4 +24,4 @@ client.connect()
 .catch((e)=>console.log(e));
 
 
-exports.dbConnect = client; 
+exports.dbConnect = client;

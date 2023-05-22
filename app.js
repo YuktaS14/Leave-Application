@@ -116,6 +116,9 @@ app.get('/login', async (req, res, next) => {
             else if (req.session.select_userrole == 'project_mentor') {
                 res.redirect(`/pm`)
             }
+            else {
+                res.redirect("/failed")
+            }
             return;
         }
 
@@ -146,6 +149,9 @@ app.get('/login', async (req, res, next) => {
             console.log('student checked --> ', req.session.select_userrole)
             if (req.session.select_userrole == 'student') {
                 res.redirect(`/student`)
+            }
+            else{
+                res.redirect("/failed")
             }
             return
         }
@@ -223,6 +229,17 @@ const adminrouter = require("./routes/admin");
 app.use("/admin", adminrouter);
 
 app.get('*', (req, res) => {
+
+    if (req.session != undefined) {
+        req.logout(function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                req.session.destroy();
+            }
+        });
+    }
+
     res.render('page_not_found.ejs')
 })
 

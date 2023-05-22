@@ -586,9 +586,10 @@ router.post('/upload', upload.single('fileToUpload'), (req, res) => {
         .on('end', () => {
             // Do something with the CSV data
             console.log(results);
-            res.send('File uploaded and processed successfully');
+            res.redirect('/admin')
         });
 });
+
 
 
 router.get("/:rollId(\\d{9})", (req, res) => {
@@ -611,6 +612,7 @@ router.get("/:rollId(\\d{9})", (req, res) => {
 });
 
 
+
 router.post("/:rollId(\\d{9})", async (req, res) => {
     console.log(req.body);
 
@@ -626,6 +628,12 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     const PM_approval = req.body.PM_approval;
     const total_overflow = req.body['Total-overflow-days']
     const current_overflow = req.body['current-overflow-days']
+
+    console.log('*******************************')
+    console.log(startDate)
+    console.log(tillDate)
+    console.log('*******************************')
+
     if (req.body.comment == '') {
         comment = "-";
     }

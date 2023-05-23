@@ -623,7 +623,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     const nameOfScholar = req.body.name;
     const typeOfLeave = req.body.leaveType;
     const startDate = req.body.leavefromdate;
-    const tillDate = req.body.leaveToDate;
+    const endDate = req.body.leaveToDate;
     const FA_approval = req.body.FA_approval;
     const PM_approval = req.body.PM_approval;
     const total_overflow = req.body['Total-overflow-days']
@@ -644,7 +644,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
 
 
     if (status == 'Not Approved') {
-        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and leavesleft = ${leftleaves}`
+        var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and  and fromdate='${startDate}' and todate='${endDate}'`
         dbConnect.query(updateStatus, (err, result) => {
             if (err) throw err;
             else {
@@ -656,7 +656,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     else if (status == 'Approved') {
         // console.log(newLeft)
         var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id}
-        and leavesleft = ${leftleaves} '
+        and leavesleft = ${leftleaves} and fromdate='${startDate}' and todate='${endDate}''
         `
 
         if (typeOfLeave == 1 || typeOfLeave == 6 ) {
@@ -688,7 +688,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
 
             let total = 0
 
-            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and leavesleft = ${leftleaves}`
+            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
 
             var q = `select sum(daysapplied) from leaveApplications where admin_approval = 'Approved' and rollno=${id}`
             dbConnect.query(q, (err, result) => {
@@ -732,7 +732,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
 
         else{
 
-            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and leavesleft = ${leftleaves}`
+            var updateStatus = `Update leaveApplications set admin_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
             dbConnect.query(updateStatus, (err, result) => {
                 if (err) throw err;
                 else {
@@ -778,8 +778,8 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     return
 });
 
-router.get('*', (req, res) => {
-    res.render('../views/page_not_found.ejs')
-})
+// router.get('*', (req, res) => {
+//     res.render('../views/page_not_found.ejs')
+// })
 
 module.exports = router;

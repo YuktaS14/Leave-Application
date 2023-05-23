@@ -228,7 +228,7 @@ app.use("/pm", pmRoute);
 const adminrouter = require("./routes/admin");
 app.use("/admin", adminrouter);
 
-app.get('*', (req, res) => {
+app.get('/failed', (req, res) => {
 
     if (req.session != undefined) {
         req.logout(function (err) {

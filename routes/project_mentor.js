@@ -169,7 +169,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
 
     if (status == 'Not Approved') {
         var updateStatus = `Update leaveApplications set mentor_approval = '${status}' 
-        where rollno = ${id} and leavesleft = ${leftleaves}`
+        where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
         dbConnect.query(updateStatus, (err, result) => {
             if (err) throw err;
             else{
@@ -180,7 +180,7 @@ router.post("/:rollId(\\d{9})", async (req, res) => {
     else if (status == 'Approved') {
         const newLeft = leftleaves - applied;
         // console.log(newLeft)
-        var updateStatus = `Update leaveApplications set mentor_approval = '${status}' where rollno = ${id} and leavesleft = ${leftleaves}`
+        var updateStatus = `Update leaveApplications set mentor_approval = '${status}' where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
         // var updateLeaves = `Update studentinfo set leavesleft = ${newLeft} where rollno = ${id} and fromdate='${startDate}' and todate='${endDate}'`
         dbConnect.query(updateStatus, (err, result) => {
             if (err) throw err;

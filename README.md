@@ -25,7 +25,7 @@ c. Admin has access to all applications, and databases. He can modify every tabl
 a. Constraints on Date, number of days leaves are applied, leave types and rules associated with each, error handling, wrong requests, etc. are handled properly through frontend and database.<br>
 b. Inconsistent input would not be accepted from the front end itself, as the constraints on data according to the database is implemented correctly.
 
-## Steps to run
+## Steps to start server
 1. create a .env file containing the following information.
 
         GOOGLE_CLIENT_ID=

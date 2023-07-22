@@ -25,3 +25,29 @@ c. Admin has access to all applications, and databases. He can modify every tabl
 a. Constraints on Date, number of days leaves are applied, leave types and rules associated with each, error handling, wrong requests, etc. are handled properly through frontend and database.<br>
 b. Inconsistent input would not be accepted from the front end itself, as the constraints on data according to the database is implemented correctly.
 
+## Steps to run
+1. create a .env file containing the following information.
+
+        GOOGLE_CLIENT_ID=
+        GOOGLE_CLIENT_SECRET=
+        REDIRECT_URL=
+        USER_EMAIL=
+        PASSWORD=
+        ADMIN_EMAIL=
+        SESSION_SECRETE=
+
+2. Install PostgreSQL 12.x (https://www.postgresql.org/)
+3. Inside ./data/database.js, set the host, password, database, and port according to your runtime environment.
+4. Please make sure that database have relational model as given in ./sql_qeuries/erd.png. leave_application.tar can be use to restore database.
+5. Install Node.js based on your operating system. Visit the website (https://nodejs.org) and download the LTS version 19.9.x of Node.js along with version 9.6.x of npm.
+6. Install all required dependencies
+
+        npm install
+
+7. start server using following in dev mode
+    
+        npm start
+        
+8. To close server
+
+        ./close.sh

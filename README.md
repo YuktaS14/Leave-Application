@@ -25,6 +25,16 @@ c. Admin has access to all applications, and databases. He can modify every tabl
 a. Constraints on Date, number of days leaves are applied, leave types and rules associated with each, error handling, wrong requests, etc. are handled properly through frontend and database.<br>
 b. Inconsistent input would not be accepted from the front end itself, as the constraints on data according to the database is implemented correctly.
 
+### Schema of the Database:
+
+![schema](https://github.com/YuktaS14/Leave-Application/assets/85993659/d2d7dd17-f603-41e8-a5ef-30279df2556c)
+
+
+### Sequence Diagram:
+![Untitled (1)](https://github.com/YuktaS14/Leave-Application/assets/85993659/e9d005a0-8547-4a8b-840e-b99e8710e896)
+
+
+
 ## Steps to start server
 1. create a .env file containing the following information.
 
